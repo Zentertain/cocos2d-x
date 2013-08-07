@@ -13,3 +13,6 @@
 [submodule "tools/cocos2d-console"]
 	path = tools/cocos2d-console
 	url = https://github.com/cocos2d/cocos2d-console.git
+[submodule "projects/FarmSaga"]
+	path = projects/FarmSaga
+	url = git@github.com:Zentertain/FarmSaga.git
