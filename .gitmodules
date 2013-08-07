@@ -16,3 +16,6 @@
 [submodule "projects/FarmSaga"]
 	path = projects/FarmSaga
 	url = git@github.com:Zentertain/FarmSaga.git
+[submodule ".\\projects\\FarmSaga"]
+	path = .\\projects\\FarmSaga
+	url = git@github.com:Zentertain/FarmSaga.git
