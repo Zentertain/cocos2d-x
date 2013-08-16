@@ -303,7 +303,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
             m_fLifeVar = dictionary->valueForKey("particleLifespanVariance")->floatValue();
 
             // emission Rate
-            m_fEmissionRate = dictionary->valueForKey("emissionRate")->floatValue();//100;// m_uTotalParticles / m_fLife;
+            m_fEmissionRate = dictionary->valueForKey("emissionRate")->floatValue();//m_uTotalParticles / m_fLife;
 
             //don't get the internal texture if a batchNode is used
             if (!m_pBatchNode)
