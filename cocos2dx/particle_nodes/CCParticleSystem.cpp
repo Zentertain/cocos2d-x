@@ -517,6 +517,9 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
     // rotation
     float startA = m_fStartSpin + m_fStartSpinVar * CCRANDOM_MINUS1_1();
     float endA = m_fEndSpin + m_fEndSpinVar * CCRANDOM_MINUS1_1();
+
+	if (m_fEndSpin == -1)
+		endA = startA;
     particle->rotation = startA;
     particle->deltaRotation = (endA - startA) / particle->timeToLive;
 
