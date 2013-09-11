@@ -28,6 +28,8 @@ void CCLabelBMFontLoader::onHandlePropTypeByte(CCNode * pNode, CCNode * pParent,
 
 void CCLabelBMFontLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pParent, const char * pPropertyName, ccBlendFunc pCCBlendFunc, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
+        pCCBlendFunc.src = GL_ONE;
+        pCCBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
         ((CCLabelBMFont *)pNode)->setBlendFunc(pCCBlendFunc);
     } else {
         CCNodeLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pCCBlendFunc, pCCBReader);
@@ -36,6 +38,10 @@ void CCLabelBMFontLoader::onHandlePropTypeBlendFunc(CCNode * pNode, CCNode * pPa
 
 void CCLabelBMFontLoader::onHandlePropTypeFntFile(CCNode * pNode, CCNode * pParent, const char * pPropertyName, const char* pFntFile, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_FNTFILE) == 0) {
+        ccBlendFunc pCCBlendFunc;
+        pCCBlendFunc.src = GL_ONE;
+        pCCBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        ((CCLabelBMFont *)pNode)->setBlendFunc(pCCBlendFunc);
         ((CCLabelBMFont *)pNode)->setFntFile(pFntFile);
     } else {
         CCNodeLoader::onHandlePropTypeFntFile(pNode, pParent, pPropertyName, pFntFile, pCCBReader);
