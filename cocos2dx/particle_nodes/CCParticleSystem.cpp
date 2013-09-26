@@ -148,18 +148,6 @@ CCParticleSystem * CCParticleSystem::create(const char *plistFile)
     return pRet;
 }
 
-CCParticleSystem* CCParticleSystem::createWithTotalParticles(unsigned int numberOfParticles)
-{
-    CCParticleSystem *pRet = new CCParticleSystem();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return pRet;
-}
-
 bool CCParticleSystem::init()
 {
     return initWithTotalParticles(150);
@@ -386,6 +374,80 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
     } while (0);
     CC_SAFE_DELETE_ARRAY(buffer);
     CC_SAFE_DELETE_ARRAY(deflated);
+    return bRet;
+}
+
+bool CCParticleSystem::initWithParticle(CCParticleSystem *pParticle)
+{
+    bool bRet = false;
+
+    do
+    {
+        int maxParticles = pParticle->m_uTotalParticles;;
+        // self, not super
+        if(this->initWithTotalParticles(maxParticles))
+        {
+            // angle
+            m_fAngle = pParticle->m_fAngle;;
+            m_fAngleVar = pParticle->m_fAngleVar;
+            
+            // duration
+            m_fDuration = pParticle->m_fDuration;
+            
+            // blend function
+            m_tBlendFunc.src = pParticle->m_tBlendFunc.src;
+            m_tBlendFunc.dst = pParticle->m_tBlendFunc.dst;
+            
+            // color
+            m_tStartColor = pParticle->m_tStartColor;
+            
+            m_tStartColorVar = pParticle->m_tStartColorVar;
+            
+            m_tEndColor = pParticle->m_tEndColor;
+            
+            m_tEndColorVar = pParticle->m_tEndColorVar;
+            
+            // particle size
+            m_fStartSize = pParticle->m_fStartSize; 
+            m_fStartSizeVar = pParticle->m_fStartSizeVar;
+            m_fEndSize = pParticle->m_fEndSize;
+            m_fEndSizeVar = pParticle->m_fEndSizeVar;
+            
+            // position
+            this->setPosition( pParticle->getPosition() );
+            m_tPosVar = pParticle->m_tPosVar;
+            
+            // Spinning
+            m_fStartSpin = pParticle->m_fStartSpin;
+            m_fStartSpinVar = pParticle->m_fStartSpinVar;
+            m_fEndSpin= pParticle->m_fEndSpin;
+            m_fEndSpinVar= pParticle->m_fEndSpinVar;
+            
+            m_nEmitterMode = pParticle->m_nEmitterMode;
+            
+            memcpy(&modeA, &pParticle->modeA, sizeof(modeA));
+            memcpy(&modeB, &pParticle->modeB, sizeof(modeB));
+            
+            // life span
+            m_fLife = pParticle->m_fLife;
+            m_fLifeVar = pParticle->m_fLifeVar;
+            
+            // emission Rate
+            m_fEmissionRate = pParticle->m_fEmissionRate;
+            
+            //don't get the internal texture if a batchNode is used
+            if (!m_pBatchNode)
+            {
+                // Set a compatible default for the alpha transfer
+                m_bOpacityModifyRGB = false;
+                
+                setTexture(pParticle->getTexture());
+                // texture
+                CCAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
+            }
+            bRet = true;
+        }
+    } while (0);
     return bRet;
 }
 
