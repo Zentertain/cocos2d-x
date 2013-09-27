@@ -882,8 +882,15 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     ccbReader->mBytes = data->getBytes();
     ccbReader->mCurrentByte = 0;
     ccbReader->mCurrentBit = 0;
-    CC_SAFE_RETAIN(pCCBReader->mOwner);
+    
     ccbReader->mOwner = pCCBReader->mOwner;
+    
+    if (!ccbReader->mOwner)
+    {
+        ccbReader->mOwner = pCCBReader->mActionManager->getRootNode();
+    }
+    
+    CC_SAFE_RETAIN(ccbReader->mOwner);
     
     if (NULL != ccbReader->mOwner) {
         CCLOG("DDD");

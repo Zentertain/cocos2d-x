@@ -608,8 +608,25 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
             }
         } else {
             CCObject* target = NULL;
-            if(selectorTarget == kCCBTargetTypeDocumentRoot) target = mRootNode;
-            else if (selectorTarget == kCCBTargetTypeOwner) target = mOwner;
+
+            if(selectorTarget == kCCBTargetTypeDocumentRoot)
+            {
+                target = mRootNode;
+            }
+            else if (selectorTarget == kCCBTargetTypeOwner)
+            {
+                if (mOwner)
+                {
+                    target = mOwner;
+                }
+                else
+                {
+                    CCNode* targetNode = mRootNode;
+                    while (targetNode && targetNode->getParent())
+                        targetNode = targetNode->getParent();
+                    target = targetNode;
+                }
+            }
             if(target != NULL) {
                 if(selectorName.length() > 0) {
                     SEL_CallFuncN selCallFunc = 0;
