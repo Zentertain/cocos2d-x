@@ -585,6 +585,7 @@ void CCSprite::draw(void)
     diff = offsetof( ccV3F_C4B_T2F, colors);
     glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
+    onBeforeDraw();
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
