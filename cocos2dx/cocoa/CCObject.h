@@ -61,6 +61,8 @@ protected:
     unsigned int        m_uReference;
     // count of autorelease
     unsigned int        m_uAutoReleaseCount;
+    
+    CCObject*           m_pCallbackTarget;
 public:
     CCObject(void);
     virtual ~CCObject(void);
@@ -76,6 +78,9 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor);
 
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
+    
+    CCObject* getCallbackTarget() { return m_pCallbackTarget; }
+    void setCallbackTarget(CCObject* pTarget) { m_pCallbackTarget = pTarget; }
     
     friend class CCAutoreleasePool;
 };

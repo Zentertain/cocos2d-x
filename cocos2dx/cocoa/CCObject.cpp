@@ -41,6 +41,7 @@ CCObject::CCObject(void)
 : m_nLuaID(0)
 , m_uReference(1) // when the object is created, the reference count of it is 1
 , m_uAutoReleaseCount(0)
+, m_pCallbackTarget(this)
 {
     static unsigned int uObjectCount = 0;
 

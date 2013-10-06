@@ -632,14 +632,14 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
                     SEL_CallFuncN selCallFunc = 0;
                     
                     CCBSelectorResolver* targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
-
+                    target->setCallbackTarget(target);
                     if(targetAsCCBSelectorResolver != NULL) {
                         selCallFunc = targetAsCCBSelectorResolver->onResolveCCBCCCallFuncSelector(target, selectorName.c_str    ());
                     }
                     if(selCallFunc == 0) {
                         CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName.c_str());
                     } else {
-                        CCCallFuncN *callback = CCCallFuncN::create(target, selCallFunc);
+                        CCCallFuncN *callback = CCCallFuncN::create(target->getCallbackTarget(), selCallFunc);
                         actions->addObject(callback);
                     }
                 } else {
