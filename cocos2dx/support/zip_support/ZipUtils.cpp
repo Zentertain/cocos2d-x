@@ -570,4 +570,43 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *
     return pBuffer;
 }
 
+unsigned char *ZipFile::getFileData(const std::string &fileName, const std::string& password, unsigned long *pSize)
+{
+    unsigned char * pBuffer = NULL;
+    if (pSize)
+    {
+        *pSize = 0;
+    }
+    
+    do
+    {
+        CC_BREAK_IF(!m_data->zipFile);
+        CC_BREAK_IF(fileName.empty());
+        
+        ZipFilePrivate::FileListContainer::const_iterator it = m_data->fileList.find(fileName);
+        CC_BREAK_IF(it ==  m_data->fileList.end());
+        
+        ZipEntryInfo fileInfo = it->second;
+        
+        int nRet = unzGoToFilePos(m_data->zipFile, &fileInfo.pos);
+        CC_BREAK_IF(UNZ_OK != nRet);
+        
+        nRet = unzOpenCurrentFilePassword(m_data->zipFile, password.c_str());
+//        nRet = unzOpenCurrentFile(m_data->zipFile);
+        CC_BREAK_IF(UNZ_OK != nRet);
+        
+        pBuffer = new unsigned char[fileInfo.uncompressed_size];
+        int CC_UNUSED nSize = unzReadCurrentFile(m_data->zipFile, pBuffer, fileInfo.uncompressed_size);
+        CCAssert(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
+        
+        if (pSize)
+        {
+            *pSize = fileInfo.uncompressed_size;
+        }
+        unzCloseCurrentFile(m_data->zipFile);
+    } while (0);
+    
+    return pBuffer;
+}
+
 NS_CC_END
