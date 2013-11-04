@@ -114,11 +114,11 @@ public:
 
     CCObject* actionForCallbackChannel(CCBSequenceProperty* channel);
     CCObject* actionForSoundChannel(CCBSequenceProperty* channel);
-    
-private:
     CCObject* getBaseValue(CCNode *pNode, const char* pPropName);
     int getSequenceId(const char* pSequenceName);
     CCBSequence* getSequence(int nSequenceId);
+    
+private:
     CCActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const char *pPropName, CCNode *pNode);
     void setAnimatedProperty(const char *pPropName, CCNode *pNode, CCObject *pValue, float fTweenDuraion);
     void setFirstFrame(CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
