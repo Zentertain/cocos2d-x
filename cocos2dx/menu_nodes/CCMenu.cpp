@@ -118,6 +118,23 @@ bool CCMenu::init()
     return initWithArray(NULL);
 }
 
+bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
+{
+    CCArray* pArray = NULL;
+    if( item )
+    {
+        pArray = CCArray::create(item, NULL);
+        CCMenuItem *i = va_arg(args, CCMenuItem*);
+        while(i)
+        {
+            pArray->addObject(i);
+            i = va_arg(args, CCMenuItem*);
+        }
+    }
+    
+    return initWithArray(pArray);
+}
+
 bool CCMenu::initWithArray(CCArray* pArrayOfItems)
 {
     if (CCLayer::init())

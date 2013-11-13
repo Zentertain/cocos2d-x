@@ -129,7 +129,22 @@ public:
     virtual int executeEventWithArgs(int nHandler, CCArray* pArgs);
 
     virtual bool handleAssert(const char *msg);
+    /** Added by slotssaga group
+     *  @pwang08
+     */
+    int executeLocalFunction( /*const char* fileName,*/ const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray);
     
+    int executeLocalFunctionDouble( /*const char* fileName,*/ const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray);
+    
+    void getLuaTableValue( CCLuaValueArray& resultArray );
+    
+    int executeLocalFunction( const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, std::map<int, std::map<int, std::map<int, int> > > &resultTable );
+    
+    void getLuaTableValue( std::map<int, std::map<int, std::map<int, int> > > &resultTable );
+    
+    static std::string getLuaTagBegin() { return "TABLE_BEGIN"; }
+    static std::string getLuaTagEnd() { return "TABLE_END"; }
+    static std::string getLuaTagMid() { return "TABLE_MID"; }
 private:
     CCLuaEngine(void)
     : m_stack(NULL)

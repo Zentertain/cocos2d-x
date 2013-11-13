@@ -440,4 +440,238 @@ int CCLuaEngine::executeEventWithArgs(int nHandler, CCArray* pArgs)
     return  m_stack->executeFunctionByHandler(nHandler, nArgNums);
 }
 
+int CCLuaEngine::executeLocalFunction( /*const char* fileName,*/ const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray)
+{
+    /*    if ( luaL_loadfile(m_state, fileName) || lua_pcall(m_state, 0, 0, 0) )
+     {
+     return -1;
+     }
+     */
+    
+    lua_getglobal(m_stack->getLuaState(), functionName);
+    if(!lua_isfunction(m_stack->getLuaState(),-1))
+    {
+        lua_pop(m_stack->getLuaState(),1);
+        return -1;
+    }
+    
+    //    pushCCLuaValueArray(array);
+    for (CCLuaValueArrayIterator it = paramArray.begin(); it != paramArray.end(); ++it)
+    {
+        m_stack->pushCCLuaValue(*it);
+    }
+    
+    if (lua_pcall(m_stack->getLuaState(), paramArray.size(), resultNum, 0) != 0)
+    {
+        CCLOG("lua_error %s", lua_tostring(m_stack->getLuaState(), -1));
+        return -1;
+    }
+    
+    resultArray.clear();
+    for ( unsigned int i = 0; i < resultNum; ++i )
+    {
+        CCLuaValue luaValue;
+        if (lua_isnumber(m_stack->getLuaState(), -1))
+        {
+            float curValue = lua_tonumber(m_stack->getLuaState(), -1);
+            luaValue = CCLuaValue::floatValue(curValue);
+            resultArray.push_back(luaValue);
+            lua_pop(m_stack->getLuaState(), 1);
+        }
+        else if (lua_isstring(m_stack->getLuaState(), -1))
+        {
+            const char* szValue = lua_tolstring(m_stack->getLuaState(), -1, 0);
+            luaValue = CCLuaValue::stringValue(szValue);
+            resultArray.push_back(luaValue);
+            lua_pop(m_stack->getLuaState(), 1);
+        }
+        else if (lua_isuserdata(m_stack->getLuaState(), -1))
+        {
+            return -1;
+        }
+        else
+        {
+            //Other type of value? return?
+            //First, insert a tag value to the result array to indicate the start of the table .
+            resultArray.push_back(CCLuaValue::stringValue(CCLuaEngine::getLuaTagBegin()));
+            
+            getLuaTableValue( resultArray );
+            
+            //At last, insert a tag value to the result array to indicate the end of the table.
+            resultArray.push_back(CCLuaValue::stringValue(CCLuaEngine::getLuaTagEnd()));
+            
+            lua_pop(m_stack->getLuaState(), 1);
+            //return -1;
+        }
+        
+    }
+    
+    return 0;
+}
+
+//---------------------------------------------------------
+int CCLuaEngine::executeLocalFunctionDouble( /*const char* fileName,*/ const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray)
+{
+    /*    if ( luaL_loadfile(m_state, fileName) || lua_pcall(m_state, 0, 0, 0) )
+     {
+     return -1;
+     }
+     */
+    
+    lua_getglobal(m_stack->getLuaState(), functionName);
+    if(!lua_isfunction(m_stack->getLuaState(),-1))
+    {
+        lua_pop(m_stack->getLuaState(),1);
+        return -1;
+    }
+    
+    //    pushCCLuaValueArray(array);
+    for (CCLuaValueArrayIterator it = paramArray.begin(); it != paramArray.end(); ++it)
+    {
+        m_stack->pushCCLuaValue(*it);
+    }
+    
+    if (lua_pcall(m_stack->getLuaState(), paramArray.size(), resultNum, 0) != 0)
+    {
+        return -1;
+    }
+    
+    resultArray.clear();
+    for ( unsigned int i = 0; i < resultNum; ++i )
+    {
+        CCLuaValue luaValue;
+        if (lua_isnumber(m_stack->getLuaState(), -1))
+        {
+            double curValue = lua_tonumber(m_stack->getLuaState(), -1);
+            luaValue = CCLuaValue::doubleValue(curValue);
+            resultArray.push_back(luaValue);
+            lua_pop(m_stack->getLuaState(), 1);
+        }
+        else if (lua_isstring(m_stack->getLuaState(), -1))
+        {
+            const char* szValue = lua_tolstring(m_stack->getLuaState(), -1, 0);
+            luaValue = CCLuaValue::stringValue(szValue);
+            resultArray.push_back(luaValue);
+            lua_pop(m_stack->getLuaState(), 1);
+        }
+        else if (lua_isuserdata(m_stack->getLuaState(), -1))
+        {
+            return -1;
+        }
+        else
+        {
+            //Other type of value? return?
+            //First, insert a tag value to the result array to indicate the start of the table .
+            resultArray.push_back(CCLuaValue::stringValue(CCLuaEngine::getLuaTagBegin()));
+            
+            getLuaTableValue( resultArray );
+            
+            //At last, insert a tag value to the result array to indicate the end of the table.
+            resultArray.push_back(CCLuaValue::stringValue(CCLuaEngine::getLuaTagEnd()));
+            
+            lua_pop(m_stack->getLuaState(), 1);
+            //return -1;
+        }
+        
+    }
+    
+    return 0;
+}
+
+
+void CCLuaEngine::getLuaTableValue( CCLuaValueArray& resultArray )
+{
+    lua_pushnil(m_stack->getLuaState());  /* Make sure lua_next starts at beginning */
+    
+    while (lua_next(m_stack->getLuaState(), -2))
+    {
+        if (lua_isnumber(m_stack->getLuaState(), -1))
+        {
+            float curValue = lua_tonumber(m_stack->getLuaState(), -1);
+            CCLuaValue luaValue = CCLuaValue::floatValue(curValue);
+            resultArray.push_back(luaValue);
+        }
+        else if (lua_isstring(m_stack->getLuaState(), -1))
+        {
+            const char* szValue = lua_tolstring(m_stack->getLuaState(), -1, 0);
+            CCLuaValue luaValue = CCLuaValue::stringValue(szValue);
+            resultArray.push_back(luaValue);
+        }
+        else
+        {
+            getLuaTableValue( resultArray );
+            CCLuaValue luaValue = CCLuaValue::stringValue(CCLuaEngine::getLuaTagMid()); //Set a mid tag in the array.
+            resultArray.push_back(luaValue);
+        }
+        
+        lua_pop(m_stack->getLuaState(),1);
+        if (lua_isnumber(m_stack->getLuaState(), -1))  //save the key of the table item.
+        {
+            int curKey = lua_tonumber(m_stack->getLuaState(), -1);
+            CCLuaValue luaKey = CCLuaValue::intValue(curKey);
+            resultArray.push_back(luaKey);
+        }
+    }
+}
+
+int CCLuaEngine::executeLocalFunction( const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, std::map<int, std::map<int, std::map<int, int> > > &resultTable )
+{
+    lua_getglobal(m_stack->getLuaState(), functionName);
+    if(!lua_isfunction(m_stack->getLuaState(),-1))
+    {
+        lua_pop(m_stack->getLuaState(),1);
+        return -1;
+    }
+    
+    for (CCLuaValueArrayIterator it = paramArray.begin(); it != paramArray.end(); ++it)
+    {
+        m_stack->pushCCLuaValue(*it);
+    }
+    
+    if (lua_pcall(m_stack->getLuaState(), paramArray.size(), resultNum, 0) != 0)
+    {
+        return -1;
+    }
+    
+    for ( unsigned int i = 0; i < resultNum; ++i )
+    {
+        getLuaTableValue(resultTable);
+    }
+    
+    return 0;
+}
+
+
+void CCLuaEngine::getLuaTableValue( std::map<int, std::map<int, std::map<int, int> > > &resultTable )
+{
+    lua_pushnil(m_stack->getLuaState());  /* Make sure lua_next starts at beginning */
+    
+    while (lua_next(m_stack->getLuaState(), -2))
+    {
+        std::map<int, std::map<int, int> > table1;
+        lua_pushnil(m_stack->getLuaState());  /* Make sure lua_next starts at beginning */
+        while (lua_next(m_stack->getLuaState(), -2))
+        {
+            std::map<int, int> table2;
+            lua_pushnil(m_stack->getLuaState());  /* Make sure lua_next starts at beginning */
+            while (lua_next(m_stack->getLuaState(), -2))
+            {
+                int curValue = lua_tonumber(m_stack->getLuaState(), -1);
+                lua_pop(m_stack->getLuaState(),1);
+                int curKey = lua_tonumber(m_stack->getLuaState(), -1);
+                table2.insert(std::make_pair(curKey, curValue));
+            }
+            
+            lua_pop(m_stack->getLuaState(),1);
+            int curKey = lua_tonumber(m_stack->getLuaState(), -1);
+            table1.insert(std::make_pair(curKey, table2));
+        }
+        
+        lua_pop(m_stack->getLuaState(),1);
+        int curKey = lua_tonumber(m_stack->getLuaState(), -1);
+        resultTable.insert(std::make_pair(curKey, table1));
+    }
+    lua_pop(m_stack->getLuaState(), 1);
+}
+
 NS_CC_END

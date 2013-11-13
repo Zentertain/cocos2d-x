@@ -43,6 +43,17 @@ const CCLuaValue CCLuaValue::floatValue(const float floatValue)
     return value;
 }
 
+/** Added by slotssaga group
+ *  @pwang08
+ */
+const CCLuaValue CCLuaValue::doubleValue(const double doubleValue)
+{
+    CCLuaValue value;
+    value.m_type = CCLuaValueTypeDouble;
+    value.m_field.doubleValue = doubleValue;
+    return value;
+}
+
 const CCLuaValue CCLuaValue::booleanValue(const bool booleanValue)
 {
     CCLuaValue value;

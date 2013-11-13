@@ -118,7 +118,8 @@ void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, CCArray *pArra
  
              if (h->getDelegate() == pHandler->getDelegate())
              {
-                 CCAssert(0, "");
+                 //Added by slotssaga group @pwang08
+                 //CCAssert(0, "");
                  return;
              }
          }

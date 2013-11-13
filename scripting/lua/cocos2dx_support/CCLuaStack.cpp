@@ -236,6 +236,14 @@ void CCLuaStack::pushFloat(float floatValue)
     lua_pushnumber(m_state, floatValue);
 }
 
+/** Added by slotssaga group
+ *  @pwang08
+ */
+void CCLuaStack::pushDouble(double doubleValue)
+{
+    lua_pushnumber(m_state, doubleValue);
+}
+
 void CCLuaStack::pushBoolean(bool boolValue)
 {
     lua_pushboolean(m_state, boolValue);
@@ -271,6 +279,13 @@ void CCLuaStack::pushCCLuaValue(const CCLuaValue& value)
     else if (type == CCLuaValueTypeFloat)
     {
         return pushFloat(value.floatValue());
+    }
+    /** Added by slotssaga group
+     *  @pwang08
+     */
+    else if (type == CCLuaValueTypeDouble)
+    {
+        return pushDouble(value.doubleValue());
     }
     else if (type == CCLuaValueTypeBoolean)
     {

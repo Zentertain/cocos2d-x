@@ -597,7 +597,7 @@ CCPoint CCDirector::getVisibleOrigin()
 void CCDirector::runWithScene(CCScene *pScene)
 {
     CCAssert(pScene != NULL, "This command can only be used to start the CCDirector. There is already a scene present.");
-    CCAssert(m_pRunningScene == NULL, "m_pRunningScene should be null");
+    //CCAssert(m_pRunningScene == NULL, "m_pRunningScene should be null");
 
     pushScene(pScene);
     startAnimation();

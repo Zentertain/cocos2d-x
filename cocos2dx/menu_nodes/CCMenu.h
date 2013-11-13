@@ -98,6 +98,9 @@ public:
     /** initializes an empty CCMenu */
     bool init();
 
+    /** initializes a CCMenu with it's items */
+    bool initWithItems(CCMenuItem* item, va_list args);
+    
     /** initializes a CCMenu with a NSArray of CCMenuItem objects 
      * @lua NA
      */
