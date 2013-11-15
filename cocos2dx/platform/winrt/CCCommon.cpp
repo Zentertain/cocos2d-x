@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCWinRTUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#include "ModalLayer.h"
+#include "WP8ModalLayer.h"
 #endif
 
 #if defined(VLD_DEBUG_MEMORY)
@@ -75,7 +75,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     // Show the message dialog
     msg->ShowAsync();
 #else
-	ModalLayer *messageBox = ModalLayer::create();
+	WP8ModalLayer *messageBox = WP8ModalLayer::create();
 	messageBox->setMessage(pszMsg);
 	CCDirector::sharedDirector()->getRunningScene()->addChild(messageBox);
 

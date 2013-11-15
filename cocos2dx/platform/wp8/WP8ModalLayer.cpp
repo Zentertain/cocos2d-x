@@ -22,16 +22,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "ModalLayer.h"
+#include "WP8ModalLayer.h"
 
 using namespace cocos2d;
 
-ModalLayer::~ModalLayer()
+WP8ModalLayer::~WP8ModalLayer()
 {
 	CC_SAFE_RELEASE(m_frame);
 }
 
-bool ModalLayer::init()
+bool WP8ModalLayer::init()
 {
     if ( !CCLayer::init() )
     {
@@ -50,7 +50,7 @@ bool ModalLayer::init()
     m_frame->setPosition(ccp(0, 0));
     this->addChild(m_frame);
 
-	CCMenuItemFont *pCloseItem = CCMenuItemFont::create("OK", this, menu_selector(ModalLayer::menuCloseCallback) );
+	CCMenuItemFont *pCloseItem = CCMenuItemFont::create("OK", this, menu_selector(WP8ModalLayer::menuCloseCallback) );
     CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
     pMenu->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
     m_frame->addChild(pMenu);
@@ -58,7 +58,7 @@ bool ModalLayer::init()
     return true;
 }
 
-void ModalLayer::setMessage(const char* pszMsg)
+void WP8ModalLayer::setMessage(const char* pszMsg)
 {
     CCDirector* pDirector = CCDirector::sharedDirector();
 	CCSize visibleSize = pDirector->getVisibleSize();
@@ -77,12 +77,12 @@ void ModalLayer::setMessage(const char* pszMsg)
 
 
 
-bool ModalLayer::ccTouchBegan(CCTouch* touch, CCEvent* event) {
+bool WP8ModalLayer::ccTouchBegan(CCTouch* touch, CCEvent* event) {
     // can not touch on back layers
     return true;
 }
 
-void ModalLayer::menuCloseCallback(CCObject* pSender)
+void WP8ModalLayer::menuCloseCallback(CCObject* pSender)
 {
     this->removeFromParentAndCleanup(true);
     

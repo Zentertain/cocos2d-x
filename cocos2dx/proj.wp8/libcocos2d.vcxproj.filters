@@ -492,10 +492,10 @@
     <ClCompile Include="..\ccFPSImages.c" />
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
-    <ClCompile Include="..\platform\wp8\ModalLayer.cpp">
+    <ClCompile Include="..\platform\wp8\WP8Keyboard.cpp">
       <Filter>platform\wp8</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\wp8\WP8Keyboard.cpp">
+    <ClCompile Include="..\platform\wp8\WP8ModalLayer.cpp">
       <Filter>platform\wp8</Filter>
     </ClCompile>
   </ItemGroup>
@@ -949,13 +949,13 @@
     <ClInclude Include="..\CCDirector.h" />
     <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\CCScheduler.h" />
-    <ClInclude Include="..\platform\wp8\ModalLayer.h">
-      <Filter>platform\wp8</Filter>
-    </ClInclude>
     <ClInclude Include="..\shaders\precompiled\wp8\ccShaders_wp8.h">
       <Filter>shaders\precompiled\wp8</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8\WP8Keyboard.h">
+      <Filter>platform\wp8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\wp8\WP8ModalLayer.h">
       <Filter>platform\wp8</Filter>
     </ClInclude>
   </ItemGroup>

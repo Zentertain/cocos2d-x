@@ -27,15 +27,15 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 
-class ModalLayer : public cocos2d::CCLayer
+class WP8ModalLayer : public cocos2d::CCLayer
 {
 public:
-	~ModalLayer();
+	~WP8ModalLayer();
     virtual bool init();
     void setMessage(const char* pszMsg);
     void menuCloseCallback(CCObject* pSender);
     virtual bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
-    CREATE_FUNC(ModalLayer);
+    CREATE_FUNC(WP8ModalLayer);
 
 private:
 	CCNode* m_frame;
