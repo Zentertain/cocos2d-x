@@ -18,6 +18,10 @@
 ** ===================================================================
 */
 
+#ifdef WP8
+#define __STRICT_ANSI__
+#endif // WP8
+
 
 /*
 @@ LUA_ANSI controls the use of non-ansi features.
