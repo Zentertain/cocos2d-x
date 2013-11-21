@@ -83,8 +83,9 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\third_party\wp8\libogg\include;$(ProjectDir)..\third_party\wp8\libvorbis\include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,7 +130,8 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\third_party\wp8\libogg\include;$(ProjectDir)..\third_party\wp8\libvorbis\include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,7 +153,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\third_party\wp8\libogg\include;$(ProjectDir)..\third_party\wp8\libvorbis\include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -177,15 +179,29 @@
     <ClInclude Include="..\wp8\corewrappers.h" />
     <ClInclude Include="..\wp8\DirectXHelper.h" />
     <ClInclude Include="..\wp8\MediaStreamer.h" />
+    <ClInclude Include="..\wp8\OggStreamer.h" />
+    <ClInclude Include="..\wp8\Streamer.h" />
+    <ClInclude Include="..\wp8\Util.h" />
     <ClInclude Include=".\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\wp8\Audio.cpp" />
     <ClCompile Include="..\wp8\MediaStreamer.cpp" />
+    <ClCompile Include="..\wp8\OggStreamer.cpp" />
     <ClCompile Include="..\wp8\SimpleAudioEngine.cpp" />
+    <ClCompile Include="..\wp8\Streamer.cpp" />
+    <ClCompile Include="..\wp8\Util.cpp" />
     <ClCompile Include=".\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\third_party\wp8\libogg\libogg.vcxproj">
+      <Project>{cb81a2cd-7892-4b98-a07e-5c6347100b2c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\wp8\libvorbis\libvorbis.vcxproj">
+      <Project>{c20cd0e1-7a0c-472c-b0d8-e7c707ca0236}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />

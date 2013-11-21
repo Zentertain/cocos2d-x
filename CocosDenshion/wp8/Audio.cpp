@@ -19,6 +19,7 @@
 #include "DirectXHelper.h"
 #include "Audio.h"
 #include "MediaStreamer.h"
+#include "Util.h"
 //#include "CCCommon.h"
 
 void AudioEngineCallbacks::Initialize(Audio *audio)
@@ -434,53 +435,6 @@ bool Audio::IsSoundEffectStarted(unsigned int sound)
     return m_soundEffects[sound].m_soundEffectStarted;
 }
 
-std::wstring CCUtf8ToUnicode(const char * pszUtf8Str)
-{
-    std::wstring ret;
-    do
-    {
-        if (! pszUtf8Str) break;
-        size_t len = strlen(pszUtf8Str);
-        if (len <= 0) break;
-		++len;
-        wchar_t * pwszStr = new wchar_t[len];
-        if (! pwszStr) break;
-        pwszStr[len - 1] = 0;
-        MultiByteToWideChar(CP_UTF8, 0, pszUtf8Str, len, pwszStr, len);
-        ret = pwszStr;
-
-		if(pwszStr) { 
-			delete[] (pwszStr); 
-			(pwszStr) = 0; 
-		}
-
-
-    } while (0);
-    return ret;
-}
-
-std::string CCUnicodeToUtf8(const wchar_t* pwszStr)
-{
-	std::string ret;
-	do
-	{
-		if(! pwszStr) break;
-		size_t len = wcslen(pwszStr);
-		if (len <= 0) break;
-		
-		char * pszUtf8Str = new char[len*3 + 1];
-		WideCharToMultiByte(CP_UTF8, 0, pwszStr, len+1, pszUtf8Str, len*3 + 1, 0, 0);
-		ret = pszUtf8Str;
-				
-		if(pszUtf8Str) { 
-			delete[] (pszUtf8Str); 
-			(pszUtf8Str) = 0; 
-		}
-	}while(0);
-
-	return ret;
-}
-
 void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 {
     if (m_engineExperiencedCriticalError) {
@@ -489,13 +443,14 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 
     int sound = Hash(pszFilePath);
 
-	MediaStreamer mediaStreamer;
-	mediaStreamer.Initialize(CCUtf8ToUnicode(pszFilePath).c_str());
+	std::string fileFormat = CocosDenshion::GetFileSuffix(pszFilePath);
+	Streamer^ streamer = StreamerFactory::getInstance().getDecoder(fileFormat);
+	streamer->Initialize(CocosDenshion::CCUtf8ToUnicode(pszFilePath).c_str());
 	m_soundEffects[sound].m_soundID = sound;	
 	
-	uint32 bufferLength = mediaStreamer.GetMaxStreamLengthInBytes();
+	uint32 bufferLength = streamer->GetMaxStreamLengthInBytes();
 	m_soundEffects[sound].m_soundEffectBufferData = new byte[bufferLength];
-	mediaStreamer.ReadAll(m_soundEffects[sound].m_soundEffectBufferData, bufferLength, &m_soundEffects[sound].m_soundEffectBufferLength);
+	streamer->ReadAll(m_soundEffects[sound].m_soundEffectBufferData, bufferLength, &m_soundEffects[sound].m_soundEffectBufferLength);
 
     if (isMusic)
     {
@@ -508,7 +463,7 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 
         DX::ThrowIfFailed(
 	    m_musicEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
-            &(mediaStreamer.GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends)
+            &(streamer->GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends)
 	    );
 		//fix bug: set a initial volume
 		//m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
@@ -523,13 +478,13 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 
         DX::ThrowIfFailed(
 	    m_soundEffectEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
-            &(mediaStreamer.GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends, nullptr)
+            &(streamer->GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends, nullptr)
         );
 		//fix bug: set a initial volume
 		m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_soundEffctVolume);
     }
 
-	m_soundEffects[sound].m_soundEffectSampleRate = mediaStreamer.GetOutputWaveFormatEx().nSamplesPerSec;
+	m_soundEffects[sound].m_soundEffectSampleRate = streamer->GetOutputWaveFormatEx().nSamplesPerSec;
 
 	// Queue in-memory buffer for playback
 	ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));

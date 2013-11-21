@@ -206,3 +206,8 @@ void MediaStreamer::Restart()
 {
 	m_offset = 0;
 }
+
+Streamer^ MediaStreamer::Clone()
+{
+	return ref new MediaStreamer();
+}
