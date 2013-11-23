@@ -84,6 +84,8 @@ void OggStreamer::Initialize(const wchar_t *url)
 			break;
 		}
 	}
+	ov_clear(&m_oggFile);
+	fclose(oggFile);
 }
 
 uint32_t OggStreamer::GetMaxStreamLengthInBytes()

@@ -22,6 +22,27 @@
 #include "Util.h"
 //#include "CCCommon.h"
 
+SoundEffectData::SoundEffectData()
+{
+	m_soundEffectSourceVoice = nullptr;
+	m_soundEffectBufferData = nullptr;
+}
+
+SoundEffectData::~SoundEffectData()
+{
+	if (m_soundEffectSourceVoice)
+	{
+		m_soundEffectSourceVoice->FlushSourceBuffers();
+		m_soundEffectSourceVoice->DestroyVoice();
+		m_soundEffectSourceVoice = nullptr;
+	}
+	if (m_soundEffectBufferData)
+	{
+		delete []m_soundEffectBufferData;
+		m_soundEffectBufferData = nullptr;
+	}
+}
+
 void AudioEngineCallbacks::Initialize(Audio *audio)
 {
     m_audio = audio;
@@ -508,16 +529,17 @@ void Audio::UnloadSoundEffect(unsigned int sound)
     if (m_engineExperiencedCriticalError) {
         return;
     }
-
-    if (m_soundEffects.end() == m_soundEffects.find(sound))
+	auto it = m_soundEffects.find(sound);
+    if (m_soundEffects.end() == it)
         return;
-
+	/*
     m_soundEffects[sound].m_soundEffectSourceVoice->DestroyVoice();
 
     m_soundEffects[sound].m_soundEffectBufferData = nullptr;
 	m_soundEffects[sound].m_soundEffectSourceVoice = nullptr;
 	m_soundEffects[sound].m_soundEffectStarted = false;
-    ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));
-
-    m_soundEffects.erase(sound);
+	*/
+    //ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));
+	//Release it
+    m_soundEffects.erase(it);
 }

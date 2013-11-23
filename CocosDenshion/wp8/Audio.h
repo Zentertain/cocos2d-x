@@ -26,6 +26,10 @@ static const int MAX_BUFFER_COUNT = 3;
 
 struct SoundEffectData
 {
+public:
+	SoundEffectData();
+	~SoundEffectData();
+public:
 	unsigned int				m_soundID;
 	IXAudio2SourceVoice*		m_soundEffectSourceVoice;
 	XAUDIO2_BUFFER				m_audioBuffer;
