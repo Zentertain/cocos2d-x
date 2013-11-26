@@ -203,7 +203,7 @@ void Audio::PlayBackgroundMusic(const char* pszFilePath, bool bLoop)
         return;
     }
 
-    StopBackgroundMusic(true);
+    StopBackgroundMusic(false);
     PlaySoundEffect(pszFilePath, bLoop, m_backgroundID, true);
 }
 

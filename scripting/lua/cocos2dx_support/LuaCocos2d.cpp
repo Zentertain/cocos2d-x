@@ -133,12 +133,14 @@ static int tolua_collect_CCApplication (lua_State* tolua_S)
     return 0;
 }
 
+/*
 static int tolua_collect_CCEditBox (lua_State* tolua_S)
 {
  CCEditBox* self = (CCEditBox*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
+*/
 
 static int tolua_collect_ccColor3B (lua_State* tolua_S)
 {
@@ -487,7 +489,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"ccBezierConfig");
  tolua_usertype(tolua_S,"CCSpriteBatchNode");
  tolua_usertype(tolua_S,"CCEaseSineInOut");
- tolua_usertype(tolua_S,"CCEditBox");
+ //tolua_usertype(tolua_S,"CCEditBox");
  tolua_usertype(tolua_S,"CCTwirl");
  tolua_usertype(tolua_S,"CCFadeTo");
  tolua_usertype(tolua_S,"CCControlColourPicker");
@@ -63330,6 +63332,7 @@ static int tolua_Cocos2d_CCControlStepper_stopAutorepeat00(lua_State* tolua_S)
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: new of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_new00
 static int tolua_Cocos2d_CCEditBox_new00(lua_State* tolua_S)
 {
@@ -63358,8 +63361,10 @@ static int tolua_Cocos2d_CCEditBox_new00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: new_local of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_new00_local
 static int tolua_Cocos2d_CCEditBox_new00_local(lua_State* tolua_S)
 {
@@ -63389,8 +63394,10 @@ static int tolua_Cocos2d_CCEditBox_new00_local(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: delete of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_delete00
 static int tolua_Cocos2d_CCEditBox_delete00(lua_State* tolua_S)
 {
@@ -63418,8 +63425,10 @@ static int tolua_Cocos2d_CCEditBox_delete00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: create of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_create00
 static int tolua_Cocos2d_CCEditBox_create00(lua_State* tolua_S)
 {
@@ -63456,8 +63465,10 @@ static int tolua_Cocos2d_CCEditBox_create00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: initWithSizeAndBackgroundSprite of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_initWithSizeAndBackgroundSprite00
 static int tolua_Cocos2d_CCEditBox_initWithSizeAndBackgroundSprite00(lua_State* tolua_S)
 {
@@ -63492,8 +63503,10 @@ static int tolua_Cocos2d_CCEditBox_initWithSizeAndBackgroundSprite00(lua_State* 
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: registerScriptEditBoxHandler of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_registerScriptEditBoxHandler00
 static int tolua_Cocos2d_CCEditBox_registerScriptEditBoxHandler00(lua_State* tolua_S)
 {
@@ -63525,8 +63538,10 @@ static int tolua_Cocos2d_CCEditBox_registerScriptEditBoxHandler00(lua_State* tol
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: unregisterScriptEditBoxHandler of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_unregisterScriptEditBoxHandler00
 static int tolua_Cocos2d_CCEditBox_unregisterScriptEditBoxHandler00(lua_State* tolua_S)
 {
@@ -63556,8 +63571,10 @@ static int tolua_Cocos2d_CCEditBox_unregisterScriptEditBoxHandler00(lua_State* t
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: getScriptEditBoxHandler of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_getScriptEditBoxHandler00
 static int tolua_Cocos2d_CCEditBox_getScriptEditBoxHandler00(lua_State* tolua_S)
 {
@@ -63588,8 +63605,10 @@ static int tolua_Cocos2d_CCEditBox_getScriptEditBoxHandler00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setText of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setText00
 static int tolua_Cocos2d_CCEditBox_setText00(lua_State* tolua_S)
 {
@@ -63621,8 +63640,10 @@ static int tolua_Cocos2d_CCEditBox_setText00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: getText of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_getText00
 static int tolua_Cocos2d_CCEditBox_getText00(lua_State* tolua_S)
 {
@@ -63653,8 +63674,10 @@ static int tolua_Cocos2d_CCEditBox_getText00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setFont of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setFont00
 static int tolua_Cocos2d_CCEditBox_setFont00(lua_State* tolua_S)
 {
@@ -63688,8 +63711,10 @@ static int tolua_Cocos2d_CCEditBox_setFont00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setFontName of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setFontName00
 static int tolua_Cocos2d_CCEditBox_setFontName00(lua_State* tolua_S)
 {
@@ -63721,8 +63746,10 @@ static int tolua_Cocos2d_CCEditBox_setFontName00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setFontSize of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setFontSize00
 static int tolua_Cocos2d_CCEditBox_setFontSize00(lua_State* tolua_S)
 {
@@ -63754,8 +63781,10 @@ static int tolua_Cocos2d_CCEditBox_setFontSize00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setFontColor of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setFontColor00
 static int tolua_Cocos2d_CCEditBox_setFontColor00(lua_State* tolua_S)
 {
@@ -63787,8 +63816,10 @@ static int tolua_Cocos2d_CCEditBox_setFontColor00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setPlaceholderFont of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPlaceholderFont00
 static int tolua_Cocos2d_CCEditBox_setPlaceholderFont00(lua_State* tolua_S)
 {
@@ -63822,8 +63853,10 @@ static int tolua_Cocos2d_CCEditBox_setPlaceholderFont00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setPlaceholderFontName of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPlaceholderFontName00
 static int tolua_Cocos2d_CCEditBox_setPlaceholderFontName00(lua_State* tolua_S)
 {
@@ -63855,8 +63888,10 @@ static int tolua_Cocos2d_CCEditBox_setPlaceholderFontName00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setPlaceholderFontSize of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPlaceholderFontSize00
 static int tolua_Cocos2d_CCEditBox_setPlaceholderFontSize00(lua_State* tolua_S)
 {
@@ -63888,8 +63923,10 @@ static int tolua_Cocos2d_CCEditBox_setPlaceholderFontSize00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setPlaceholderFontColor of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPlaceholderFontColor00
 static int tolua_Cocos2d_CCEditBox_setPlaceholderFontColor00(lua_State* tolua_S)
 {
@@ -63921,8 +63958,10 @@ static int tolua_Cocos2d_CCEditBox_setPlaceholderFontColor00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setPlaceHolder of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPlaceHolder00
 static int tolua_Cocos2d_CCEditBox_setPlaceHolder00(lua_State* tolua_S)
 {
@@ -63954,8 +63993,10 @@ static int tolua_Cocos2d_CCEditBox_setPlaceHolder00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: getPlaceHolder of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_getPlaceHolder00
 static int tolua_Cocos2d_CCEditBox_getPlaceHolder00(lua_State* tolua_S)
 {
@@ -63986,8 +64027,10 @@ static int tolua_Cocos2d_CCEditBox_getPlaceHolder00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setInputMode of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setInputMode00
 static int tolua_Cocos2d_CCEditBox_setInputMode00(lua_State* tolua_S)
 {
@@ -64019,8 +64062,10 @@ static int tolua_Cocos2d_CCEditBox_setInputMode00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setMaxLength of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setMaxLength00
 static int tolua_Cocos2d_CCEditBox_setMaxLength00(lua_State* tolua_S)
 {
@@ -64052,8 +64097,10 @@ static int tolua_Cocos2d_CCEditBox_setMaxLength00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: getMaxLength of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_getMaxLength00
 static int tolua_Cocos2d_CCEditBox_getMaxLength00(lua_State* tolua_S)
 {
@@ -64084,8 +64131,10 @@ static int tolua_Cocos2d_CCEditBox_getMaxLength00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setInputFlag of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setInputFlag00
 static int tolua_Cocos2d_CCEditBox_setInputFlag00(lua_State* tolua_S)
 {
@@ -64117,8 +64166,10 @@ static int tolua_Cocos2d_CCEditBox_setInputFlag00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setReturnType of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setReturnType00
 static int tolua_Cocos2d_CCEditBox_setReturnType00(lua_State* tolua_S)
 {
@@ -64150,8 +64201,10 @@ static int tolua_Cocos2d_CCEditBox_setReturnType00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setPosition of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPosition00
 static int tolua_Cocos2d_CCEditBox_setPosition00(lua_State* tolua_S)
 {
@@ -64183,8 +64236,10 @@ static int tolua_Cocos2d_CCEditBox_setPosition00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setVisible of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setVisible00
 static int tolua_Cocos2d_CCEditBox_setVisible00(lua_State* tolua_S)
 {
@@ -64216,8 +64271,10 @@ static int tolua_Cocos2d_CCEditBox_setVisible00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setContentSize of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setContentSize00
 static int tolua_Cocos2d_CCEditBox_setContentSize00(lua_State* tolua_S)
 {
@@ -64249,8 +64306,10 @@ static int tolua_Cocos2d_CCEditBox_setContentSize00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: setAnchorPoint of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setAnchorPoint00
 static int tolua_Cocos2d_CCEditBox_setAnchorPoint00(lua_State* tolua_S)
 {
@@ -64282,8 +64341,10 @@ static int tolua_Cocos2d_CCEditBox_setAnchorPoint00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: visit of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_visit00
 static int tolua_Cocos2d_CCEditBox_visit00(lua_State* tolua_S)
 {
@@ -64313,8 +64374,10 @@ static int tolua_Cocos2d_CCEditBox_visit00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: onEnter of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_onEnter00
 static int tolua_Cocos2d_CCEditBox_onEnter00(lua_State* tolua_S)
 {
@@ -64344,8 +64407,10 @@ static int tolua_Cocos2d_CCEditBox_onEnter00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: onExit of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_onExit00
 static int tolua_Cocos2d_CCEditBox_onExit00(lua_State* tolua_S)
 {
@@ -64375,8 +64440,10 @@ static int tolua_Cocos2d_CCEditBox_onExit00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: touchDownAction of class  CCEditBox */
+/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_touchDownAction00
 static int tolua_Cocos2d_CCEditBox_touchDownAction00(lua_State* tolua_S)
 {
@@ -64410,6 +64477,7 @@ static int tolua_Cocos2d_CCEditBox_touchDownAction00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+*/
 
 /* method: new of class  CCInteger */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCInteger_new00
@@ -70541,10 +70609,11 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsSentence",kEditBoxInputFlagInitialCapsSentence);
   tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsAllCharacters",kEditBoxInputFlagInitialCapsAllCharacters);
   #ifdef __cplusplus
-  tolua_cclass(tolua_S,"CCEditBox","CCEditBox","CCControlButton",tolua_collect_CCEditBox);
+  //tolua_cclass(tolua_S,"CCEditBox","CCEditBox","CCControlButton",tolua_collect_CCEditBox);
   #else
-  tolua_cclass(tolua_S,"CCEditBox","CCEditBox","CCControlButton",NULL);
+  //tolua_cclass(tolua_S,"CCEditBox","CCEditBox","CCControlButton",NULL);
   #endif
+  /*
   tolua_beginmodule(tolua_S,"CCEditBox");
    tolua_function(tolua_S,"new",tolua_Cocos2d_CCEditBox_new00);
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCEditBox_new00_local);
@@ -70581,6 +70650,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"onExit",tolua_Cocos2d_CCEditBox_onExit00);
    tolua_function(tolua_S,"touchDownAction",tolua_Cocos2d_CCEditBox_touchDownAction00);
   tolua_endmodule(tolua_S);
+  */
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCInteger","CCInteger","CCObject",tolua_collect_CCInteger);
   #else
