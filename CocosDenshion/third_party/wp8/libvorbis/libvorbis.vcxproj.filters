@@ -10,9 +10,6 @@
     <ClCompile Include="src\analysis.c">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\barkmel.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\bitrate.c">
       <Filter>Resource Files</Filter>
     </ClCompile>

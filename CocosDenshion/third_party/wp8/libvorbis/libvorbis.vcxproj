@@ -108,7 +108,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\analysis.c" />
-    <ClCompile Include="src\barkmel.c" />
     <ClCompile Include="src\bitrate.c" />
     <ClCompile Include="src\block.c" />
     <ClCompile Include="src\codebook.c" />
