@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{fd8110f6-9912-4eb9-96a3-e2e696675bc1}</ProjectGuid>
+    <RootNamespace>libcurl</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="Windows">
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+    <Reference Include="platform.winmd">
+      <IsWinMDFile>true</IsWinMDFile>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\amigaos.c" />
+    <ClCompile Include="src\asyn-ares.c" />
+    <ClCompile Include="src\asyn-thread.c" />
+    <ClCompile Include="src\axtls.c" />
+    <ClCompile Include="src\base64.c" />
+    <ClCompile Include="src\bundles.c" />
+    <ClCompile Include="src\conncache.c" />
+    <ClCompile Include="src\connect.c" />
+    <ClCompile Include="src\content_encoding.c" />
+    <ClCompile Include="src\cookie.c" />
+    <ClCompile Include="src\curl_addrinfo.c" />
+    <ClCompile Include="src\curl_darwinssl.c" />
+    <ClCompile Include="src\curl_fnmatch.c" />
+    <ClCompile Include="src\curl_gethostname.c" />
+    <ClCompile Include="src\curl_gssapi.c" />
+    <ClCompile Include="src\curl_memrchr.c" />
+    <ClCompile Include="src\curl_multibyte.c" />
+    <ClCompile Include="src\curl_ntlm.c" />
+    <ClCompile Include="src\curl_ntlm_core.c" />
+    <ClCompile Include="src\curl_ntlm_msgs.c" />
+    <ClCompile Include="src\curl_ntlm_wb.c" />
+    <ClCompile Include="src\curl_rtmp.c" />
+    <ClCompile Include="src\curl_sasl.c" />
+    <ClCompile Include="src\curl_schannel.c" />
+    <ClCompile Include="src\curl_sspi.c" />
+    <ClCompile Include="src\curl_threads.c" />
+    <ClCompile Include="src\cyassl.c" />
+    <ClCompile Include="src\dict.c" />
+    <ClCompile Include="src\dotdot.c" />
+    <ClCompile Include="src\easy.c" />
+    <ClCompile Include="src\escape.c" />
+    <ClCompile Include="src\file.c" />
+    <ClCompile Include="src\fileinfo.c" />
+    <ClCompile Include="src\formdata.c" />
+    <ClCompile Include="src\ftp.c" />
+    <ClCompile Include="src\ftplistparser.c" />
+    <ClCompile Include="src\getenv.c" />
+    <ClCompile Include="src\getinfo.c" />
+    <ClCompile Include="src\gopher.c" />
+    <ClCompile Include="src\gskit.c" />
+    <ClCompile Include="src\gtls.c" />
+    <ClCompile Include="src\hash.c" />
+    <ClCompile Include="src\hmac.c" />
+    <ClCompile Include="src\hostasyn.c" />
+    <ClCompile Include="src\hostcheck.c" />
+    <ClCompile Include="src\hostip.c" />
+    <ClCompile Include="src\hostip4.c" />
+    <ClCompile Include="src\hostip6.c" />
+    <ClCompile Include="src\hostsyn.c" />
+    <ClCompile Include="src\http.c" />
+    <ClCompile Include="src\http2.c" />
+    <ClCompile Include="src\http_chunks.c" />
+    <ClCompile Include="src\http_digest.c" />
+    <ClCompile Include="src\http_negotiate.c" />
+    <ClCompile Include="src\http_negotiate_sspi.c" />
+    <ClCompile Include="src\http_proxy.c" />
+    <ClCompile Include="src\idn_win32.c" />
+    <ClCompile Include="src\if2ip.c" />
+    <ClCompile Include="src\imap.c" />
+    <ClCompile Include="src\inet_ntop.c" />
+    <ClCompile Include="src\inet_pton.c" />
+    <ClCompile Include="src\krb5.c" />
+    <ClCompile Include="src\ldap.c" />
+    <ClCompile Include="src\llist.c" />
+    <ClCompile Include="src\md4.c" />
+    <ClCompile Include="src\md5.c" />
+    <ClCompile Include="src\memdebug.c" />
+    <ClCompile Include="src\mprintf.c" />
+    <ClCompile Include="src\multi.c" />
+    <ClCompile Include="src\netrc.c" />
+    <ClCompile Include="src\non-ascii.c" />
+    <ClCompile Include="src\nonblock.c" />
+    <ClCompile Include="src\nss.c" />
+    <ClCompile Include="src\nwlib.c" />
+    <ClCompile Include="src\nwos.c" />
+    <ClCompile Include="src\openldap.c" />
+    <ClCompile Include="src\parsedate.c" />
+    <ClCompile Include="src\pingpong.c" />
+    <ClCompile Include="src\pipeline.c" />
+    <ClCompile Include="src\polarssl.c" />
+    <ClCompile Include="src\polarssl_threadlock.c" />
+    <ClCompile Include="src\pop3.c" />
+    <ClCompile Include="src\progress.c" />
+    <ClCompile Include="src\qssl.c" />
+    <ClCompile Include="src\rawstr.c" />
+    <ClCompile Include="src\rtsp.c" />
+    <ClCompile Include="src\security.c" />
+    <ClCompile Include="src\select.c" />
+    <ClCompile Include="src\sendf.c" />
+    <ClCompile Include="src\share.c" />
+    <ClCompile Include="src\slist.c" />
+    <ClCompile Include="src\smtp.c" />
+    <ClCompile Include="src\socks.c" />
+    <ClCompile Include="src\socks_gssapi.c" />
+    <ClCompile Include="src\socks_sspi.c" />
+    <ClCompile Include="src\speedcheck.c" />
+    <ClCompile Include="src\splay.c" />
+    <ClCompile Include="src\ssh.c" />
+    <ClCompile Include="src\sslgen.c" />
+    <ClCompile Include="src\ssluse.c" />
+    <ClCompile Include="src\strdup.c" />
+    <ClCompile Include="src\strequal.c" />
+    <ClCompile Include="src\strerror.c" />
+    <ClCompile Include="src\strtok.c" />
+    <ClCompile Include="src\strtoofft.c" />
+    <ClCompile Include="src\telnet.c" />
+    <ClCompile Include="src\tftp.c" />
+    <ClCompile Include="src\timeval.c" />
+    <ClCompile Include="src\transfer.c" />
+    <ClCompile Include="src\url.c" />
+    <ClCompile Include="src\version.c" />
+    <ClCompile Include="src\warnless.c" />
+    <ClCompile Include="src\wildcard.c" />
+    <ClCompile Include="src\x509asn1.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
