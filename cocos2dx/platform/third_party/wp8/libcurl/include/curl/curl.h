@@ -95,6 +95,7 @@ typedef void CURL;
 /*
  * libcurl external API function linkage decorations.
  */
+#define CURL_STATICLIB 1
 
 #ifdef CURL_STATICLIB
 #  define CURL_EXTERN

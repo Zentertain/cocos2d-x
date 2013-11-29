@@ -23,13 +23,10 @@
  ***************************************************************************/
 
 /*
- * Define WIN32 when build target is Win32 API
+ * Define WP8 when build target is WP8 API
  */
 
-#if (defined(_WIN32) || defined(__WIN32__)) && !defined(WIN32) && \
-    !defined(__SYMBIAN32__)
-#define WIN32
-#endif
+#define WP8
 
 /*
  * Include configuration script results or hand-crafted
@@ -45,8 +42,8 @@
 #ifdef _WIN32_WCE
 #  include "config-win32ce.h"
 #else
-#  ifdef WIN32
-#    include "config-win32.h"
+#  ifdef WP8
+#    include "config-wp8.h"
 #  endif
 #endif
 
@@ -165,6 +162,7 @@
 /*
  * Disable other protocols when http is the only one desired.
  */
+#define HTTP_ONLY
 
 #ifdef HTTP_ONLY
 #  ifndef CURL_DISABLE_TFTP

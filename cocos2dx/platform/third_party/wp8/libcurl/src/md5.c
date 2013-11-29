@@ -120,7 +120,8 @@ static void MD5_Final(unsigned char digest[16], MD5_CTX *ctx)
 {
   CC_MD5_Final(digest, ctx);
 }
-
+/*
+//WP8 doesn't have wincrypt.h
 #elif defined(_WIN32)
 
 #include <wincrypt.h>
@@ -156,7 +157,7 @@ static void MD5_Final(unsigned char digest[16], MD5_CTX *ctx)
   if(ctx->hCryptProv)
     CryptReleaseContext(ctx->hCryptProv, 0);
 }
-
+*/
 #else
 /* When no other crypto library is available we use this code segment */
 

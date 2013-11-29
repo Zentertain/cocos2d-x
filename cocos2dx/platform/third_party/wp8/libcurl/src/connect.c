@@ -902,15 +902,18 @@ void Curl_sndbufset(curl_socket_t sockfd)
   int curval = 0;
   int curlen = sizeof(curval);
 
-  OSVERSIONINFO osver;
+  //OSVERSIONINFO osver;
   static int detectOsState = DETECT_OS_NONE;
 
-  if(detectOsState == DETECT_OS_NONE) {
-    memset(&osver, 0, sizeof(osver));
-    osver.dwOSVersionInfoSize = sizeof(osver);
+  if(detectOsState == DETECT_OS_NONE) 
+  {
+    //memset(&osver, 0, sizeof(osver));
+    //osver.dwOSVersionInfoSize = sizeof(osver);
     detectOsState = DETECT_OS_PREVISTA;
-    if(GetVersionEx(&osver)) {
-      if(osver.dwMajorVersion >= 6)
+	//Ok, the current libcurl is only for wp8 or wp8 later version
+    //if(IsWindowsVistaOrGreater())
+	{
+      //if(osver.dwMajorVersion >= 6)
         detectOsState = DETECT_OS_VISTA_OR_LATER;
     }
   }
