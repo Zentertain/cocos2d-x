@@ -235,6 +235,11 @@ public:
     @param[in]        pszFilePath        The path of the effect file,or the FileName of T_SoundResInfo
     */
     void unloadEffect(const char* pszFilePath);
+	
+	/**
+    @brief          unload all preloaded effects from internal buffer, only works in wp8 system
+    */
+    void unloadEffects();
 };
 
 } // end of namespace CocosDenshion
