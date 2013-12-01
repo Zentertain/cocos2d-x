@@ -18,10 +18,11 @@
 #define XAUDIO2_HELPER_FUNCTIONS 1
 #include <xaudio2.h>
 #include <map>
+#include <stdint.h>
 
 static const int STREAMING_BUFFER_SIZE = 65536;
 static const int MAX_BUFFER_COUNT = 3;
-static const int MAX_EFFECT_COUNT = 5;
+static const int MAX_EFFECT_COUNT = 6;
 
 #define UNUSED_PARAM(unusedparam) (void)unusedparam
 
@@ -38,7 +39,7 @@ public:
 	uint32						m_soundEffectBufferLength;
 	uint32						m_soundEffectSampleRate;
 	bool						m_soundEffectStarted;
-	unsigned int				m_playCount;
+	uint64_t					m_lastPlayTime;
 private:
 	SoundEffectData(const SoundEffectData&);
 	SoundEffectData& operator =(const SoundEffectData&);

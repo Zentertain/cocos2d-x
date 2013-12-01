@@ -22,7 +22,7 @@
 #include "Util.h"
 //#include "CCCommon.h"
 
-SoundEffectData::SoundEffectData() : m_playCount(0)
+SoundEffectData::SoundEffectData() : m_lastPlayTime(0)
 {
 	m_soundEffectSourceVoice = nullptr;
 	m_soundEffectBufferData = nullptr;
@@ -345,7 +345,7 @@ void Audio::PlaySoundEffect(unsigned int sound)
     }
 
 	SoundEffectData* soundEffect = m_soundEffects[sound];
-	++ m_soundEffects[sound]->m_playCount;
+	m_soundEffects[sound]->m_lastPlayTime = GetTickCount64();
 	HRESULT hr = soundEffect->m_soundEffectSourceVoice->Start();
 	if FAILED(hr)
     {
@@ -512,16 +512,16 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 		{
 			do 
 			{
-				unsigned int minPlayCount = 0xffffffff;
+				uint64_t minPlayTime = 0xffffffffffffffff;
 				unsigned int minPlaySound = 0;
 				for (auto it = m_soundEffects.begin(), ie = m_soundEffects.end(); it != ie; ++ it)
 				{
 					//if it's background music or the current music, continue
 					if (it->first == m_backgroundID || it->first == sound)
 						continue;
-					if (it->second->m_playCount < minPlayCount)
+					if (it->second->m_lastPlayTime < minPlayTime)
 					{
-						minPlayCount = it->second->m_playCount;
+						minPlayTime = it->second->m_lastPlayTime;
 						minPlaySound = it->first;
 					}
 				}
