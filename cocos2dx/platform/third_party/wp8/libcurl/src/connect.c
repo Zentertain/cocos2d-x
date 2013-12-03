@@ -528,12 +528,13 @@ static bool verifyconnect(curl_socket_t sockfd, int *error)
    *
    *    Someone got to verify this on Win-NT 4.0, 2000."
    */
-
+/*
 #ifdef _WIN32_WCE
   Sleep(0);
 #else
   SleepEx(0, FALSE);
 #endif
+*/
 
 #endif
 

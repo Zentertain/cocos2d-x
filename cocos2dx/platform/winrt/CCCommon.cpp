@@ -40,6 +40,7 @@ NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
+#if COCOS2D_DEBUG != 0
     char szBuf[MAX_LEN];
 
     va_list ap;
@@ -54,6 +55,7 @@ void CCLog(const char * pszFormat, ...)
 
     WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), szBuf, sizeof(szBuf), NULL, FALSE);
     printf("%s\n", szBuf);
+#endif
 }
 
 
@@ -86,6 +88,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 
 void CCLuaLog(const char *pszMsg)
 {
+#if COCOS2D_DEBUG != 0
     int bufflen = MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, NULL, 0);
     WCHAR* widebuff = new WCHAR[bufflen + 1];
     memset(widebuff, 0, sizeof(WCHAR) * (bufflen + 1));
@@ -102,6 +105,7 @@ void CCLuaLog(const char *pszMsg)
 
 	delete[] widebuff;
 	delete[] buff;
+#endif
 }
 
 NS_CC_END

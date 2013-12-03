@@ -43,7 +43,7 @@ typedef int pthread_cond_t;
 #define pthread_cond_wait(x, y)
 
 inline void pthread_mutex_init(pthread_mutex_t* m, void* attributes) {
-	*m = CreateMutexEx(NULL,FALSE,0,NULL);
+	*m = CreateMutexExW(NULL,FALSE,0,NULL);
 }
 
 inline int pthread_mutex_lock(pthread_mutex_t* m) {
