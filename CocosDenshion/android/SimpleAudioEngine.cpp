@@ -245,6 +245,10 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	}
 }
 
+void SimpleAudioEngine::unloadEffects()
+{
+}
+
 void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 {
 	if (s_bI9100)

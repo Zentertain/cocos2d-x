@@ -243,9 +243,6 @@ public:
      */
     void setUniformsForBuiltins();
 
-    /** will update the MVP matrix on the MVP uniform if it is different than the previous call for this same shader program. */
-    void setUniformForModelViewProjectionMatrix();
-    
     /** returns the vertexShader error log 
      *  @js  getVertexShaderLog
      *  @lua NA

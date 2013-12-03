@@ -643,9 +643,9 @@ const char *Curl_strerror(struct connectdata *conn, int err)
   if(err >= 0 && err < sys_nerr)
     strncpy(buf, strerror(err), max);
   else {
-    if(!get_winsock_error(err, buf, max) &&
+    if(!get_winsock_error(err, buf, max)/* &&
        !FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, err,
-                       LANG_NEUTRAL, buf, (DWORD)max, NULL))
+                       LANG_NEUTRAL, buf, (DWORD)max, NULL)*/)
       snprintf(buf, max, "Unknown error %d (%#x)", err, err);
   }
 #endif

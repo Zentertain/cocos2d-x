@@ -71,14 +71,14 @@ int Curl_ack_eintr = 0;
  */
 int Curl_wait_ms(int timeout_ms)
 {
-#if !defined(MSDOS) && !defined(USE_WINSOCK)
+
 #ifndef HAVE_POLL_FINE
   struct timeval pending_tv;
 #endif
   struct timeval initial_tv;
   int pending_ms;
   int error;
-#endif
+
   int r = 0;
 
   if(!timeout_ms)
@@ -87,11 +87,7 @@ int Curl_wait_ms(int timeout_ms)
     SET_SOCKERRNO(EINVAL);
     return -1;
   }
-#if defined(MSDOS)
-  delay(timeout_ms);
-#elif defined(USE_WINSOCK)
-  Sleep(timeout_ms);
-#else
+
   pending_ms = timeout_ms;
   initial_tv = curlx_tvnow();
   do {
@@ -111,7 +107,7 @@ int Curl_wait_ms(int timeout_ms)
     if(pending_ms <= 0)
       break;
   } while(r == -1);
-#endif /* USE_WINSOCK */
+
   if(r)
     r = -1;
   return r;

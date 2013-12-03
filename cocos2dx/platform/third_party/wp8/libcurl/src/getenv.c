@@ -38,7 +38,11 @@ char *GetEnv(const char *variable)
   char *temp = getenv(variable);
   env[0] = '\0';
   if(temp != NULL)
-    ExpandEnvironmentStringsA(temp, env, sizeof(env));
+  {
+		//Attention, the GetEnv is deprecated
+		//ExpandEnvironmentStringsA(temp, env, sizeof(env));
+		strcpy_s(env, sizeof(env), temp);
+  }
   return (env[0] != '\0')?strdup(env):NULL;
 #else
   char *env = getenv(variable);

@@ -18,9 +18,11 @@
 #define XAUDIO2_HELPER_FUNCTIONS 1
 #include <xaudio2.h>
 #include <map>
+#include <stdint.h>
 
 static const int STREAMING_BUFFER_SIZE = 65536;
 static const int MAX_BUFFER_COUNT = 3;
+static const int MAX_EFFECT_COUNT = 6;
 
 #define UNUSED_PARAM(unusedparam) (void)unusedparam
 
@@ -37,6 +39,10 @@ public:
 	uint32						m_soundEffectBufferLength;
 	uint32						m_soundEffectSampleRate;
 	bool						m_soundEffectStarted;
+	uint64_t					m_lastPlayTime;
+private:
+	SoundEffectData(const SoundEffectData&);
+	SoundEffectData& operator =(const SoundEffectData&);
 };
 
 class Audio;
@@ -76,7 +82,7 @@ struct StreamingVoiceContext : public IXAudio2VoiceCallback
             SetEvent(hBufferEndEvent);
         }
     }
-    STDMETHOD_(void, OnLoopEnd)(void*){}
+    STDMETHOD_(void, OnLoopEnd)(void*);
     STDMETHOD_(void, OnVoiceError)(void*, HRESULT){}
 
     HANDLE hBufferEndEvent;
@@ -99,8 +105,8 @@ private:
 
     StreamingVoiceContext       m_voiceContext;
 
-    typedef std::map<unsigned int, SoundEffectData> EffectList;
-    typedef std::pair<unsigned int, SoundEffectData> Effect;
+    typedef std::map<unsigned int, SoundEffectData*> EffectList;
+    typedef std::pair<unsigned int, SoundEffectData*> Effect;
 	EffectList				    m_soundEffects;         
 
     unsigned int                m_backgroundID;       
@@ -150,7 +156,7 @@ public:
     void SetSoundEffectVolume(float volume);
     float GetSoundEffectVolume();
 
-	void PlaySoundEffect(const char* pszFilePath, bool bLoop, unsigned int& sound, bool isMusic = false);
+	unsigned int PlaySoundEffect(const char* pszFilePath, bool bLoop, bool isMusic = false);
     void PlaySoundEffect(unsigned int sound);
 	bool IsSoundEffectStarted(unsigned int sound);
 	void StopSoundEffect(unsigned int sound);
@@ -165,4 +171,5 @@ public:
     void PreloadSoundEffect(const char* pszFilePath, bool isMusic = false);
     void UnloadSoundEffect(const char* pszFilePath);
     void UnloadSoundEffect(unsigned int sound);
+	void UnloadSoundEffects();
 };

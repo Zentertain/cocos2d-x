@@ -551,20 +551,6 @@ void CCGLProgram::setUniformsForBuiltins()
 	}
 }
 
-void CCGLProgram::setUniformForModelViewProjectionMatrix()
-{
-    kmMat4 matrixP;
-    kmMat4 matrixMV;
-    kmMat4 matrixMVP;
-    
-    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
-    kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
-    
-    kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-    
-    setUniformLocationWithMatrix4fv(m_uUniforms[kCCUniformMVPMatrix], matrixMVP.mat, 1);
-}
-
 void CCGLProgram::reset()
 {
     m_uVertShader = m_uFragShader = 0;

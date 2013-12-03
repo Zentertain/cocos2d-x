@@ -135,7 +135,7 @@
 #define HAVE_WINDOWS_H 1
 
 /* Define if you have the <winsock.h> header file. */
-#define HAVE_WINSOCK_H 1
+//#define HAVE_WINSOCK_H 1
 
 /* Define if you have the <winsock2.h> header file. */
 #ifndef __SALFORDC__
