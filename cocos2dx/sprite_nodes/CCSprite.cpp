@@ -1086,12 +1086,12 @@ void CCSprite::setTexture(CCTexture2D *texture)
     // shader program
     if (texture)
     {
-		if (m_pShaderProgram == nullptr || m_pShaderProgram == CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor))
+		if (m_pShaderProgram == NULL || m_pShaderProgram == CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor))
 			setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
     }
     else
     {
-		if (m_pShaderProgram == nullptr || m_pShaderProgram == CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor))
+		if (m_pShaderProgram == NULL || m_pShaderProgram == CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor))
 			setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor));
     }
     
