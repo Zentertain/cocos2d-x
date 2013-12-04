@@ -111,3 +111,5 @@ tools/jenkins_scripts/mac/android/userconf.ini
 
 # CTags
 tags
+cocos2dx/platform/third_party/winrt/angleproject/tests/
+cocos2dx/platform/third_party/winrt/angleproject/extensions/
