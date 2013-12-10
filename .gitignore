@@ -113,3 +113,4 @@ tools/jenkins_scripts/mac/android/userconf.ini
 tags
 cocos2dx/platform/third_party/winrt/angleproject/tests/
 cocos2dx/platform/third_party/winrt/angleproject/extensions/
+projects
