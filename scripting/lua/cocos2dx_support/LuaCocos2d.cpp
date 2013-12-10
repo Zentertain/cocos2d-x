@@ -67069,6 +67069,53 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: userMustLiveLeftSpinCountPersistence of class  Game */
+#ifndef TOLUA_DISABLE_tolua_User_Define_Game_LuaRuntimeParameterPersistence00
+static int tolua_User_Define_Game_LuaRuntimeParameterPersistence00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"Game",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,7,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,8,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,9,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Game* self = (Game*)  tolua_tousertype(tolua_S,1,0);
+        int modeType =              ((int)  tolua_tonumber(tolua_S,2,0));
+        int leftSpinCount =         ((int)  tolua_tonumber(tolua_S,3,0));
+        int mustLiveCount =         ((int)  tolua_tonumber(tolua_S,4,0));
+        int mustDieCount =          ((int)  tolua_tonumber(tolua_S,5,0));
+        int lowRateSpinCount =      ((int)  tolua_tonumber(tolua_S,6,0));
+        int64_t upperThreshold =    ((int64_t)  tolua_tonumber(tolua_S,7,0));
+        int64_t lowerThreshold =    ((int64_t)  tolua_tonumber(tolua_S,8,0));
+
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'LuaRuntimeParameterPersistence'", NULL);
+#endif
+        {
+            self->luaRuntimeParameterPersistence( modeType, leftSpinCount, mustLiveCount, mustDieCount,
+                                                 lowRateSpinCount, upperThreshold, lowerThreshold);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'LuaRuntimeParameterPersistence'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 
 /* method: userMustDieLeftSpinCountPersistence of class  Game */
 #ifndef TOLUA_DISABLE_tolua_User_Define_Game_UserMustDieLeftSpinCountPersistence00
@@ -70779,6 +70826,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"luckyTablePersistence",tolua_User_Define_Game_LuckyTablePersistence00);
     tolua_function(tolua_S, "userMustLiveLeftSpinCountPersistence", tolua_User_Define_Game_UserMustLiveLeftSpinCountPersistence00);
     tolua_function(tolua_S, "userMustDieLeftSpinCountPersistence", tolua_User_Define_Game_UserMustDieLeftSpinCountPersistence00);
+    tolua_function(tolua_S, "luaRuntimeParameterPersistence", tolua_User_Define_Game_LuaRuntimeParameterPersistence00);
     tolua_function(tolua_S, "getClientVersion", tolua_User_Define_Game_GetClientVersion00);
     tolua_function(tolua_S, "getClientPlatformType", tolua_User_Define_Game_GetClientPlatformType00);
     tolua_endmodule(tolua_S);
