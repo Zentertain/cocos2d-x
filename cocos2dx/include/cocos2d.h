@@ -176,7 +176,11 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	#include "platform/winrt/CCApplication.h"
+#ifdef WP8_XAML
+	#include "platform/wp8-xaml/CCEGLView.h"
+#else
 	#include "platform/wp8/CCEGLView.h"
+#endif // WP8_XAML
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
 	#include "platform/winrt/CCAccelerometer.h"
