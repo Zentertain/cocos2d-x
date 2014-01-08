@@ -310,7 +310,8 @@ public:
                 && setOption(CURLOPT_WRITEFUNCTION, callback)
                 && setOption(CURLOPT_WRITEDATA, stream)
                 && setOption(CURLOPT_HEADERFUNCTION, headerCallback)
-                && setOption(CURLOPT_HEADERDATA, headerStream);
+                && setOption(CURLOPT_HEADERDATA, headerStream)
+                && setOption(CURLOPT_NOSIGNAL, 1);
         
     }
 
