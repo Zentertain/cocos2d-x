@@ -76,5 +76,18 @@ void KeyboardEvent::execute(Cocos2dRenderer ^ renderer)
     }
 }
 
+void BackKeyEvent::execute(Cocos2dRenderer^ renderer)
+{
+	renderer->OnBackKeyPress();
+}
+
+void UserEvent::execute(Cocos2dRenderer ^renderer)
+{
+	if (m_delegate)
+	{
+		m_delegate->Invoke(m_type);
+	}
+}
+
 }
 

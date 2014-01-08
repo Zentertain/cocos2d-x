@@ -35,7 +35,7 @@ namespace PhoneDirect3DXamlAppComponent
 {
 
 public delegate void Cocos2dEventDelegate(Cocos2dEvent event);    
-
+public delegate void UserEventDelegate(UserEventType e);
 
 enum PointerEventType
 {
@@ -77,6 +77,22 @@ private:
     Platform::Agile<Platform::String> m_text;
 };
 
+class BackKeyEvent : public InputEvent
+{
+public:
+	BackKeyEvent() {}
+	virtual void execute(Cocos2dRenderer^ renderer);
+};
+
+class UserEvent : public InputEvent
+{
+public:
+	UserEvent(UserEventType type, UserEventDelegate ^d) : m_type(type), m_delegate(d) {}
+	virtual void execute(Cocos2dRenderer ^renderer);
+private:
+	UserEventType		m_type;
+	UserEventDelegate	^m_delegate;
+};
 
 }
 

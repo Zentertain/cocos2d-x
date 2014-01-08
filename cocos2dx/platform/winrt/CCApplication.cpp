@@ -26,7 +26,11 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "platform/winrt/CCEGLView.h"
 #else
+#ifdef WP8_XAML
+#include "platform/wp8-xaml/CCEGLView.h"
+#else
 #include "platform/wp8/CCEGLView.h"
+#endif
 #endif
 #include "CCDirector.h"
 #include <algorithm>

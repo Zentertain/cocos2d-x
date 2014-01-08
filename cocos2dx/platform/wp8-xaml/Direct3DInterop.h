@@ -62,7 +62,7 @@ public:
     property Windows::Foundation::Size WindowBounds;
 
     void SetCocos2dEventDelegate(Cocos2dEventDelegate^ delegate);
-
+	void SetUserEventDelegate(UserEventDelegate ^d);
 protected:
     // Event Handlers
     void OnPointerPressed(Windows::Phone::Input::Interop::DrawingSurfaceManipulationHost^ sender, Windows::UI::Core::PointerEventArgs^ args);
@@ -75,7 +75,7 @@ internal:
     void PrepareResources(LARGE_INTEGER presentTargetTime);
     void Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceContext1* context, _In_ ID3D11RenderTargetView* renderTargetView);
     bool SendCocos2dEvent(Cocos2dEvent event);
-
+	bool SendUserEvent(UserEventType e);
 private:
     void ProcessEvents();
     void AddPointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
@@ -88,6 +88,7 @@ private:
 
     Windows::Foundation::Size m_renderResolution;
     Cocos2dEventDelegate^ m_delegate;
+	UserEventDelegate		^m_userEventDelegate;
 };
 
 }

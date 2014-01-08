@@ -77,7 +77,10 @@ IAsyncAction^ Direct3DInterop::OnSuspending()
 
 bool Direct3DInterop::OnBackKeyPress()
 {
-    return m_renderer->OnBackKeyPress();
+	std::lock_guard<std::mutex> guard(mMutex);
+	std::shared_ptr<BackKeyEvent> e(new BackKeyEvent);
+	mInputEvents.push(e);
+	return true;
 }
 
 // Pointer Event Handlers. We need to queue up pointer events to pass them to the drawing thread
@@ -179,5 +182,19 @@ bool Direct3DInterop::SendCocos2dEvent(Cocos2dEvent event)
     return false;
 }
 
+void Direct3DInterop::SetUserEventDelegate(UserEventDelegate ^d)
+{
+	m_userEventDelegate = d;
+}
+
+bool Direct3DInterop::SendUserEvent(UserEventType e)
+{
+	if (m_userEventDelegate)
+	{
+		m_userEventDelegate->Invoke(e);
+		return true;
+	}
+	return true;
+}
 
 }

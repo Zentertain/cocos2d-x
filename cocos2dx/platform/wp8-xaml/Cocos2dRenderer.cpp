@@ -96,7 +96,7 @@ IAsyncAction^ Cocos2dRenderer::OnSuspending()
 // user pressed the Back Key on the phone
 bool Cocos2dRenderer::OnBackKeyPress()
 {
-	BackStackEventDispatcher::getInstance().incBackKeyEventCount();
+	BackStackEventDispatcher::getInstance().dispatchBackEvent();
     return true;
 }
 
@@ -117,9 +117,6 @@ bool Cocos2dRenderer::OnRender()
 {
     if(m_loadingComplete)
     {
-		// dispatch back key event on ui thread
-		BackStackEventDispatcher::getInstance().dispatchBackEvent();
-
         CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
         pEGLView->Render();
         return true; // eglSwapBuffers was called by pEGLView->Render();
