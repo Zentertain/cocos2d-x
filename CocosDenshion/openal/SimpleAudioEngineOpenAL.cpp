@@ -612,11 +612,12 @@ void SimpleAudioEngine::stopAllEffects()
 {
     EffectsMap::iterator iter = s_effects.begin();
 
-    if (iter != s_effects.end())
+    while (iter != s_effects.end())
     {
         checkALError("stopAllEffects:init");
         alSourceStop(iter->second->source);
         checkALError("stopAllEffects:alSourceStop");
+        ++ iter;
     }
 }
 
