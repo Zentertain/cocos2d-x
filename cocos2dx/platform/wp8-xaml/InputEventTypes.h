@@ -45,6 +45,12 @@ public enum class Cocos2dKeyEvent : int
     Enter
 };
 
+
+public enum class UserEventType
+{
+	UserRate,
+};
+
 }
 
 #endif // #ifndef __INPUT_EVENT_TYPES__
