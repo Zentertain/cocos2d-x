@@ -107,7 +107,7 @@ public class Cocos2dxBitmap {
 													final float shadowDX, final float shadowDY, final float shadowBlur, final boolean stroke,
 													final float strokeR, final float strokeG, final float strokeB, final float strokeSize) {
 
-		
+		try {
 		final int horizontalAlignment = pAlignment & 0x0F;
 		final int verticalAlignment   = (pAlignment >> 4) & 0x0F;
 
@@ -189,6 +189,10 @@ public class Cocos2dxBitmap {
 		}
 		
 		Cocos2dxBitmap.initNativeObject(bitmap);
+		}catch(Exception e)
+		{
+			
+		}
 	}
 
 	private static Paint newPaint(final String pFontName, final int pFontSize,

@@ -606,9 +606,13 @@ bool CCImage::initWithStringShadowStroke(
     info.tintColorG             = textTintG;
     info.tintColorB             = textTintB;
     
-    
-    if (! _initWithString(pText, eAlignMask, pFontName, nSize, &info))
-    {
+
+    try {
+        if (! _initWithString(pText, eAlignMask, pFontName, nSize, &info))
+        {
+            return false;
+        }
+    } catch (...) {
         return false;
     }
     m_nHeight = (short)info.height;
