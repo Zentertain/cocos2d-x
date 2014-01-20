@@ -132,7 +132,7 @@ public:
     /** Added by slotssaga group
      *  @pwang08
      */
-    int executeLocalFunction( /*const char* fileName,*/ const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray);
+    CC_DEPRECATED_ATTRIBUTE int executeLocalFunction( /*const char* fileName,*/ const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray);
     
     int executeLocalFunctionDouble( /*const char* fileName,*/ const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray);
     
