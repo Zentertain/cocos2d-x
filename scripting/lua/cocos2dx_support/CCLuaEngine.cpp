@@ -564,7 +564,7 @@ int CCLuaEngine::executeLocalFunctionDouble( /*const char* fileName,*/ const cha
             //First, insert a tag value to the result array to indicate the start of the table .
             resultArray.push_back(CCLuaValue::stringValue(CCLuaEngine::getLuaTagBegin()));
             
-            getLuaTableValue( resultArray );
+            getLuaTableValueDouble( resultArray );
             
             //At last, insert a tag value to the result array to indicate the end of the table.
             resultArray.push_back(CCLuaValue::stringValue(CCLuaEngine::getLuaTagEnd()));
@@ -613,6 +613,42 @@ void CCLuaEngine::getLuaTableValue( CCLuaValueArray& resultArray )
         }
     }
 }
+
+void CCLuaEngine::getLuaTableValueDouble( CCLuaValueArray& resultArray )
+{
+    lua_pushnil(m_stack->getLuaState());  /* Make sure lua_next starts at beginning */
+    
+    while (lua_next(m_stack->getLuaState(), -2))
+    {
+        if (lua_isnumber(m_stack->getLuaState(), -1))
+        {
+            float curValue = lua_tonumber(m_stack->getLuaState(), -1);
+            CCLuaValue luaValue = CCLuaValue::doubleValue(curValue);
+            resultArray.push_back(luaValue);
+        }
+        else if (lua_isstring(m_stack->getLuaState(), -1))
+        {
+            const char* szValue = lua_tolstring(m_stack->getLuaState(), -1, 0);
+            CCLuaValue luaValue = CCLuaValue::stringValue(szValue);
+            resultArray.push_back(luaValue);
+        }
+        else
+        {
+            getLuaTableValueDouble( resultArray );
+            CCLuaValue luaValue = CCLuaValue::stringValue(CCLuaEngine::getLuaTagMid()); //Set a mid tag in the array.
+            resultArray.push_back(luaValue);
+        }
+        
+        lua_pop(m_stack->getLuaState(),1);
+        if (lua_isnumber(m_stack->getLuaState(), -1))  //save the key of the table item.
+        {
+            int curKey = lua_tonumber(m_stack->getLuaState(), -1);
+            CCLuaValue luaKey = CCLuaValue::intValue(curKey);
+            resultArray.push_back(luaKey);
+        }
+    }
+}
+
 
 int CCLuaEngine::executeLocalFunction( const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, std::map<int, std::map<int, std::map<int, int> > > &resultTable )
 {
