@@ -38,13 +38,6 @@ extern "C" {
 #include "SimpleAudioEngine.h"
 #include "cocos-ext.h"
 
-/**
- * Added by slotssaga group
- * @pwang08
- */
-#include "Game.h"
-#include "LogicMan.h"
-
 using namespace cocos2d;
 using namespace cocos2d::extension;
 using namespace CocosDenshion;
@@ -133,14 +126,12 @@ static int tolua_collect_CCApplication (lua_State* tolua_S)
     return 0;
 }
 
-/*
 static int tolua_collect_CCEditBox (lua_State* tolua_S)
 {
  CCEditBox* self = (CCEditBox*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
-*/
 
 static int tolua_collect_ccColor3B (lua_State* tolua_S)
 {
@@ -489,7 +480,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"ccBezierConfig");
  tolua_usertype(tolua_S,"CCSpriteBatchNode");
  tolua_usertype(tolua_S,"CCEaseSineInOut");
- //tolua_usertype(tolua_S,"CCEditBox");
+ tolua_usertype(tolua_S,"CCEditBox");
  tolua_usertype(tolua_S,"CCTwirl");
  tolua_usertype(tolua_S,"CCFadeTo");
  tolua_usertype(tolua_S,"CCControlColourPicker");
@@ -649,13 +640,6 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCEaseBounceOut");
  tolua_usertype(tolua_S,"CCAnimationFrame");
  tolua_usertype(tolua_S,"CCControlSwitch");
- 
- /**
-  * Added by slotssaga group
-  * @pwang08
-  */
- tolua_usertype(tolua_S, "Game");
- tolua_usertype(tolua_S, "LogicMan");
 }
 
 /* get function: mat of class  kmMat4 */
@@ -63332,7 +63316,6 @@ static int tolua_Cocos2d_CCControlStepper_stopAutorepeat00(lua_State* tolua_S)
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: new of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_new00
 static int tolua_Cocos2d_CCEditBox_new00(lua_State* tolua_S)
 {
@@ -63361,10 +63344,8 @@ static int tolua_Cocos2d_CCEditBox_new00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: new_local of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_new00_local
 static int tolua_Cocos2d_CCEditBox_new00_local(lua_State* tolua_S)
 {
@@ -63394,10 +63375,8 @@ static int tolua_Cocos2d_CCEditBox_new00_local(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: delete of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_delete00
 static int tolua_Cocos2d_CCEditBox_delete00(lua_State* tolua_S)
 {
@@ -63425,10 +63404,8 @@ static int tolua_Cocos2d_CCEditBox_delete00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: create of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_create00
 static int tolua_Cocos2d_CCEditBox_create00(lua_State* tolua_S)
 {
@@ -63465,10 +63442,8 @@ static int tolua_Cocos2d_CCEditBox_create00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: initWithSizeAndBackgroundSprite of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_initWithSizeAndBackgroundSprite00
 static int tolua_Cocos2d_CCEditBox_initWithSizeAndBackgroundSprite00(lua_State* tolua_S)
 {
@@ -63503,10 +63478,8 @@ static int tolua_Cocos2d_CCEditBox_initWithSizeAndBackgroundSprite00(lua_State* 
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: registerScriptEditBoxHandler of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_registerScriptEditBoxHandler00
 static int tolua_Cocos2d_CCEditBox_registerScriptEditBoxHandler00(lua_State* tolua_S)
 {
@@ -63538,10 +63511,8 @@ static int tolua_Cocos2d_CCEditBox_registerScriptEditBoxHandler00(lua_State* tol
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: unregisterScriptEditBoxHandler of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_unregisterScriptEditBoxHandler00
 static int tolua_Cocos2d_CCEditBox_unregisterScriptEditBoxHandler00(lua_State* tolua_S)
 {
@@ -63571,10 +63542,8 @@ static int tolua_Cocos2d_CCEditBox_unregisterScriptEditBoxHandler00(lua_State* t
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: getScriptEditBoxHandler of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_getScriptEditBoxHandler00
 static int tolua_Cocos2d_CCEditBox_getScriptEditBoxHandler00(lua_State* tolua_S)
 {
@@ -63605,10 +63574,8 @@ static int tolua_Cocos2d_CCEditBox_getScriptEditBoxHandler00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setText of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setText00
 static int tolua_Cocos2d_CCEditBox_setText00(lua_State* tolua_S)
 {
@@ -63640,10 +63607,8 @@ static int tolua_Cocos2d_CCEditBox_setText00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: getText of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_getText00
 static int tolua_Cocos2d_CCEditBox_getText00(lua_State* tolua_S)
 {
@@ -63674,10 +63639,8 @@ static int tolua_Cocos2d_CCEditBox_getText00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setFont of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setFont00
 static int tolua_Cocos2d_CCEditBox_setFont00(lua_State* tolua_S)
 {
@@ -63711,10 +63674,8 @@ static int tolua_Cocos2d_CCEditBox_setFont00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setFontName of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setFontName00
 static int tolua_Cocos2d_CCEditBox_setFontName00(lua_State* tolua_S)
 {
@@ -63746,10 +63707,8 @@ static int tolua_Cocos2d_CCEditBox_setFontName00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setFontSize of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setFontSize00
 static int tolua_Cocos2d_CCEditBox_setFontSize00(lua_State* tolua_S)
 {
@@ -63781,10 +63740,8 @@ static int tolua_Cocos2d_CCEditBox_setFontSize00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setFontColor of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setFontColor00
 static int tolua_Cocos2d_CCEditBox_setFontColor00(lua_State* tolua_S)
 {
@@ -63816,10 +63773,8 @@ static int tolua_Cocos2d_CCEditBox_setFontColor00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setPlaceholderFont of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPlaceholderFont00
 static int tolua_Cocos2d_CCEditBox_setPlaceholderFont00(lua_State* tolua_S)
 {
@@ -63853,10 +63808,8 @@ static int tolua_Cocos2d_CCEditBox_setPlaceholderFont00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setPlaceholderFontName of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPlaceholderFontName00
 static int tolua_Cocos2d_CCEditBox_setPlaceholderFontName00(lua_State* tolua_S)
 {
@@ -63888,10 +63841,8 @@ static int tolua_Cocos2d_CCEditBox_setPlaceholderFontName00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setPlaceholderFontSize of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPlaceholderFontSize00
 static int tolua_Cocos2d_CCEditBox_setPlaceholderFontSize00(lua_State* tolua_S)
 {
@@ -63923,10 +63874,8 @@ static int tolua_Cocos2d_CCEditBox_setPlaceholderFontSize00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setPlaceholderFontColor of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPlaceholderFontColor00
 static int tolua_Cocos2d_CCEditBox_setPlaceholderFontColor00(lua_State* tolua_S)
 {
@@ -63958,10 +63907,8 @@ static int tolua_Cocos2d_CCEditBox_setPlaceholderFontColor00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setPlaceHolder of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPlaceHolder00
 static int tolua_Cocos2d_CCEditBox_setPlaceHolder00(lua_State* tolua_S)
 {
@@ -63993,10 +63940,8 @@ static int tolua_Cocos2d_CCEditBox_setPlaceHolder00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: getPlaceHolder of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_getPlaceHolder00
 static int tolua_Cocos2d_CCEditBox_getPlaceHolder00(lua_State* tolua_S)
 {
@@ -64027,10 +63972,8 @@ static int tolua_Cocos2d_CCEditBox_getPlaceHolder00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setInputMode of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setInputMode00
 static int tolua_Cocos2d_CCEditBox_setInputMode00(lua_State* tolua_S)
 {
@@ -64062,10 +64005,8 @@ static int tolua_Cocos2d_CCEditBox_setInputMode00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setMaxLength of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setMaxLength00
 static int tolua_Cocos2d_CCEditBox_setMaxLength00(lua_State* tolua_S)
 {
@@ -64097,10 +64038,8 @@ static int tolua_Cocos2d_CCEditBox_setMaxLength00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: getMaxLength of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_getMaxLength00
 static int tolua_Cocos2d_CCEditBox_getMaxLength00(lua_State* tolua_S)
 {
@@ -64131,10 +64070,8 @@ static int tolua_Cocos2d_CCEditBox_getMaxLength00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setInputFlag of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setInputFlag00
 static int tolua_Cocos2d_CCEditBox_setInputFlag00(lua_State* tolua_S)
 {
@@ -64166,10 +64103,8 @@ static int tolua_Cocos2d_CCEditBox_setInputFlag00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setReturnType of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setReturnType00
 static int tolua_Cocos2d_CCEditBox_setReturnType00(lua_State* tolua_S)
 {
@@ -64201,10 +64136,8 @@ static int tolua_Cocos2d_CCEditBox_setReturnType00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setPosition of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setPosition00
 static int tolua_Cocos2d_CCEditBox_setPosition00(lua_State* tolua_S)
 {
@@ -64236,10 +64169,8 @@ static int tolua_Cocos2d_CCEditBox_setPosition00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setVisible of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setVisible00
 static int tolua_Cocos2d_CCEditBox_setVisible00(lua_State* tolua_S)
 {
@@ -64271,10 +64202,8 @@ static int tolua_Cocos2d_CCEditBox_setVisible00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setContentSize of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setContentSize00
 static int tolua_Cocos2d_CCEditBox_setContentSize00(lua_State* tolua_S)
 {
@@ -64306,10 +64235,8 @@ static int tolua_Cocos2d_CCEditBox_setContentSize00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: setAnchorPoint of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_setAnchorPoint00
 static int tolua_Cocos2d_CCEditBox_setAnchorPoint00(lua_State* tolua_S)
 {
@@ -64341,10 +64268,8 @@ static int tolua_Cocos2d_CCEditBox_setAnchorPoint00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: visit of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_visit00
 static int tolua_Cocos2d_CCEditBox_visit00(lua_State* tolua_S)
 {
@@ -64374,10 +64299,8 @@ static int tolua_Cocos2d_CCEditBox_visit00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: onEnter of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_onEnter00
 static int tolua_Cocos2d_CCEditBox_onEnter00(lua_State* tolua_S)
 {
@@ -64407,10 +64330,8 @@ static int tolua_Cocos2d_CCEditBox_onEnter00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: onExit of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_onExit00
 static int tolua_Cocos2d_CCEditBox_onExit00(lua_State* tolua_S)
 {
@@ -64440,10 +64361,8 @@ static int tolua_Cocos2d_CCEditBox_onExit00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: touchDownAction of class  CCEditBox */
-/*
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCEditBox_touchDownAction00
 static int tolua_Cocos2d_CCEditBox_touchDownAction00(lua_State* tolua_S)
 {
@@ -64477,7 +64396,6 @@ static int tolua_Cocos2d_CCEditBox_touchDownAction00(lua_State* tolua_S)
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
-*/
 
 /* method: new of class  CCInteger */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCInteger_new00
@@ -66932,414 +66850,6 @@ static int tolua_Cocos2d_CCTableView_unregisterAllScriptHandler00(lua_State* tol
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'unregisterAllScriptHandler'.",&tolua_err);
  return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-
-//=======================================================
-/**
- * Added by slotssaga group
- * @pwang08
- */
-/* method: getInstance of class  Game */
-#ifndef TOLUA_DISABLE_tolua_User_Define_Game_getInstance00
-static int tolua_User_Define_Game_getInstance00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertable(tolua_S,1,"Game",0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,2,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        {
-            Game* tolua_ret = (Game*)  Game::getInstance();
-            tolua_pushusertype(tolua_S,(void*)tolua_ret,"Game");
-        }
-    }
-    return 1;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getInstance'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: modeTypePersistence of class  Game */
-#ifndef TOLUA_DISABLE_tolua_User_Define_Game_modeTypePersistence00
-static int tolua_User_Define_Game_modeTypePersistence00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"Game",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        Game* self = (Game*)  tolua_tousertype(tolua_S,1,0);
-        int modeType = ((int)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'modeTypePersistence'", NULL);
-#endif
-        {
-            self->modeTypePersistence(modeType);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'modeTypePersistence'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: luckyModeLeftSpinCountPersistence of class  Game */
-#ifndef TOLUA_DISABLE_tolua_User_Define_Game_luckyModeLeftSpinCountPersistence00
-static int tolua_User_Define_Game_luckyModeLeftSpinCountPersistence00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"Game",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        Game* self = (Game*)  tolua_tousertype(tolua_S,1,0);
-        int luckyModeLeftSpinCount = ((int)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'luckyModeLeftSpinCountPersistence'", NULL);
-#endif
-        {
-            self->luckyModeLeftSpinCountPersistence(luckyModeLeftSpinCount);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'luckyModeLeftSpinCountPersistence'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: userMustLiveLeftSpinCountPersistence of class  Game */
-#ifndef TOLUA_DISABLE_tolua_User_Define_Game_UserMustLiveLeftSpinCountPersistence00
-static int tolua_User_Define_Game_UserMustLiveLeftSpinCountPersistence00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"Game",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        Game* self = (Game*)  tolua_tousertype(tolua_S,1,0);
-        int leftSpinCount = ((int)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'userMustLiveLeftSpinCountPersistence'", NULL);
-#endif
-        {
-            self->userMustLiveLeftSpinCountPersistence(leftSpinCount);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'userMustLiveLeftSpinCountPersistence'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: userMustLiveLeftSpinCountPersistence of class  Game */
-#ifndef TOLUA_DISABLE_tolua_User_Define_Game_LuaRuntimeParameterPersistence00
-static int tolua_User_Define_Game_LuaRuntimeParameterPersistence00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"Game",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,7,0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,8,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,9,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        Game* self = (Game*)  tolua_tousertype(tolua_S,1,0);
-        int modeType =              ((int)  tolua_tonumber(tolua_S,2,0));
-        int leftSpinCount =         ((int)  tolua_tonumber(tolua_S,3,0));
-        int mustLiveCount =         ((int)  tolua_tonumber(tolua_S,4,0));
-        int mustDieCount =          ((int)  tolua_tonumber(tolua_S,5,0));
-        int lowRateSpinCount =      ((int)  tolua_tonumber(tolua_S,6,0));
-        int64_t upperThreshold =    ((int64_t)  tolua_tonumber(tolua_S,7,0));
-        int64_t lowerThreshold =    ((int64_t)  tolua_tonumber(tolua_S,8,0));
-
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'LuaRuntimeParameterPersistence'", NULL);
-#endif
-        {
-            self->luaRuntimeParameterPersistence( modeType, leftSpinCount, mustLiveCount, mustDieCount,
-                                                 lowRateSpinCount, upperThreshold, lowerThreshold);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'LuaRuntimeParameterPersistence'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-
-/* method: userMustDieLeftSpinCountPersistence of class  Game */
-#ifndef TOLUA_DISABLE_tolua_User_Define_Game_UserMustDieLeftSpinCountPersistence00
-static int tolua_User_Define_Game_UserMustDieLeftSpinCountPersistence00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"Game",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        Game* self = (Game*)  tolua_tousertype(tolua_S,1,0);
-        int leftSpinCount = ((int)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'userMustDieLeftSpinCountPersistence'", NULL);
-#endif
-        {
-            self->userMustDieLeftSpinCountPersistence(leftSpinCount);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'userMustDieLeftSpinCountPersistence'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: luckyTablePersistence of class  Game */
-#ifndef TOLUA_DISABLE_tolua_User_Define_Game_LuckyTablePersistence00
-static int tolua_User_Define_Game_LuckyTablePersistence00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"Game",0,&tolua_err) ||
-        !tolua_istable(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        Game* self = (Game*)  tolua_tousertype(tolua_S,1,0);
-        std::vector<int> luckyTable;
-        
-        /*
-         lua_gettable(tolua_S,2);
-         lua_pushnil(tolua_S);
-         while ( lua_next(tolua_S, 2) )
-         {
-         lua_pushnil(tolua_S);
-         while ( lua_next(tolua_S, 2) )
-         {
-         int value = (int)lua_tonumber(tolua_S, -1);
-         lua_pop(tolua_S,1);
-         int key = (int)lua_tonumber(tolua_S, -1);
-         luckyTable.push_back(value);
-         }
-         }
-         */
-        //lua_pushnumber(tolua_S, 1);
-        //lua_gettable(tolua_S,2);
-        //lua_pushnil(tolua_S);
-        if ( lua_istable(tolua_S, 2) )
-        {
-            lua_pushnil(tolua_S);
-            while ( lua_next(tolua_S, -2) )
-            {
-                //
-                lua_pushnil(tolua_S);
-                while ( lua_next(tolua_S, -2) )
-                {
-                    int value = (int)lua_tonumber(tolua_S, -1);
-                    lua_pop(tolua_S,1);
-                    //lua_tonumber(tolua_S, -1);
-                    luckyTable.push_back(value);
-                }
-                lua_pop(tolua_S,1);
-                //lua_tonumber(tolua_S, -1);
-            }
-        }
-        
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'luckyTablePersistence'", NULL);
-#endif
-        {
-            self->luckyTablePersistence(luckyTable);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'luckyTablePersistence'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getClientPlatformType of class  Game */
-#ifndef TOLUA_DISABLE_tolua_User_Define_Game_GetClientPlatformType00
-static int tolua_User_Define_Game_GetClientPlatformType00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"Game",0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,2,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        Game* self = (Game*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getClientPlatformType'", NULL);
-#endif
-        {
-            unsigned int tolua_ret = (unsigned int)  self->getClientPlatformType();
-            tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-        }
-    }
-    return 1;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getClientPlatformType'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getClientVersion of class  Game */
-#ifndef TOLUA_DISABLE_tolua_User_Define_Game_GetClientVersion00
-static int tolua_User_Define_Game_GetClientVersion00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"Game",0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,2,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        Game* self = (Game*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getClientVersion'", NULL);
-#endif
-        {
-            unsigned int tolua_ret = (unsigned int)  self->getClientVersion();
-            tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-        }
-    }
-    return 1;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getClientVersion'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-//-------------------------------------------------------
-#ifndef TOLUA_DISABLE_tolua_User_Define_LogicMan_getInstance00
-static int tolua_User_Define_LogicMan_getInstance00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertable(tolua_S,1,"LogicMan",0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,2,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        {
-            LogicMan* tolua_ret = (LogicMan*)  LogicMan::getInstance();
-            tolua_pushusertype(tolua_S,(void*)tolua_ret,"LogicMan");
-        }
-    }
-    return 1;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getInstance'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-
-#ifndef TOLUA_DISABLE_tolua_User_Define_LogicMan_forceUpdateClient00
-static int tolua_User_Define_LogicMan_forceUpdateClient00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"LogicMan",0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,2,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LogicMan* self = (LogicMan*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'forceUpdateClient'", NULL);
-#endif
-        {
-            self->forceUpdateClient();
-        }
-    }
-    return 1;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getInstance'.",&tolua_err);
-    return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
@@ -70656,11 +70166,10 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsSentence",kEditBoxInputFlagInitialCapsSentence);
   tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsAllCharacters",kEditBoxInputFlagInitialCapsAllCharacters);
   #ifdef __cplusplus
-  //tolua_cclass(tolua_S,"CCEditBox","CCEditBox","CCControlButton",tolua_collect_CCEditBox);
+  tolua_cclass(tolua_S,"CCEditBox","CCEditBox","CCControlButton",tolua_collect_CCEditBox);
   #else
-  //tolua_cclass(tolua_S,"CCEditBox","CCEditBox","CCControlButton",NULL);
+  tolua_cclass(tolua_S,"CCEditBox","CCEditBox","CCControlButton",NULL);
   #endif
-  /*
   tolua_beginmodule(tolua_S,"CCEditBox");
    tolua_function(tolua_S,"new",tolua_Cocos2d_CCEditBox_new00);
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCEditBox_new00_local);
@@ -70697,7 +70206,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"onExit",tolua_Cocos2d_CCEditBox_onExit00);
    tolua_function(tolua_S,"touchDownAction",tolua_Cocos2d_CCEditBox_touchDownAction00);
   tolua_endmodule(tolua_S);
-  */
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCInteger","CCInteger","CCObject",tolua_collect_CCInteger);
   #else
@@ -70816,28 +70324,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_constant(tolua_S,"kNumberOfCellsInTableView",CCTableView::kNumberOfCellsInTableView);
    tolua_function(tolua_S,"unregisterAllScriptHandler",tolua_Cocos2d_CCTableView_unregisterAllScriptHandler00);
   tolua_endmodule(tolua_S);
-    
-    //--------Added by slotssaga group.
-    tolua_cclass(tolua_S,"Game","Game","",NULL);
-    tolua_beginmodule(tolua_S,"Game");
-    tolua_function(tolua_S, "getInstance", tolua_User_Define_Game_getInstance00);
-    tolua_function(tolua_S,"modeTypePersistence",tolua_User_Define_Game_modeTypePersistence00);
-    tolua_function(tolua_S,"luckyModeLeftSpinCountPersistence",tolua_User_Define_Game_luckyModeLeftSpinCountPersistence00);
-    tolua_function(tolua_S,"luckyTablePersistence",tolua_User_Define_Game_LuckyTablePersistence00);
-    tolua_function(tolua_S, "userMustLiveLeftSpinCountPersistence", tolua_User_Define_Game_UserMustLiveLeftSpinCountPersistence00);
-    tolua_function(tolua_S, "userMustDieLeftSpinCountPersistence", tolua_User_Define_Game_UserMustDieLeftSpinCountPersistence00);
-    tolua_function(tolua_S, "luaRuntimeParameterPersistence", tolua_User_Define_Game_LuaRuntimeParameterPersistence00);
-    tolua_function(tolua_S, "getClientVersion", tolua_User_Define_Game_GetClientVersion00);
-    tolua_function(tolua_S, "getClientPlatformType", tolua_User_Define_Game_GetClientPlatformType00);
-    tolua_endmodule(tolua_S);
-    
-    tolua_cclass(tolua_S,"LogicMan","LogicMan","",NULL);
-    tolua_beginmodule(tolua_S,"LogicMan");
-    tolua_function(tolua_S, "getInstance", tolua_User_Define_LogicMan_getInstance00);
-    tolua_function(tolua_S, "forceUpdateClient", tolua_User_Define_LogicMan_forceUpdateClient00);
-    tolua_endmodule(tolua_S);
-    //--------Added end.
-    
  tolua_endmodule(tolua_S);
  return 1;
 }
