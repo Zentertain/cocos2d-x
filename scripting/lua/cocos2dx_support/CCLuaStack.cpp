@@ -32,12 +32,10 @@ extern "C" {
 #include "tolua_fix.h"
 }
 
-#include "LuaCocos2d.h"
+//#include "LuaCocos2d.h"
+#include "LuaSlotsSaga.h"
 #include "Cocos2dxLuaLoader.h"
-#include "LuaCocoStudio.h"
-#include "lua_cocos2dx_manual.h"
-#include "lua_cocos2dx_extensions_manual.h"
-#include "lua_cocos2dx_cocostudio_manual.h"
+//#include "lua_cocos2dx_extensions_manual.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/ios/CCLuaObjcBridge.h"
@@ -109,7 +107,8 @@ bool CCLuaStack::init(void)
 {
     m_state = lua_open();
     luaL_openlibs(m_state);
-    tolua_Cocos2d_open(m_state);
+    //tolua_Cocos2d_open(m_state);
+	tolua_SlotsSaga_open(m_state);
     toluafix_open(m_state);
 
     // Register our version of the global "print" function
@@ -118,13 +117,13 @@ bool CCLuaStack::init(void)
         {NULL, NULL}
     };
     luaL_register(m_state, "_G", global_functions);
-    tolua_CocoStudio_open(m_state);
+    //tolua_CocoStudio_open(m_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     CCLuaObjcBridge::luaopen_luaoc(m_state);
 #endif
-    register_all_cocos2dx_manual(m_state);
-    register_all_cocos2dx_extension_manual(m_state);
-    register_all_cocos2dx_studio_manual(m_state);
+    //register_all_cocos2dx_manual(m_state);
+    //register_all_cocos2dx_extension_manual(m_state);
+    //register_all_cocos2dx_studio_manual(m_state);
     // add cocos2dx loader
     addLuaLoader(cocos2dx_lua_loader);
 
@@ -241,6 +240,14 @@ void CCLuaStack::pushFloat(float floatValue)
     lua_pushnumber(m_state, floatValue);
 }
 
+/** Added by slotssaga group
+ *  @pwang08
+ */
+void CCLuaStack::pushDouble(double doubleValue)
+{
+    lua_pushnumber(m_state, doubleValue);
+}
+
 void CCLuaStack::pushBoolean(bool boolValue)
 {
     lua_pushboolean(m_state, boolValue);
@@ -276,6 +283,13 @@ void CCLuaStack::pushCCLuaValue(const CCLuaValue& value)
     else if (type == CCLuaValueTypeFloat)
     {
         return pushFloat(value.floatValue());
+    }
+    /** Added by slotssaga group
+     *  @pwang08
+     */
+    else if (type == CCLuaValueTypeDouble)
+    {
+        return pushDouble(value.doubleValue());
     }
     else if (type == CCLuaValueTypeBoolean)
     {
