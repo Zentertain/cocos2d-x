@@ -16,17 +16,31 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
+#include "DirectXHelper.h"
 #include "Audio.h"
 #include "MediaStreamer.h"
+#include "Util.h"
 //#include "CCCommon.h"
 
-inline void ThrowIfFailed(HRESULT hr)
+SoundEffectData::SoundEffectData() : m_lastPlayTime(0)
 {
-    if (FAILED(hr))
-    {
-        // Set a breakpoint on this line to catch DX API errors.
-        throw Platform::Exception::CreateException(hr);
-    }
+	m_soundEffectSourceVoice = nullptr;
+	m_soundEffectBufferData = nullptr;
+}
+
+SoundEffectData::~SoundEffectData()
+{
+	if (m_soundEffectSourceVoice)
+	{
+		m_soundEffectSourceVoice->FlushSourceBuffers();
+		m_soundEffectSourceVoice->DestroyVoice();
+		m_soundEffectSourceVoice = nullptr;
+	}
+	if (m_soundEffectBufferData)
+	{
+		delete []m_soundEffectBufferData;
+		m_soundEffectBufferData = nullptr;
+	}
 }
 
 void AudioEngineCallbacks::Initialize(Audio *audio)
@@ -42,10 +56,13 @@ void  _stdcall AudioEngineCallbacks::OnCriticalError(HRESULT Error)
     m_audio->SetEngineExperiencedCriticalError();
 };
 
+void StreamingVoiceContext::OnLoopEnd(void *pBufferContext)
+{
+
+}
+
 Audio::Audio() :
-    m_backgroundID(0),
-	m_soundEffctVolume(1.0f),
-	m_backgroundMusicVolume(1.0f)
+    m_backgroundID(0)
 {
 }
 
@@ -63,7 +80,7 @@ void Audio::CreateResources()
 {
     try
     {	
-        ThrowIfFailed(
+        DX::ThrowIfFailed(
             XAudio2Create(&m_musicEngine)
             );
 
@@ -83,7 +100,7 @@ void Audio::CreateResources()
 	    // decode the data then we feed it through the XAudio2 pipeline as a separate Mastering Voice, so that we can tag it
 	    // as Game Media.
         // We default the mastering voice to 2 channels to simplify the reverb logic.
-	    ThrowIfFailed(
+	    DX::ThrowIfFailed(
 		    m_musicEngine->CreateMasteringVoice(&m_musicMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia)
         );
 
@@ -92,7 +109,7 @@ void Audio::CreateResources()
 	    // single mastering voice.
 	    // We are creating an entirely new engine instance and mastering voice in order to tag
 	    // our sound effects with the audio category AudioCategory_GameEffects.
-	    ThrowIfFailed(
+	    DX::ThrowIfFailed(
 		    XAudio2Create(&m_soundEffectEngine)
 		    );
     
@@ -100,7 +117,7 @@ void Audio::CreateResources()
         m_soundEffectEngine->RegisterForCallbacks(&m_soundEffectEngineCallback);
 
         // We default the mastering voice to 2 channels to simplify the reverb logic.
-	    ThrowIfFailed(
+	    DX::ThrowIfFailed(
 		    m_soundEffectEngine->CreateMasteringVoice(&m_soundEffectMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameEffects)
 		    );
     }
@@ -140,10 +157,11 @@ void Audio::ReleaseResources()
     EffectList::iterator EffectIter = m_soundEffects.begin();
     for (; EffectIter != m_soundEffects.end(); EffectIter++)
 	{
-        if (EffectIter->second.m_soundEffectSourceVoice != nullptr) 
+        if (EffectIter->second->m_soundEffectSourceVoice != nullptr) 
         {
-            EffectIter->second.m_soundEffectSourceVoice->DestroyVoice();
-            EffectIter->second.m_soundEffectSourceVoice = nullptr;
+            EffectIter->second->m_soundEffectSourceVoice->DestroyVoice();
+            EffectIter->second->m_soundEffectSourceVoice = nullptr;
+			delete EffectIter->second;
         }
 	}
     m_soundEffects.clear();
@@ -190,9 +208,17 @@ void Audio::PlayBackgroundMusic(const char* pszFilePath, bool bLoop)
     if (m_engineExperiencedCriticalError) {
         return;
     }
-
-    StopBackgroundMusic(true);
-    PlaySoundEffect(pszFilePath, bLoop, m_backgroundID, true);
+	//If the current background music is the same to pszFilePath, just play it again
+	unsigned int sound = Hash(pszFilePath);
+	if (sound == m_backgroundID)
+	{
+		StopBackgroundMusic(false);
+	}
+	else
+	{
+		StopBackgroundMusic(true);
+	}
+    m_backgroundID = PlaySoundEffect(pszFilePath, bLoop, true);
 }
 
 void Audio::StopBackgroundMusic(bool bReleaseData)
@@ -249,7 +275,7 @@ void Audio::SetBackgroundVolume(float volume)
 
     if (m_soundEffects.end() != m_soundEffects.find(m_backgroundID))
     {
-        m_soundEffects[m_backgroundID].m_soundEffectSourceVoice->SetVolume(volume);
+        m_soundEffects[m_backgroundID]->m_soundEffectSourceVoice->SetVolume(volume);
     }
 }
 
@@ -270,7 +296,7 @@ void Audio::SetSoundEffectVolume(float volume)
 	for (iter = m_soundEffects.begin(); iter != m_soundEffects.end(); iter++)
 	{
         if (iter->first != m_backgroundID)
-            iter->second.m_soundEffectSourceVoice->SetVolume(m_soundEffctVolume);
+            iter->second->m_soundEffectSourceVoice->SetVolume(m_soundEffctVolume);
 	}
 }
 
@@ -279,9 +305,9 @@ float Audio::GetSoundEffectVolume()
     return m_soundEffctVolume;
 }
 
-void Audio::PlaySoundEffect(const char* pszFilePath, bool bLoop, unsigned int& sound, bool isMusic)
+unsigned int Audio::PlaySoundEffect(const char* pszFilePath, bool bLoop, bool isMusic)
 {
-    sound = Hash(pszFilePath);
+    unsigned int sound = Hash(pszFilePath);
 
     if (m_soundEffects.end() == m_soundEffects.find(sound))
     {
@@ -289,11 +315,13 @@ void Audio::PlaySoundEffect(const char* pszFilePath, bool bLoop, unsigned int& s
     }
 
     if (m_soundEffects.end() == m_soundEffects.find(sound))
-        return;
+        return sound;
 
-    m_soundEffects[sound].m_audioBuffer.LoopCount = bLoop ? XAUDIO2_LOOP_INFINITE : 0;
+    m_soundEffects[sound]->m_audioBuffer.LoopCount = bLoop ? XAUDIO2_LOOP_INFINITE : 0;
 
     PlaySoundEffect(sound);
+
+	return sound;
 }
 
 void Audio::PlaySoundEffect(unsigned int sound)
@@ -307,8 +335,8 @@ void Audio::PlaySoundEffect(unsigned int sound)
 
     StopSoundEffect(sound);
 
-    ThrowIfFailed(
-		m_soundEffects[sound].m_soundEffectSourceVoice->SubmitSourceBuffer(&m_soundEffects[sound].m_audioBuffer)
+    DX::ThrowIfFailed(
+		m_soundEffects[sound]->m_soundEffectSourceVoice->SubmitSourceBuffer(&m_soundEffects[sound]->m_audioBuffer)
 		);
 
     if (m_engineExperiencedCriticalError) {
@@ -316,7 +344,8 @@ void Audio::PlaySoundEffect(unsigned int sound)
         return;
     }
 
-	SoundEffectData* soundEffect = &m_soundEffects[sound];
+	SoundEffectData* soundEffect = m_soundEffects[sound];
+	m_soundEffects[sound]->m_lastPlayTime = GetTickCount64();
 	HRESULT hr = soundEffect->m_soundEffectSourceVoice->Start();
 	if FAILED(hr)
     {
@@ -324,7 +353,7 @@ void Audio::PlaySoundEffect(unsigned int sound)
         return;
     }
 
-	m_soundEffects[sound].m_soundEffectStarted = true;
+	m_soundEffects[sound]->m_soundEffectStarted = true;
 }
 
 void Audio::StopSoundEffect(unsigned int sound)
@@ -336,8 +365,8 @@ void Audio::StopSoundEffect(unsigned int sound)
     if (m_soundEffects.end() == m_soundEffects.find(sound))
         return;
 
-    HRESULT hr = m_soundEffects[sound].m_soundEffectSourceVoice->Stop();
-    HRESULT hr1 = m_soundEffects[sound].m_soundEffectSourceVoice->FlushSourceBuffers();
+    HRESULT hr = m_soundEffects[sound]->m_soundEffectSourceVoice->Stop();
+    HRESULT hr1 = m_soundEffects[sound]->m_soundEffectSourceVoice->FlushSourceBuffers();
     if (FAILED(hr) || FAILED(hr1))
     {
         // If there's an error, then we'll recreate the engine on the next render pass
@@ -345,7 +374,7 @@ void Audio::StopSoundEffect(unsigned int sound)
         return;
     }
 
-    m_soundEffects[sound].m_soundEffectStarted = false;
+    m_soundEffects[sound]->m_soundEffectStarted = false;
 }
 
 void Audio::PauseSoundEffect(unsigned int sound)
@@ -357,7 +386,7 @@ void Audio::PauseSoundEffect(unsigned int sound)
     if (m_soundEffects.end() == m_soundEffects.find(sound))
         return;
 
-    HRESULT hr = m_soundEffects[sound].m_soundEffectSourceVoice->Stop();
+    HRESULT hr = m_soundEffects[sound]->m_soundEffectSourceVoice->Stop();
     if FAILED(hr)
     {
         // If there's an error, then we'll recreate the engine on the next render pass
@@ -375,7 +404,7 @@ void Audio::ResumeSoundEffect(unsigned int sound)
     if (m_soundEffects.end() == m_soundEffects.find(sound))
         return;
 
-    HRESULT hr = m_soundEffects[sound].m_soundEffectSourceVoice->Start();
+    HRESULT hr = m_soundEffects[sound]->m_soundEffectSourceVoice->Start();
     if FAILED(hr)
     {
         // If there's an error, then we'll recreate the engine on the next render pass
@@ -441,54 +470,7 @@ bool Audio::IsSoundEffectStarted(unsigned int sound)
     if (m_soundEffects.end() == m_soundEffects.find(sound))
         return false;
 
-    return m_soundEffects[sound].m_soundEffectStarted;
-}
-
-std::wstring CCUtf8ToUnicode(const char * pszUtf8Str)
-{
-    std::wstring ret;
-    do
-    {
-        if (! pszUtf8Str) break;
-        size_t len = strlen(pszUtf8Str);
-        if (len <= 0) break;
-		++len;
-        wchar_t * pwszStr = new wchar_t[len];
-        if (! pwszStr) break;
-        pwszStr[len - 1] = 0;
-        MultiByteToWideChar(CP_UTF8, 0, pszUtf8Str, len, pwszStr, len);
-        ret = pwszStr;
-
-		if(pwszStr) { 
-			delete[] (pwszStr); 
-			(pwszStr) = 0; 
-		}
-
-
-    } while (0);
-    return ret;
-}
-
-std::string CCUnicodeToUtf8(const wchar_t* pwszStr)
-{
-	std::string ret;
-	do
-	{
-		if(! pwszStr) break;
-		size_t len = wcslen(pwszStr);
-		if (len <= 0) break;
-		
-		char * pszUtf8Str = new char[len*3 + 1];
-		WideCharToMultiByte(CP_UTF8, 0, pwszStr, len+1, pszUtf8Str, len*3 + 1, 0, 0);
-		ret = pszUtf8Str;
-				
-		if(pszUtf8Str) { 
-			delete[] (pszUtf8Str); 
-			(pszUtf8Str) = 0; 
-		}
-	}while(0);
-
-	return ret;
+    return m_soundEffects[sound]->m_soundEffectStarted;
 }
 
 void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
@@ -499,13 +481,15 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 
     int sound = Hash(pszFilePath);
 
-	MediaStreamer mediaStreamer;
-	mediaStreamer.Initialize(CCUtf8ToUnicode(pszFilePath).c_str());
-	m_soundEffects[sound].m_soundID = sound;	
+	std::string fileFormat = CocosDenshion::GetFileSuffix(pszFilePath);
+	Streamer^ streamer = StreamerFactory::getInstance().getDecoder(fileFormat);
+	streamer->Initialize(CocosDenshion::CCUtf8ToUnicode(pszFilePath).c_str());
+	m_soundEffects[sound] = new SoundEffectData;
+	m_soundEffects[sound]->m_soundID = sound;	
 	
-	uint32 bufferLength = mediaStreamer.GetMaxStreamLengthInBytes();
-	m_soundEffects[sound].m_soundEffectBufferData = new byte[bufferLength];
-	mediaStreamer.ReadAll(m_soundEffects[sound].m_soundEffectBufferData, bufferLength, &m_soundEffects[sound].m_soundEffectBufferLength);
+	uint32 bufferLength = streamer->GetMaxStreamLengthInBytes();
+	m_soundEffects[sound]->m_soundEffectBufferData = new byte[bufferLength];
+	streamer->ReadAll(m_soundEffects[sound]->m_soundEffectBufferData, bufferLength, &m_soundEffects[sound]->m_soundEffectBufferLength);
 
     if (isMusic)
     {
@@ -516,14 +500,36 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 	    sends.SendCount = 1;
 	    sends.pSends = descriptors;
 
-        ThrowIfFailed(
-	    m_musicEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
-            &(mediaStreamer.GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends)
+        DX::ThrowIfFailed(
+	    m_musicEngine->CreateSourceVoice(&m_soundEffects[sound]->m_soundEffectSourceVoice,
+            &(streamer->GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends)
 	    );
 		//fix bug: set a initial volume
-		m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
+		//m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
     } else
     {
+		if (m_soundEffects.size() > MAX_EFFECT_COUNT)
+		{
+			do 
+			{
+				uint64_t minPlayTime = 0xffffffffffffffff;
+				unsigned int minPlaySound = 0;
+				for (auto it = m_soundEffects.begin(), ie = m_soundEffects.end(); it != ie; ++ it)
+				{
+					//if it's background music or the current music, continue
+					if (it->first == m_backgroundID || it->first == sound)
+						continue;
+					if (it->second->m_lastPlayTime < minPlayTime)
+					{
+						minPlayTime = it->second->m_lastPlayTime;
+						minPlaySound = it->first;
+					}
+				}
+				StopSoundEffect(minPlaySound);
+				UnloadSoundEffect(minPlaySound);
+			} while (m_soundEffects.size() > MAX_EFFECT_COUNT);
+		}
+
         XAUDIO2_SEND_DESCRIPTOR descriptors[1];
         descriptors[0].pOutputVoice = m_soundEffectMasteringVoice;
 	    descriptors[0].Flags = 0;
@@ -531,24 +537,24 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 	    sends.SendCount = 1;
 	    sends.pSends = descriptors;
 
-        ThrowIfFailed(
-	    m_soundEffectEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
-            &(mediaStreamer.GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends, nullptr)
+        DX::ThrowIfFailed(
+	    m_soundEffectEngine->CreateSourceVoice(&m_soundEffects[sound]->m_soundEffectSourceVoice,
+            &(streamer->GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends, nullptr)
         );
 		//fix bug: set a initial volume
-		m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_soundEffctVolume);
+		m_soundEffects[sound]->m_soundEffectSourceVoice->SetVolume(m_soundEffctVolume);
     }
 
-	m_soundEffects[sound].m_soundEffectSampleRate = mediaStreamer.GetOutputWaveFormatEx().nSamplesPerSec;
+	m_soundEffects[sound]->m_soundEffectSampleRate = streamer->GetOutputWaveFormatEx().nSamplesPerSec;
 
 	// Queue in-memory buffer for playback
-	ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));
+	ZeroMemory(&m_soundEffects[sound]->m_audioBuffer, sizeof(m_soundEffects[sound]->m_audioBuffer));
 
-	m_soundEffects[sound].m_audioBuffer.AudioBytes = m_soundEffects[sound].m_soundEffectBufferLength;
-	m_soundEffects[sound].m_audioBuffer.pAudioData = m_soundEffects[sound].m_soundEffectBufferData;
-	m_soundEffects[sound].m_audioBuffer.pContext = &m_soundEffects[sound];
-	m_soundEffects[sound].m_audioBuffer.Flags = XAUDIO2_END_OF_STREAM;
-    m_soundEffects[sound].m_audioBuffer.LoopCount = 0;
+	m_soundEffects[sound]->m_audioBuffer.AudioBytes = m_soundEffects[sound]->m_soundEffectBufferLength;
+	m_soundEffects[sound]->m_audioBuffer.pAudioData = m_soundEffects[sound]->m_soundEffectBufferData;
+	m_soundEffects[sound]->m_audioBuffer.pContext = &m_soundEffects[sound];
+	m_soundEffects[sound]->m_audioBuffer.Flags = XAUDIO2_END_OF_STREAM;
+    m_soundEffects[sound]->m_audioBuffer.LoopCount = 0;
 }
 
 void Audio::UnloadSoundEffect(const char* pszFilePath)
@@ -563,19 +569,30 @@ void Audio::UnloadSoundEffect(unsigned int sound)
     if (m_engineExperiencedCriticalError) {
         return;
     }
-
-    if (m_soundEffects.end() == m_soundEffects.find(sound))
+	auto it = m_soundEffects.find(sound);
+    if (m_soundEffects.end() == it)
         return;
-
+	/*
     m_soundEffects[sound].m_soundEffectSourceVoice->DestroyVoice();
-
-    if(m_soundEffects[sound].m_soundEffectBufferData)
-        delete [] m_soundEffects[sound].m_soundEffectBufferData;
 
     m_soundEffects[sound].m_soundEffectBufferData = nullptr;
 	m_soundEffects[sound].m_soundEffectSourceVoice = nullptr;
 	m_soundEffects[sound].m_soundEffectStarted = false;
-    ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));
+	*/
+    //ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));
+	//Release it
+	delete it->second;
+    m_soundEffects.erase(it);
+}
 
-    m_soundEffects.erase(sound);
+void Audio::UnloadSoundEffects()
+{
+	std::vector<unsigned int> soundEffectIds;
+	for (auto it = m_soundEffects.begin(), ie = m_soundEffects.end(); it != ie; ++ it)
+	{
+		soundEffectIds.push_back(it->first);
+	}
+	std::for_each(soundEffectIds.begin(), soundEffectIds.end(), [this](unsigned int effectId) {
+		UnloadSoundEffect(effectId);
+	});
 }

@@ -18,10 +18,10 @@
 
 #pragma once
 
-
+#include "Streamer.h"
 #include <vector>
 
-ref class MediaStreamer
+ref class MediaStreamer : public Streamer
 {
 private:
     WAVEFORMATEX      m_waveFormat;
@@ -41,17 +41,18 @@ public:
 internal:
     MediaStreamer();
 
-    WAVEFORMATEX& GetOutputWaveFormatEx()
+    WAVEFORMATEX& GetOutputWaveFormatEx() override
     {
         return m_waveFormat;
     }
 
-    UINT32 GetMaxStreamLengthInBytes()
+    UINT32 GetMaxStreamLengthInBytes() override
     {
 		return m_data.size();
     }
 
-    void Initialize(_In_ const WCHAR* url); 
-    void ReadAll(uint8* buffer, uint32 maxBufferSize, uint32* bufferLength); 
+    void Initialize(_In_ const WCHAR* url) override; 
+    void ReadAll(uint8* buffer, uint32 maxBufferSize, uint32* bufferLength) override; 
     void Restart();
+	Streamer^ Clone() override;
 };

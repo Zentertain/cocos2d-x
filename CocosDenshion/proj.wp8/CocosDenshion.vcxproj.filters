@@ -5,6 +5,9 @@
     <ClCompile Include="..\wp8\Audio.cpp" />
     <ClCompile Include="..\wp8\MediaStreamer.cpp" />
     <ClCompile Include="..\wp8\SimpleAudioEngine.cpp" />
+    <ClCompile Include="..\wp8\OggStreamer.cpp" />
+    <ClCompile Include="..\wp8\Util.cpp" />
+    <ClCompile Include="..\wp8\Streamer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\pch.h" />
@@ -12,5 +15,8 @@
     <ClInclude Include="..\wp8\corewrappers.h" />
     <ClInclude Include="..\wp8\DirectXHelper.h" />
     <ClInclude Include="..\wp8\MediaStreamer.h" />
+    <ClInclude Include="..\wp8\Streamer.h" />
+    <ClInclude Include="..\wp8\OggStreamer.h" />
+    <ClInclude Include="..\wp8\Util.h" />
   </ItemGroup>
 </Project>
