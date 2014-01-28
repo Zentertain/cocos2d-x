@@ -36,7 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // register lua engine
     CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-    
+
     CCLuaStack *pStack = pEngine->getLuaStack();
     lua_State *tolua_s = pStack->getLuaState();
     tolua_extensions_ccb_open(tolua_s);
@@ -45,9 +45,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_s = pStack->getLuaState();
     tolua_web_socket_open(tolua_s);
 #endif
-    
+        
     std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");
+    searchPaths.insert(searchPaths.begin(), "scenetest/LoadSceneEdtiorFileTest");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     searchPaths.push_back("TestCppResources");

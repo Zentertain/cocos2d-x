@@ -257,6 +257,14 @@ void CCNode::setScale(float scale)
     m_bTransformDirty = m_bInverseDirty = true;
 }
 
+/// scale setter
+void CCNode::setScale(float fScaleX,float fScaleY)
+{
+    m_fScaleX = fScaleX;
+    m_fScaleY = fScaleY;
+    m_bTransformDirty = m_bInverseDirty = true;
+}
+
 /// scaleX getter
 float CCNode::getScaleX()
 {
@@ -503,16 +511,16 @@ void CCNode::setGLServerState(ccGLServerState glServerState)
 
 void CCNode::setUserObject(CCObject *pUserObject)
 {
-    CC_SAFE_RELEASE(m_pUserObject);
     CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(m_pUserObject);
     m_pUserObject = pUserObject;
 }
 
 void CCNode::setShaderProgram(CCGLProgram *pShaderProgram)
 {
+    CC_SAFE_RETAIN(pShaderProgram);
     CC_SAFE_RELEASE(m_pShaderProgram);
     m_pShaderProgram = pShaderProgram;
-    CC_SAFE_RETAIN(m_pShaderProgram);
 }
 
 CCRect CCNode::boundingBox()
@@ -902,33 +910,47 @@ void CCNode::transform()
 
 void CCNode::onEnter()
 {
-    arrayMakeObjectsPerformSelector(m_pChildren, onEnter, CCNode*);
-
-    this->resumeSchedulerAndActions();
-
+    //fix setTouchEnabled not take effect when called the function in onEnter in JSBinding.
     m_bRunning = true;
 
     if (m_eScriptType != kScriptTypeNone)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnter);
     }
+
+    //Judge the running state for prevent called onEnter method more than once,it's possible that this function called by addChild  
+    if (m_pChildren && m_pChildren->count() > 0)
+    {
+        CCObject* child;
+        CCNode* node;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            node = (CCNode*)child;
+            if (!node->isRunning())
+            {
+                node->onEnter();
+            }            
+        }
+    }
+
+    this->resumeSchedulerAndActions();   
 }
 
 void CCNode::onEnterTransitionDidFinish()
 {
-    arrayMakeObjectsPerformSelector(m_pChildren, onEnterTransitionDidFinish, CCNode*);
-
-    if (m_eScriptType == kScriptTypeJavascript)
+    if (m_eScriptType != kScriptTypeNone)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnterTransitionDidFinish);
     }
+    
+    arrayMakeObjectsPerformSelector(m_pChildren, onEnterTransitionDidFinish, CCNode*);
 }
 
 void CCNode::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onExitTransitionDidStart, CCNode*);
 
-    if (m_eScriptType == kScriptTypeJavascript)
+    if (m_eScriptType != kScriptTypeNone)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExitTransitionDidStart);
     }
@@ -940,12 +962,12 @@ void CCNode::onExit()
 
     m_bRunning = false;
 
+    arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
+    
     if ( m_eScriptType != kScriptTypeNone)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExit);
     }
-
-    arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);    
 }
 
 void CCNode::registerScriptHandler(int nHandler)
@@ -1319,6 +1341,20 @@ bool CCNodeRGBA::init()
         return true;
     }
     return false;
+}
+
+CCNodeRGBA * CCNodeRGBA::create(void)
+{
+	CCNodeRGBA * pRet = new CCNodeRGBA();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+	return pRet;
 }
 
 GLubyte CCNodeRGBA::getOpacity(void)

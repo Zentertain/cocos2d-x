@@ -43,12 +43,19 @@ class CCObject;
 class CCNode;
 class CCEvent;
 
+/**
+ * @js NA
+ * @lua NA
+ */
 class CC_DLL CCCopying
 {
 public:
     virtual CCObject* copyWithZone(CCZone* pZone);
 };
 
+/**
+ * @js NA
+ */
 class CC_DLL CCObject : public CCCopying
 {
 public:
@@ -65,6 +72,9 @@ protected:
     CCObject*           m_pCallbackTarget;
 public:
     CCObject(void);
+    /**
+     *  @lua NA
+     */
     virtual ~CCObject(void);
     
     void release(void);
