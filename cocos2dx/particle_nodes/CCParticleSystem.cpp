@@ -388,6 +388,7 @@ bool CCParticleSystem::initWithParticle(CCParticleSystem *pParticle)
         if(this->initWithTotalParticles(maxParticles))
         {
             // angle
+            m_sPlistFile = pParticle->m_sPlistFile;
             m_fAngle = pParticle->m_fAngle;;
             m_fAngleVar = pParticle->m_fAngleVar;
             
