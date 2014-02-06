@@ -40,7 +40,7 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
         s_sharedFileUtils = new CCFileUtilsAndroid();
         s_sharedFileUtils->init();
         std::string resourcePath = getApkPath();
-        s_pZipFile = new AssetZipFile(resourcePath, "assets/", "assets/gameres.zip");
+        s_pZipFile = new AssetZipFile(resourcePath, "assets/", "assets/gameres.001");
     }
     return s_sharedFileUtils;
 }
