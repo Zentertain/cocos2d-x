@@ -217,6 +217,7 @@ namespace cocos2d
         ZipFilePrivate *m_data;
     };
 
+    struct ourmemory_s;
     class CC_DLL AssetZipFile
     {
     public:
@@ -231,6 +232,9 @@ namespace cocos2d
         unsigned char *getFileData(const std::string &fileName, unsigned long *pSize);
         unsigned char *getFileData(const std::string &fileName, const std::string& password, unsigned long *pSize);
     private:
+        unsigned char * m_buffer;
+        unsigned long m_size;
+        ourmemory_s* m_ourmemory;
         ZipFilePrivate * m_data;
     };
 

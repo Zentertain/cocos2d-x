@@ -507,6 +507,7 @@ bool ZipFile::setFilter(const std::string &filter)
                     entry.pos = posInfo;
                     entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
                     m_data->fileList[currentFileName] = entry;
+                    CCLOG("insert file entry: %s", szCurrentFileName);
                 }
             }
             // next file - also get the information about it
@@ -581,18 +582,26 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, const std::stri
 
 AssetZipFile::AssetZipFile(const std::string& zipFile, const std::string& filter, const std::string& assetZipFile)
 : m_data (new ZipFilePrivate)
+, m_buffer (0)
+, m_size(0)
+, m_ourmemory(NULL)
 {
     std::auto_ptr<ZipFile> pZipFile(new ZipFile(zipFile, filter));
     unsigned long bufsize = 0;
     unsigned char* buffer = pZipFile->getFileData(assetZipFile, &bufsize);
-    
+
+    m_buffer = buffer;
+    m_size = bufsize;
+
     zlib_filefunc_def filefunc32 = {0};
-    ourmemory_t unzmem = {0};
     
-    unzmem.base = (char*)buffer;
-    unzmem.size = bufsize;
+    m_ourmemory = new ourmemory_t;
+    memset(m_ourmemory, 0, sizeof(ourmemory_t));
+
+    m_ourmemory->base = (char*)buffer;
+    m_ourmemory->size = bufsize;
     
-    fill_memory_filefunc(&filefunc32, &unzmem);
+    fill_memory_filefunc(&filefunc32, m_ourmemory);
     
     m_data->zipFile = unzOpen2("__notused__", &filefunc32);
     if (m_data->zipFile) {
@@ -607,6 +616,8 @@ AssetZipFile::~AssetZipFile()
         unzClose(m_data->zipFile);
     }
     CC_SAFE_DELETE(m_data);
+    CC_SAFE_DELETE(m_buffer);
+    CC_SAFE_DELETE(m_ourmemory);
 }
 
 bool AssetZipFile::initAssetZipFile()
@@ -634,6 +645,7 @@ bool AssetZipFile::initAssetZipFile()
             if (posErr == UNZ_OK)
             {
                 std::string currentFileName = szCurrentFileName;
+
                 // cache info about filtered files only (like 'assets/')
                 if (
                     //filter.empty()
@@ -644,6 +656,7 @@ bool AssetZipFile::initAssetZipFile()
                     entry.pos = posInfo;
                     entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
                     m_data->fileList[currentFileName] = entry;
+                    CCLOG("insert file entry info: %s, %d bytes", szCurrentFileName, (int)fileInfo.uncompressed_size);
                 }
             }
             // next file - also get the information about it
@@ -687,7 +700,7 @@ unsigned char *AssetZipFile::getFileData(const std::string &fileName, const std:
     {
         CC_BREAK_IF(!m_data->zipFile);
         CC_BREAK_IF(fileName.empty());
-        
+
         ZipFilePrivate::FileListContainer::const_iterator it = m_data->fileList.find(fileName);
         CC_BREAK_IF(it ==  m_data->fileList.end());
         
