@@ -507,6 +507,8 @@ bool ZipFile::setFilter(const std::string &filter)
                     entry.pos = posInfo;
                     entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
                     m_data->fileList[currentFileName] = entry;
+
+                    CCLOG("data filelist: %s", currentFileName.c_str());
                 }
             }
             // next file - also get the information about it
@@ -604,7 +606,7 @@ AssetZipFile::AssetZipFile(const std::string& zipFile, const std::string& filter
     
     m_data->zipFile = unzOpen2("__notused__", &filefunc32);
     if (m_data->zipFile) {
-        initAssetZipFile();
+        initAssetZipFile(filter);
     }
 }
 
@@ -619,7 +621,7 @@ AssetZipFile::~AssetZipFile()
     CC_SAFE_DELETE(m_ourmemory);
 }
 
-bool AssetZipFile::initAssetZipFile()
+bool AssetZipFile::initAssetZipFile(const std::string& filter)
 {
     bool ret = false;
     do
@@ -643,7 +645,7 @@ bool AssetZipFile::initAssetZipFile()
             int posErr = unzGetFilePos(m_data->zipFile, &posInfo);
             if (posErr == UNZ_OK)
             {
-                std::string currentFileName = szCurrentFileName;
+                std::string currentFileName = filter + szCurrentFileName;
 
                 // cache info about filtered files only (like 'assets/')
                 if (
@@ -655,6 +657,8 @@ bool AssetZipFile::initAssetZipFile()
                     entry.pos = posInfo;
                     entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
                     m_data->fileList[currentFileName] = entry;
+
+                    //CCLOG("data filelist: %s", currentFileName.c_str());
                 }
             }
             // next file - also get the information about it
@@ -674,8 +678,9 @@ bool AssetZipFile::fileExists(const std::string &fileName) const
     do
     {
         CC_BREAK_IF(!m_data);
-        
+
         ret = m_data->fileList.find(fileName) != m_data->fileList.end();
+        //CCLOG("file exists: %s : %s", fileName.c_str(), ret ? "true" : "false");
     } while(false);
     
     return ret;

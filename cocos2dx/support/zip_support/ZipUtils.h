@@ -225,7 +225,7 @@ namespace cocos2d
         ~AssetZipFile();
     
         // init asset zip file
-        bool initAssetZipFile();
+        bool initAssetZipFile(const std::string& filter);
 
         bool fileExists(const std::string &fileName) const;
 
