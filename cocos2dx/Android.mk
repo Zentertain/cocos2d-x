@@ -122,6 +122,7 @@ support/image_support/TGAlib.cpp \
 support/tinyxml2/tinyxml2.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
+support/zip_support/ioapi_mem.cpp \
 support/zip_support/unzip.cpp \
 support/component/CCComponent.cpp \
 support/component/CCComponentContainer.cpp \

@@ -65,7 +65,7 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
     {
         pobSprite->autorelease();
         return pobSprite;
-    }
+    }   
     CC_SAFE_DELETE(pobSprite);
     return NULL;
 }

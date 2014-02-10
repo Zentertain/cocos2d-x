@@ -51,6 +51,7 @@
 
 #ifndef  _ZLIBIOAPI_H
 #include "ioapi.h"
+#include "ioapi_mem.h"
 #endif
 
 #ifdef HAVE_BZIP2
