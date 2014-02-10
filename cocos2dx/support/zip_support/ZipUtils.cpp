@@ -507,7 +507,6 @@ bool ZipFile::setFilter(const std::string &filter)
                     entry.pos = posInfo;
                     entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
                     m_data->fileList[currentFileName] = entry;
-                    CCLOG("insert file entry: %s", szCurrentFileName);
                 }
             }
             // next file - also get the information about it
@@ -656,7 +655,6 @@ bool AssetZipFile::initAssetZipFile()
                     entry.pos = posInfo;
                     entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
                     m_data->fileList[currentFileName] = entry;
-                    CCLOG("insert file entry info: %s, %d bytes", szCurrentFileName, (int)fileInfo.uncompressed_size);
                 }
             }
             // next file - also get the information about it
