@@ -236,7 +236,7 @@ CCNode* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, CCObject *pOw
     {
         return NULL;
     }
-
+    
     std::string strCCBFileName(pCCBFileName);
     std::string strSuffix(".ccbi");
     // Add ccbi suffix
@@ -748,6 +748,7 @@ CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
             this->mCCNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
         }
     }
+
     return node;
 }
 
