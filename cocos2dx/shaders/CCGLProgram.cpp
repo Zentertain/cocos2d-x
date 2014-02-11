@@ -165,10 +165,6 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
     }
     
     const GLchar *sources[] = {
-        (type == GL_FRAGMENT_SHADER ?
-        "#ifdef GL_ES\n"
-        "#extension GL_OES_standard_derivatives : enable\n"
-        "#endif\n" : ""),
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         (type == GL_VERTEX_SHADER ? "precision highp float;\n" : "precision mediump float;\n"),
 #endif
@@ -553,20 +549,6 @@ void CCGLProgram::setUniformsForBuiltins()
     {
         setUniformLocationWith4f(m_uUniforms[kCCUniformRandom01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 	}
-}
-
-void CCGLProgram::setUniformForModelViewProjectionMatrix()
-{
-    kmMat4 matrixP;
-    kmMat4 matrixMV;
-    kmMat4 matrixMVP;
-    
-    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
-    kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
-    
-    kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-    
-    setUniformLocationWithMatrix4fv(m_uUniforms[kCCUniformMVPMatrix], matrixMVP.mat, 1);
 }
 
 void CCGLProgram::reset()
