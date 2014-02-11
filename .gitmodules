@@ -19,6 +19,6 @@
 [submodule "plugin"]
 	path = plugin
 	url = https://github.com/cocos2d-x/plugin-x.git
-[submodule "cocos2dx/platform/third_party/winrt/angleproject"]
-	path = cocos2dx/platform/third_party/winrt/angleproject
-	url = https://github.com/stammen/angleproject
+[submodule "cocos2dx/platform/third_party/wp8/angleproject"]
+	path = cocos2dx/platform/third_party/wp8/angleproject
+	url = https://github.com/pwang08/angleproject.git

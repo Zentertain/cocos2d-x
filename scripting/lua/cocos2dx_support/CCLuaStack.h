@@ -104,6 +104,10 @@ public:
     virtual void clean(void);
     virtual void pushInt(int intValue);
     virtual void pushFloat(float floatValue);
+    /** Added by slotssaga group
+     *  @pwang08
+     */
+    virtual void pushDouble(double doubleValue);
     virtual void pushBoolean(bool boolValue);
     virtual void pushString(const char* stringValue);
     virtual void pushString(const char* stringValue, int length);

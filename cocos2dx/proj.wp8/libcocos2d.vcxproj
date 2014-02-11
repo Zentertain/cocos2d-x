@@ -130,7 +130,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../platform/third_party/winrt/angleproject/include;../platform/third_party/winrt/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../platform/wp8;../platform/winrt;../include;../;../kazmath/include;../kazmath/include/GL;../platform/third_party/wp8/zlib;../platform/third_party/wp8/libpng;../platform/third_party/wp8/freetype/include;../platform/third_party/wp8/libjpeg;../platform/third_party/wp8/libtiff;../platform/third_party/wp8/libwebp;../platform/third_party/wp8/angleproject/include;../platform/third_party/wp8/angleproject/samples/gles2_book/Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -546,7 +546,7 @@
     <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_phone.vcxproj">
+    <ProjectReference Include="..\platform\third_party\wp8\angleproject\samples\gles2_book\Common\esUtil_phone.vcxproj">
       <Project>{d2d857bf-346e-4014-b9cf-50d5e1f8a357}</Project>
     </ProjectReference>
   </ItemGroup>

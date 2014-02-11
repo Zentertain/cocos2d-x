@@ -57,6 +57,10 @@ typedef CCLuaValueArray::const_iterator     CCLuaValueArrayIterator;
 typedef enum {
     CCLuaValueTypeInt,
     CCLuaValueTypeFloat,
+    /** Added by slotssaga group
+     *  @pwang08
+     */
+    CCLuaValueTypeDouble,
     CCLuaValueTypeBoolean,
     CCLuaValueTypeString,
     CCLuaValueTypeDict,
@@ -67,6 +71,10 @@ typedef enum {
 typedef union {
     int                 intValue;
     float               floatValue;
+    /** Added by slotssaga group
+     *  @pwang08
+     */
+    double              doubleValue;
     bool                booleanValue;
     std::string*        stringValue;
     CCLuaValueDict*     dictValue;
@@ -83,6 +91,10 @@ class CCLuaValue
 public:
     static const CCLuaValue intValue(const int intValue);
     static const CCLuaValue floatValue(const float floatValue);
+    /** Added by slotssaga group
+     *  @pwang08
+     */
+    static const CCLuaValue doubleValue(const double doubleValue);
     static const CCLuaValue booleanValue(const bool booleanValue);
     static const CCLuaValue stringValue(const char* stringValue);
     static const CCLuaValue stringValue(const std::string& stringValue);
@@ -115,6 +127,13 @@ public:
     
     float floatValue(void) const {
         return m_field.floatValue;
+    }
+    
+    /** Added by slotssaga group
+     *  @pwang08
+     */
+    double doubleValue(void) const {
+        return m_field.doubleValue;
     }
     
     bool booleanValue(void) const {
