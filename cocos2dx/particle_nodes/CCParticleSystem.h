@@ -408,8 +408,6 @@ public:
      */
     bool initWithDictionary(CCDictionary *dictionary, const char *dirname);
 
-    bool initWithParticle(CCParticleSystem *pParticle);
-    
     //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
     //! Add a particle to the emitter
