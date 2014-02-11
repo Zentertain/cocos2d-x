@@ -622,7 +622,7 @@ void CCLuaEngine::getLuaTableValueDouble( CCLuaValueArray& resultArray )
     {
         if (lua_isnumber(m_stack->getLuaState(), -1))
         {
-            float curValue = lua_tonumber(m_stack->getLuaState(), -1);
+            double curValue = lua_tonumber(m_stack->getLuaState(), -1);
             CCLuaValue luaValue = CCLuaValue::doubleValue(curValue);
             resultArray.push_back(luaValue);
         }
