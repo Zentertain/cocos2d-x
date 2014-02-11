@@ -1742,11 +1742,14 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/../platform/third_party/ios/libraries\\\"",
-					"/Users/zhangyachuan/Dev/Cocos2d-x-projects/cocos2d-x/cocos2dx/platform/third_party/tizen/prebuilt/libwebp/libs/armv7l",
-					"/Users/zhangyachuan/Dev/Cocos2d-x-projects/cocos2d-x/cocos2dx/platform/third_party/tizen/prebuilt/libwebp/libs/x86",
+					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/cocos2dx/platform/third_party/tizen/prebuilt/libwebp/libs/armv7l\"",
+					"\"$(SRCROOT)/cocos2dx/platform/third_party/tizen/prebuilt/libwebp/libs/x86\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-dynamic",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1772,11 +1775,14 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/../platform/third_party/ios/libraries\\\"",
-					"/Users/zhangyachuan/Dev/Cocos2d-x-projects/cocos2d-x/cocos2dx/platform/third_party/tizen/prebuilt/libwebp/libs/armv7l",
-					"/Users/zhangyachuan/Dev/Cocos2d-x-projects/cocos2d-x/cocos2dx/platform/third_party/tizen/prebuilt/libwebp/libs/x86",
+					"\"$(SRCROOT)/../platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/cocos2dx/platform/third_party/tizen/prebuilt/libwebp/libs/armv7l\"",
+					"\"$(SRCROOT)/cocos2dx/platform/third_party/tizen/prebuilt/libwebp/libs/x86\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-dynamic",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
