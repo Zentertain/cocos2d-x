@@ -234,6 +234,9 @@ namespace cocos2d
     struct ourmemory_s;
     class CC_DLL AssetZipFile
     {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        friend class CCFileUtilsAndroid;
+#endif
     public:
         AssetZipFile(const std::string& zipFile, const std::string& filter, const std::string& assetZipFile);
         ~AssetZipFile();
@@ -246,10 +249,14 @@ namespace cocos2d
         unsigned char *getFileData(const std::string &fileName, unsigned long *pSize);
         unsigned char *getFileData(const std::string &fileName, const std::string& password, unsigned long *pSize);
     private:
+
+        unsigned char *getFileData(const std::string &fileName, unsigned long *pSize, ZipFilePrivate *data);
         unsigned char * m_buffer;
         unsigned long m_size;
         ourmemory_s* m_ourmemory;
         ZipFilePrivate * m_data;
+        /** Another data used not in main thread */
+        ZipFilePrivate *_dataThread;
     };
 
 
