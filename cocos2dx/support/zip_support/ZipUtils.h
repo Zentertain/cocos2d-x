@@ -216,6 +216,30 @@ namespace cocos2d
         /** Internal data like zip file pointer / file list array and so on */
         ZipFilePrivate *m_data;
     };
+
+    struct ourmemory_s;
+    class CC_DLL AssetZipFile
+    {
+    public:
+        AssetZipFile(const std::string& zipFile, const std::string& filter, const std::string& assetZipFile);
+        ~AssetZipFile();
+    
+        // init asset zip file
+        bool initAssetZipFile(const std::string& filter);
+
+        bool fileExists(const std::string &fileName) const;
+
+        unsigned char *getFileData(const std::string &fileName, unsigned long *pSize);
+        unsigned char *getFileData(const std::string &fileName, const std::string& password, unsigned long *pSize);
+    private:
+        unsigned char * m_buffer;
+        unsigned long m_size;
+        ourmemory_s* m_ourmemory;
+        ZipFilePrivate * m_data;
+    };
+
+
+
 } // end of namespace cocos2d
 #endif // __SUPPORT_ZIPUTILS_H__
 

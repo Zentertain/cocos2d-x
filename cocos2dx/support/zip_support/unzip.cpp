@@ -86,6 +86,8 @@
 #   include <errno.h>
 #endif
 
+    #include "cocos2d.h"
+
 namespace cocos2d {
 
 #ifndef local
@@ -618,6 +620,7 @@ local unzFile unzOpenInternal (const void *path,
                                                  path,
                                                  ZLIB_FILEFUNC_MODE_READ |
                                                  ZLIB_FILEFUNC_MODE_EXISTING);
+
     if (us.filestream==NULL)
         return NULL;
 
@@ -740,6 +743,7 @@ local unzFile unzOpenInternal (const void *path,
         (err==UNZ_OK))
         err=UNZ_BADZIPFILE;
 
+    CCLOG("unzOpenInternal err code: %d", err);
     if (err!=UNZ_OK)
     {
         ZCLOSE64(us.z_filefunc, us.filestream);
@@ -904,7 +908,6 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
               ZLIB_FILEFUNC_SEEK_SET)!=0)
         err=UNZ_ERRNO;
 
-
     /* we check the magic */
     if (err==UNZ_OK)
     {
@@ -1009,7 +1012,6 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
     else
         lSeek += file_info.size_file_extra;
 
-
     if ((err==UNZ_OK) && (file_info.size_file_extra != 0))
     {
                                 uLong acc = 0;
@@ -1105,7 +1107,6 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
     }
     //else
     //    lSeek+=file_info.size_file_comment;
-
 
     if ((err==UNZ_OK) && (pfile_info!=NULL))
         *pfile_info=file_info;
