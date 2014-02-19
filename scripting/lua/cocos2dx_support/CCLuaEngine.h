@@ -135,9 +135,12 @@ public:
     int executeLocalFunction( /*const char* fileName,*/ const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray);
     
     int executeLocalFunctionDouble( /*const char* fileName,*/ const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray);
+    int executeLocalFunctionStyled(const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray);
     
     void getLuaTableValue( CCLuaValueArray& resultArray );
     void getLuaTableValueDouble( CCLuaValueArray& resultArray );
+    CCLuaValue getLuaTableStyledValue();
+    
     int executeLocalFunction( const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, std::map<int, std::map<int, std::map<int, int> > > &resultTable );
     
     void getLuaTableValue( std::map<int, std::map<int, std::map<int, int> > > &resultTable );

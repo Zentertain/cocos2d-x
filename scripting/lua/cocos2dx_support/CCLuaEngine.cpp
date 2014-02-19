@@ -578,6 +578,57 @@ int CCLuaEngine::executeLocalFunctionDouble( /*const char* fileName,*/ const cha
     return 0;
 }
 
+int CCLuaEngine::executeLocalFunctionStyled(const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, CCLuaValueArray& resultArray)
+{
+    lua_getglobal(m_stack->getLuaState(), functionName);
+    if(!lua_isfunction(m_stack->getLuaState(),-1))
+    {
+        lua_pop(m_stack->getLuaState(),1);
+        return -1;
+    }
+
+    for (CCLuaValueArrayIterator it = paramArray.begin(); it != paramArray.end(); ++it)
+    {
+        m_stack->pushCCLuaValue(*it);
+    }
+    
+    if (lua_pcall(m_stack->getLuaState(), paramArray.size(), resultNum, 0) != 0)
+    {
+        return -1;
+    }
+    
+    resultArray.clear();
+    for (unsigned int i = 0; i < resultNum; ++i)
+    {
+        CCLuaValue luaValue;
+        if (lua_isnumber(m_stack->getLuaState(), -1))
+        {
+            double curValue = lua_tonumber(m_stack->getLuaState(), -1);
+            luaValue = CCLuaValue::doubleValue(curValue);
+            resultArray.push_back(luaValue);
+            lua_pop(m_stack->getLuaState(), 1);
+        }
+        else if (lua_isstring(m_stack->getLuaState(), -1))
+        {
+            const char* szValue = lua_tolstring(m_stack->getLuaState(), -1, 0);
+            luaValue = CCLuaValue::stringValue(szValue);
+            resultArray.push_back(luaValue);
+            lua_pop(m_stack->getLuaState(), 1);
+        }
+        else if (lua_istable(m_stack->getLuaState(), -1))
+        {
+            //CCLuaValueArray tableValue = getLuaTableStyledValue();
+            resultArray.push_back(getLuaTableStyledValue());
+            lua_pop(m_stack->getLuaState(), 1);
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    
+    return 0;
+}
 
 void CCLuaEngine::getLuaTableValue( CCLuaValueArray& resultArray )
 {
@@ -649,6 +700,46 @@ void CCLuaEngine::getLuaTableValueDouble( CCLuaValueArray& resultArray )
     }
 }
 
+CCLuaValue CCLuaEngine::getLuaTableStyledValue()
+{
+    CCLuaValueArray resultArray;
+    
+    lua_pushnil(m_stack->getLuaState());  /* Make sure lua_next starts at beginning */
+    while (lua_next(m_stack->getLuaState(), -2))
+    {
+        if (lua_isnumber(m_stack->getLuaState(), -1))
+        {
+            double curValue = lua_tonumber(m_stack->getLuaState(), -1);
+            CCLuaValue luaValue = CCLuaValue::doubleValue(curValue);
+            resultArray.push_back(luaValue);
+        }
+        else if (lua_isstring(m_stack->getLuaState(), -1))
+        {
+            const char* szValue = lua_tolstring(m_stack->getLuaState(), -1, 0);
+            CCLuaValue luaValue = CCLuaValue::stringValue(szValue);
+            resultArray.push_back(luaValue);
+        }
+        else if (lua_istable(m_stack->getLuaState(), -1))
+        {
+            resultArray.push_back(getLuaTableStyledValue());
+        }
+        
+        lua_pop(m_stack->getLuaState(),1);
+        if (lua_isnumber(m_stack->getLuaState(), -1))  //save the key of the table item.
+        {
+            int curKey = lua_tonumber(m_stack->getLuaState(), -1);
+            CCLuaValue luaKey = CCLuaValue::intValue(curKey);
+            resultArray.push_back(luaKey);
+        }
+        else if (lua_isstring(m_stack->getLuaState(), -1))
+        {
+            const char *strKey = lua_tostring(m_stack->getLuaState(), -1);
+            resultArray.push_back(CCLuaValue::stringValue(strKey));
+        }
+    }
+    
+    return CCLuaValue::arrayValue(resultArray);
+}
 
 int CCLuaEngine::executeLocalFunction( const char* functionName, const CCLuaValueArray& paramArray, unsigned int resultNum, std::map<int, std::map<int, std::map<int, int> > > &resultTable )
 {
