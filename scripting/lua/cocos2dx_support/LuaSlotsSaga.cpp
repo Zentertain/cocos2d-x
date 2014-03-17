@@ -27,7 +27,7 @@ static void tolua_reg_types (lua_State* tolua_S)
 	tolua_usertype(tolua_S, "isValidSymbolForCol");
 }
 
-/* function: getClientVersion of class  Game */
+/* function: whether or not the symbol is valid for colume */
 #ifndef TOLUA_DISABLE_tolua_User_Define_isValidSymbolForCol
 static int tolua_User_Define_isValidSymbolForCol(lua_State* tolua_S)
 {
