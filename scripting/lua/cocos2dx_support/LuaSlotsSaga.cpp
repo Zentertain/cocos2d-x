@@ -24,7 +24,36 @@ static void tolua_reg_types (lua_State* tolua_S)
 {
 	tolua_usertype(tolua_S, "Game");
 	tolua_usertype(tolua_S, "LogicMan");
+	tolua_usertype(tolua_S, "isValidSymbolForCol");
 }
+
+/* function: getClientVersion of class  Game */
+#ifndef TOLUA_DISABLE_tolua_User_Define_isValidSymbolForCol
+static int tolua_User_Define_isValidSymbolForCol(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isnumber(tolua_S, 1, 0, &tolua_err) ||
+        !tolua_isnumber(tolua_S, 2, 0, &tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        int col     = ((int) tolua_tonumber(tolua_S,1,0));
+        int mask    = ((int) tolua_tonumber(tolua_S,2,0));
+        int rst     = mask & (1 << (col-1));
+        tolua_pushnumber(tolua_S,(lua_Number)rst);
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'getInstance'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
 
 /* method: getInstance of class  Game */
 #ifndef TOLUA_DISABLE_tolua_User_Define_Game_getInstance00
@@ -436,6 +465,8 @@ TOLUA_API int tolua_SlotsSaga_open (lua_State* tolua_S)
  tolua_module(tolua_S,NULL,0);
  tolua_beginmodule(tolua_S,NULL);
  
+    tolua_function(tolua_S, "isValidSymbolForCol", tolua_User_Define_isValidSymbolForCol);
+    
     tolua_cclass(tolua_S,"Game","Game","",NULL);
     tolua_beginmodule(tolua_S,"Game");
     tolua_function(tolua_S, "getInstance", tolua_User_Define_Game_getInstance00);
