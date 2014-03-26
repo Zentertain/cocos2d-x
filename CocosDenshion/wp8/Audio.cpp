@@ -505,7 +505,7 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
             &(streamer->GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends)
 	    );
 		//fix bug: set a initial volume
-		//m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
+		m_soundEffects[sound]->m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
     } else
     {
 		if (m_soundEffects.size() > MAX_EFFECT_COUNT)
