@@ -31,7 +31,6 @@ static void tolua_reg_types (lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_User_Define_isValidSymbolForCol
 static int tolua_User_Define_isValidSymbolForCol(lua_State* tolua_S)
 {
-    CCLog("=========tolua_User_Define_isValidSymbolForCol");
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
@@ -46,7 +45,6 @@ static int tolua_User_Define_isValidSymbolForCol(lua_State* tolua_S)
         int mask    = ((int) tolua_tonumber(tolua_S,2,0));
         int rst     = mask & (1 << (col-1));
         tolua_pushnumber(tolua_S,(lua_Number)rst);
-        CCLog("mask=%d, col=%d, rst=%d", mask, col, rst);
     }
     return 1;
 #ifndef TOLUA_RELEASE
