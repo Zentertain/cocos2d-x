@@ -972,7 +972,7 @@ public:
      * 
      * @return A "local" axis aligned boudning box of the node.
      */
-    CCRect boundingBox(void);
+    virtual CCRect boundingBox(void);
 
     /// @{
     /// @name Actions

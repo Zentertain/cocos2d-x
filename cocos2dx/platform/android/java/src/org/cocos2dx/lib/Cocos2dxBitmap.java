@@ -89,19 +89,19 @@ public class Cocos2dxBitmap {
 	 * @param pHeight
 	 *            the height to draw, it can be 0
 	 */
-	public static void createTextBitmap(String pString, final String pFontName,
+	public static boolean createTextBitmap(String pString, final String pFontName,
 			final int pFontSize, final int pAlignment, final int pWidth,
 			final int pHeight) {
 		
 		//
-		createTextBitmapShadowStroke( pString, pFontName, pFontSize, 1.0f, 1.0f, 1.0f,   	// text font and color
+		return createTextBitmapShadowStroke( pString, pFontName, pFontSize, 1.0f, 1.0f, 1.0f,   	// text font and color
 									  pAlignment, pWidth, pHeight,							// alignment and size
 									  false, 0.0f, 0.0f, 0.0f,								// no shadow
 									  false, 1.0f, 1.0f, 1.0f, 1.0f);						// no stroke
 									 
 	}
 
-	public static void createTextBitmapShadowStroke(String pString,  final String pFontName, final int pFontSize,
+	public static boolean createTextBitmapShadowStroke(String pString,  final String pFontName, final int pFontSize,
 													final float fontTintR, final float fontTintG, final float fontTintB,
 													final int pAlignment, final int pWidth, final int pHeight, final boolean shadow,
 													final float shadowDX, final float shadowDY, final float shadowBlur, final boolean stroke,
@@ -189,9 +189,10 @@ public class Cocos2dxBitmap {
 		}
 		
 		Cocos2dxBitmap.initNativeObject(bitmap);
+		return true;
 		}catch(Exception e)
 		{
-			
+			return false;
 		}
 	}
 
