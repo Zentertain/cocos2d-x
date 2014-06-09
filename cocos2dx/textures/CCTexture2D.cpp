@@ -515,7 +515,14 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
     
     #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture data
+    {
+    auto dimensions = textDefinition->m_dimensions;
+    auto hAlignment = textDefinition->m_alignment;
+    auto vAlignment = textDefinition->m_vertAlignment;
+    auto fontName = textDefinition->m_fontName.c_str();
+    auto fontSize = textDefinition->m_fontSize;
         VolatileTexture::addStringTexture(this, text, dimensions, hAlignment, vAlignment, fontName, fontSize);
+    }
     #endif
         
         bool bRet = false;
