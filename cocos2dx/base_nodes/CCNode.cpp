@@ -878,8 +878,7 @@ void CCNode::transform()
     CGAffineToGL(&tmpAffine, transfrom4x4.mat);
 
     // Update Z vertex manually
-    transfrom4x4.mat[14] = m_fVertexZ;
-
+    transfrom4x4.mat[14] = 1 + m_fVertexZ;
     kmGLMultMatrix( &transfrom4x4 );
 
 

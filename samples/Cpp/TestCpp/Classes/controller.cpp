@@ -14,6 +14,8 @@ static TestScene* CreateTestScene(int nIdx)
 
     switch (nIdx)
     {
+    case TEST_WATER:
+        pScene = new WaterNodeTestScene(); break;
     case TEST_ACTIONS:
         pScene = new ActionsTestScene(); break;
     case TEST_TRANSITIONS:
