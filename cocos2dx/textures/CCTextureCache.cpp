@@ -821,12 +821,25 @@ void VolatileTexture::reloadAllTextures()
     isReloading = true;
 
     CCLOG("reload all texture");
+    
+    std::vector<bool> aIsNeedReload;
+    
     std::list<VolatileTexture *>::iterator iter = textures.begin();
-
+    
     while (iter != textures.end())
     {
         VolatileTexture *vt = *iter++;
-
+        aIsNeedReload.push_back(!glIsTexture(vt->texture->getName()));
+    }
+    
+    iter = textures.begin();
+    int i = 0;
+    while (iter != textures.end())
+    {
+        VolatileTexture *vt = *iter++;
+        if (!aIsNeedReload[i++])
+            continue;
+        
         switch (vt->m_eCashedImageType)
         {
         case kImageFile:

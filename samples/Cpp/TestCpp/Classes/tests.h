@@ -59,9 +59,12 @@
 #include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
 #include "DataVisitorTest/DataVisitorTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
+#include "WaterNodeTest.h"
+
 enum
 {
-    TEST_ACTIONS = 0,
+    TEST_WATER = 0,
+    TEST_ACTIONS,
     TEST_TRANSITIONS,
     TEST_PROGRESS_ACTIONS,
     TEST_EFFECTS,
@@ -124,6 +127,7 @@ enum
 };
 
 const std::string g_aTestNames[TESTS_COUNT] = {
+    "WaterTest",
     "ActionsTest",
     "TransitionsTest",
     "ActionsProgressTest",
