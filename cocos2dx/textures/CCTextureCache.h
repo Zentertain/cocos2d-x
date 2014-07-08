@@ -42,7 +42,7 @@ NS_CC_BEGIN
 
 class CCLock;
 class CCImage;
-
+class CCScheduler;
 /**
  * @addtogroup textures
  * @{
@@ -57,7 +57,7 @@ class CC_DLL CCTextureCache : public CCObject
 protected:
     CCDictionary* m_pTextures;
     //pthread_mutex_t                *m_pDictLock;
-
+    CCScheduler* m_pScheduler;
 
 private:
     /// todo: void addImageWithAsyncObject(CCAsyncObject* async);
@@ -165,6 +165,9 @@ public:
     It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
     */
     static void reloadAllTextures();
+    
+    void update(float deltaTime);
+    
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -192,10 +195,14 @@ public:
     static void setTexParameters(CCTexture2D *t, ccTexParams *texParams);
     static void removeTexture(CCTexture2D *t);
     static void reloadAllTextures();
+    static void reloadAllTexturesDelay();
+    static void reloadOneTexture(VolatileTexture * vt);
+    static void update();
 
 public:
     static std::list<VolatileTexture*> textures;
     static bool isReloading;
+    static std::list<VolatileTexture*> texturesReload;
     
 private:
     // find VolatileTexture by CCTexture2D*
@@ -203,6 +210,7 @@ private:
     static VolatileTexture* findVolotileTexture(CCTexture2D *tt);
 
 protected:
+
     CCTexture2D *texture;
     
     CCImage *uiImage;

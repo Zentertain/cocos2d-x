@@ -488,9 +488,12 @@ CCPoint CCProgressTimer::boundaryTexCoord(char index)
 
 void CCProgressTimer::draw(void)
 {
-    if( ! m_pVertexData || ! m_pSprite)
+    if( ! m_pVertexData || ! m_pSprite || !m_pSprite->getTexture())
         return;
-
+    
+    if (m_pSprite->getTexture()->getName() == 0)
+        return;
+    
     CC_NODE_DRAW_SETUP();
 
     ccGLBlendFunc( m_pSprite->getBlendFunc().src, m_pSprite->getBlendFunc().dst );

@@ -590,6 +590,10 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     {
         return;
     }
+    
+    if (m_pTexture->getName() == 0)
+        return;
+
     ccGLBindTexture2D(m_pTexture->getName());
 
 #if CC_TEXTURE_ATLAS_USE_VAO
