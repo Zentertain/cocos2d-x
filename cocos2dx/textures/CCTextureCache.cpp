@@ -840,7 +840,7 @@ void VolatileTexture::reloadOneTexture(VolatileTexture * vt)
     {
         case kImageFile:
         {
-            //CCLOG("Reload texture: %s, pri = %d ", vt->m_strFileName.c_str(), vt->texture->getUseSequence());
+            CCLOG("Reload texture: %s, pri = %d ", vt->m_strFileName.c_str(), vt->texture->getUseSequence());
 
             std::string lowerCase(vt->m_strFileName.c_str());
             for (unsigned int i = 0; i < lowerCase.length(); ++i)
@@ -1040,6 +1040,8 @@ void VolatileTexture::reloadAllTexturesDelay()
         texturesReload.push_back(texs.top());
         texs.pop();
     }
+    
+    CCLOG("Reload texture: %d  ", texturesReload.size());
     isReloading = false;
 }
 
@@ -1048,7 +1050,7 @@ void VolatileTexture::update()
 {
     if (!texturesReload.empty())
     {
-        //CCLOG("texture reload num: %d ", texturesReload.size());
+        CCLOG("texture reload num: %d ", texturesReload.size());
         struct cc_timeval begin;
         
         if (CCTime::gettimeofdayCocos2d(&begin, NULL) != 0)

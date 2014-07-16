@@ -76,7 +76,7 @@ CCSpriteFrameCache::~CCSpriteFrameCache(void)
     CC_SAFE_DELETE(m_pLoadedFileNames);
 }
 
-void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary, CCTexture2D *pobTexture)
+void CCSpriteFrameCache::addSpriteFramesWithDictionary(const char* szPlist, CCDictionary* dictionary, CCTexture2D *pobTexture)
 {
     /*
     Supported Zwoptex Formats:
@@ -99,19 +99,22 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
 
     // check the format
     CCAssert(format >=0 && format <= 3, "format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
-
+    std::string strPlist = szPlist;
     CCDictElement* pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)
     {
+
         CCDictionary* frameDict = (CCDictionary*)pElement->getObject();
         std::string spriteFrameName = pElement->getStrKey();
-        CCSpriteFrame* spriteFrame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(spriteFrameName);
+        std::string strFullName = strPlist + "/" + spriteFrameName;
+
+        CCSpriteFrame* spriteFrame = (CCSpriteFrame*)m_pSpriteFrames->objectForKey(strFullName);
         if (spriteFrame)
         {
             continue;
         }
-        
-        if(format == 0) 
+
+        if(format == 0)
         {
             float x = frameDict->valueForKey("x")->floatValue();
             float y = frameDict->valueForKey("y")->floatValue();
@@ -196,7 +199,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
         }
 
         // add sprite frame
-        m_pSpriteFrames->setObject(spriteFrame, spriteFrameName);
+        m_pSpriteFrames->setObject(spriteFrame, strFullName.c_str());
         spriteFrame->release();
     }
 }
@@ -206,7 +209,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
     CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
 
-    addSpriteFramesWithDictionary(dict, pobTexture);
+    addSpriteFramesWithDictionary(pszPlist, dict, pobTexture);
 
     dict->release();
 }
@@ -268,7 +271,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 
         if (pTexture)
         {
-            addSpriteFramesWithDictionary(dict, pTexture);
+            addSpriteFramesWithDictionary(pszPlist, dict, pTexture);
             m_pLoadedFileNames->insert(pszPlist);
         }
         else

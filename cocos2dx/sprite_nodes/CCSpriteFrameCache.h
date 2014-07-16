@@ -67,7 +67,7 @@ public:
 private:
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
-    void addSpriteFramesWithDictionary(CCDictionary* pobDictionary, CCTexture2D *pobTexture);
+    void addSpriteFramesWithDictionary(const char* szPlist, CCDictionary* pobDictionary, CCTexture2D *pobTexture);
 public:
     /** Adds multiple Sprite Frames from a plist file.
      * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
