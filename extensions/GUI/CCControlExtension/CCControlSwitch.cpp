@@ -157,6 +157,9 @@ void CCControlSwitchSprite::draw()
 {
     CC_NODE_DRAW_SETUP();
 
+    if (getTexture()->getName() == 0 || m_pMaskTexture->getName() == 0)
+        return;
+    
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
     ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     getShaderProgram()->setUniformsForBuiltins();
