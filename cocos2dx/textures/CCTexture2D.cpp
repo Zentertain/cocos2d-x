@@ -71,6 +71,7 @@ CCTexture2D::CCTexture2D()
 , m_bHasPremultipliedAlpha(false)
 , m_bHasMipmaps(false)
 , m_pShaderProgram(NULL)
+, m_useSequence(0)
 {
 }
 
@@ -106,6 +107,10 @@ unsigned int CCTexture2D::getPixelsHigh()
 
 GLuint CCTexture2D::getName()
 {
+    // add use sequence number
+    static int s_useSequence = 0;
+    s_useSequence++;
+    m_useSequence = s_useSequence;
     return m_uName;
 }
 
@@ -939,6 +944,5 @@ unsigned int CCTexture2D::bitsPerPixelForFormat()
 {
 	return this->bitsPerPixelForFormat(m_ePixelFormat);
 }
-
 
 NS_CC_END

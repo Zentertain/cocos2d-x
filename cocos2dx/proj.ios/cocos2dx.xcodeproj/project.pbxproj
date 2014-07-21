@@ -271,6 +271,9 @@
 		15FBEE69164BBA98008CB2C3 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FBEE67164BBA98008CB2C3 /* CCDrawingPrimitives.h */; };
 		15FBEE6B164BBB20008CB2C3 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FBEE6A164BBB20008CB2C3 /* CCDrawNode.h */; };
 		15FBEE6D164BBF77008CB2C3 /* CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FBEE6C164BBF77008CB2C3 /* CCDrawNode.cpp */; };
+		173594F118F6BDC200577337 /* crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 173594EE18F6BDC200577337 /* crypt.h */; };
+		173594F218F6BDC200577337 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 173594EF18F6BDC200577337 /* ioapi_mem.cpp */; };
+		173594F318F6BDC200577337 /* ioapi_mem.h in Headers */ = {isa = PBXBuildFile; fileRef = 173594F018F6BDC200577337 /* ioapi_mem.h */; };
 		1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2802AE16DF1C5B00189CBF /* ccUTF8.cpp */; };
 		1A2802B116DF1C5B00189CBF /* ccUTF8.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2802AF16DF1C5B00189CBF /* ccUTF8.h */; };
 		1A3187F416C0B30600207637 /* CCImageCommonWebp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3187F316C0B30600207637 /* CCImageCommonWebp.cpp */; };
@@ -589,6 +592,9 @@
 		15FBEE67164BBA98008CB2C3 /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
 		15FBEE6A164BBB20008CB2C3 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
 		15FBEE6C164BBF77008CB2C3 /* CCDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawNode.cpp; sourceTree = "<group>"; };
+		173594EE18F6BDC200577337 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		173594EF18F6BDC200577337 /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
+		173594F018F6BDC200577337 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
 		1A2802AE16DF1C5B00189CBF /* ccUTF8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccUTF8.cpp; sourceTree = "<group>"; };
 		1A2802AF16DF1C5B00189CBF /* ccUTF8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUTF8.h; sourceTree = "<group>"; };
 		1A3187F316C0B30600207637 /* CCImageCommonWebp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCImageCommonWebp.cpp; sourceTree = "<group>"; };
@@ -1159,9 +1165,9 @@
 		1551A5FE158F2ADE00E66CFE /* zip_support */ = {
 			isa = PBXGroup;
 			children = (
-				3CDC657A18AA2D1D0018A42A /* crypt.h */,
-				3CDC657B18AA2D1D0018A42A /* ioapi_mem.cpp */,
-				3CDC657C18AA2D1D0018A42A /* ioapi_mem.h */,
+				173594EE18F6BDC200577337 /* crypt.h */,
+				173594EF18F6BDC200577337 /* ioapi_mem.cpp */,
+				173594F018F6BDC200577337 /* ioapi_mem.h */,
 				1551A5FF158F2ADE00E66CFE /* ioapi.cpp */,
 				1551A600158F2ADE00E66CFE /* ioapi.h */,
 				1551A601158F2ADE00E66CFE /* unzip.cpp */,
@@ -1358,7 +1364,7 @@
 				1551A6C0158F2ADE00E66CFE /* quaternion.h in Headers */,
 				1551A6C1158F2ADE00E66CFE /* ray2.h in Headers */,
 				1551A6C2158F2ADE00E66CFE /* utility.h in Headers */,
-				3CDC657F18AA2D1D0018A42A /* ioapi_mem.h in Headers */,
+				173594F318F6BDC200577337 /* ioapi_mem.h in Headers */,
 				1551A6C3158F2ADE00E66CFE /* vec2.h in Headers */,
 				1551A6C4158F2ADE00E66CFE /* vec3.h in Headers */,
 				1551A6C5158F2ADE00E66CFE /* vec4.h in Headers */,
@@ -1391,7 +1397,7 @@
 				1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */,
 				1551A727158F2ADE00E66CFE /* CCThread.h in Headers */,
 				1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */,
-				3CDC657D18AA2D1D0018A42A /* crypt.h in Headers */,
+				173594F118F6BDC200577337 /* crypt.h in Headers */,
 				1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */,
 				1551A72C158F2ADE00E66CFE /* CCApplication.h in Headers */,
 				1551A72F158F2ADE00E66CFE /* CCDirectorCaller.h in Headers */,
@@ -1659,7 +1665,7 @@
 				1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */,
 				1A4646DC16DC901A00DE131F /* ccFPSImages.c in Sources */,
 				1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */,
-				3CDC657E18AA2D1D0018A42A /* ioapi_mem.cpp in Sources */,
+				173594F218F6BDC200577337 /* ioapi_mem.cpp in Sources */,
 				4EF8999016E207E70040A527 /* CCParallaxNode.cpp in Sources */,
 				4EF8999216E207E70040A527 /* CCTileMapAtlas.cpp in Sources */,
 				4EF8999416E207E70040A527 /* CCTMXLayer.cpp in Sources */,

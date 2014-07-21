@@ -355,11 +355,17 @@ void CCParticleSystemQuad::draw()
 	
     CCAssert(!m_pBatchNode,"draw should not be called when added to a particleBatchNode");
 
+    if (m_pTexture != NULL && m_pTexture->getName() == 0)
+        return;
+    
     CC_NODE_DRAW_SETUP();
 
     ccGLBindTexture2D( m_pTexture->getName() );
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
+    if (m_uParticleIdx != m_uParticleCount)
+        return;
+    
     CCAssert( m_uParticleIdx == m_uParticleCount, "Abnormal error in particle quad");
 
 #if CC_TEXTURE_ATLAS_USE_VAO

@@ -216,6 +216,8 @@
 		15AA9F3C15B7EF960033D6C2 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AA9F3A15B7EF960033D6C2 /* AppDelegate.cpp */; };
 		15E2AD85165C874400F7743F /* ChipmunkTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AD83165C874400F7743F /* ChipmunkTest.cpp */; };
 		15E2ADA1165CBB0700F7743F /* ClippingNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E2AD9F165CBB0700F7743F /* ClippingNodeTest.cpp */; };
+		17E864AE1908E12600FB8F9E /* CCWaterNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17E864AC1908E12600FB8F9E /* CCWaterNode.cpp */; };
+		17E864B11908E4C100FB8F9E /* WaterNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17E864AF1908E4C100FB8F9E /* WaterNodeTest.cpp */; };
 		1A144289172788AF0096438B /* SpineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A144287172788AF0096438B /* SpineTest.cpp */; };
 		1A14AE0615DA5E780064E300 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */; };
 		1A27573F1697CF2B00504026 /* CCEditBoxImplAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A27573D1697CF2B00504026 /* CCEditBoxImplAndroid.cpp */; };
@@ -889,6 +891,10 @@
 		15E2AD84165C874400F7743F /* ChipmunkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkTest.h; sourceTree = "<group>"; };
 		15E2AD9F165CBB0700F7743F /* ClippingNodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingNodeTest.cpp; sourceTree = "<group>"; };
 		15E2ADA0165CBB0700F7743F /* ClippingNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingNodeTest.h; sourceTree = "<group>"; };
+		17E864AC1908E12600FB8F9E /* CCWaterNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCWaterNode.cpp; path = ../Classes/WaterTest/CCWaterNode.cpp; sourceTree = "<group>"; };
+		17E864AD1908E12600FB8F9E /* CCWaterNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCWaterNode.h; path = ../Classes/WaterTest/CCWaterNode.h; sourceTree = "<group>"; };
+		17E864AF1908E4C100FB8F9E /* WaterNodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaterNodeTest.cpp; path = ../Classes/WaterTest/WaterNodeTest.cpp; sourceTree = "<group>"; };
+		17E864B01908E4C100FB8F9E /* WaterNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaterNodeTest.h; path = ../Classes/WaterTest/WaterNodeTest.h; sourceTree = "<group>"; };
 		1A144287172788AF0096438B /* SpineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpineTest.cpp; sourceTree = "<group>"; };
 		1A144288172788AF0096438B /* SpineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpineTest.h; sourceTree = "<group>"; };
 		1A14AE0415DA5E780064E300 /* EditBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditBoxTest.cpp; sourceTree = "<group>"; };
@@ -1746,6 +1752,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				17E864AB1908E0C600FB8F9E /* WaterTest */,
 				15AA9C4115B7EC450033D6C2 /* AccelerometerTest */,
 				15AA9C4415B7EC450033D6C2 /* ActionManagerTest */,
 				15AA9C4715B7EC450033D6C2 /* ActionsEaseTest */,
@@ -2475,6 +2482,17 @@
 			);
 			name = ClippingNodeTest;
 			path = ../Classes/ClippingNodeTest;
+			sourceTree = "<group>";
+		};
+		17E864AB1908E0C600FB8F9E /* WaterTest */ = {
+			isa = PBXGroup;
+			children = (
+				17E864AC1908E12600FB8F9E /* CCWaterNode.cpp */,
+				17E864AD1908E12600FB8F9E /* CCWaterNode.h */,
+				17E864AF1908E4C100FB8F9E /* WaterNodeTest.cpp */,
+				17E864B01908E4C100FB8F9E /* WaterNodeTest.h */,
+			);
+			name = WaterTest;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -3373,6 +3391,7 @@
 				15AA9D5215B7EC460033D6C2 /* ActionManagerTest.cpp in Sources */,
 				15AA9D5315B7EC460033D6C2 /* ActionsEaseTest.cpp in Sources */,
 				15AA9D5415B7EC460033D6C2 /* ActionsProgressTest.cpp in Sources */,
+				17E864AE1908E12600FB8F9E /* CCWaterNode.cpp in Sources */,
 				15AA9D5515B7EC460033D6C2 /* ActionsTest.cpp in Sources */,
 				15AA9D5615B7EC460033D6C2 /* Box2dTest.cpp in Sources */,
 				15AA9D5715B7EC460033D6C2 /* Box2dView.cpp in Sources */,
@@ -3398,6 +3417,7 @@
 				15AA9D6715B7EC460033D6C2 /* ClickAndMoveTest.cpp in Sources */,
 				15AA9D6815B7EC460033D6C2 /* CocosDenshionTest.cpp in Sources */,
 				15AA9D6915B7EC460033D6C2 /* controller.cpp in Sources */,
+				17E864B11908E4C100FB8F9E /* WaterNodeTest.cpp in Sources */,
 				15AA9D6A15B7EC460033D6C2 /* CurlTest.cpp in Sources */,
 				15AA9D6B15B7EC460033D6C2 /* CurrentLanguageTest.cpp in Sources */,
 				15AA9D6C15B7EC460033D6C2 /* DrawPrimitivesTest.cpp in Sources */,

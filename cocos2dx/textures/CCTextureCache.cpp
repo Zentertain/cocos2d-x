@@ -219,6 +219,9 @@ CCTextureCache::CCTextureCache()
     CCAssert(g_sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
     
     m_pTextures = new CCDictionary();
+    m_pScheduler = CCDirector::sharedDirector()->getScheduler();
+    m_pScheduler->retain();
+    m_pScheduler->scheduleSelector(schedule_selector(CCTextureCache::update), this, 0, kCCRepeatForever, 0.0f, false);
 }
 
 CCTextureCache::~CCTextureCache()
@@ -227,6 +230,7 @@ CCTextureCache::~CCTextureCache()
     need_quit = true;
     pthread_cond_signal(&s_SleepCondition);
     CC_SAFE_RELEASE(m_pTextures);
+    CC_SAFE_RELEASE(m_pScheduler);
 }
 
 void CCTextureCache::purgeSharedTextureCache()
@@ -671,7 +675,7 @@ CCTexture2D* CCTextureCache::textureForKey(const char* key)
 void CCTextureCache::reloadAllTextures()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTexture::reloadAllTextures();
+    VolatileTexture::reloadAllTexturesDelay();
 #endif
 }
 
@@ -702,10 +706,19 @@ void CCTextureCache::dumpCachedTextureInfo()
     CCLOG("cocos2d: CCTextureCache dumpDebugInfo: %ld textures, for %lu KB (%.2f MB)", (long)count, (long)totalBytes / 1024, totalBytes / (1024.0f*1024.0f));
 }
 
+void CCTextureCache::update(float deltaTime)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    VolatileTexture::update();
+#endif
+}
+
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 
 std::list<VolatileTexture*> VolatileTexture::textures;
 bool VolatileTexture::isReloading = false;
+std::list<VolatileTexture*> VolatileTexture::texturesReload;
 
 VolatileTexture::VolatileTexture(CCTexture2D *t)
 : texture(t)
@@ -732,6 +745,7 @@ VolatileTexture::VolatileTexture(CCTexture2D *t)
 VolatileTexture::~VolatileTexture()
 {
     textures.remove(this);
+    texturesReload.remove(this);
     CC_SAFE_RELEASE(uiImage);
 }
 
@@ -843,17 +857,104 @@ void VolatileTexture::removeTexture(CCTexture2D *t)
     }
 }
 
+
+void VolatileTexture::reloadOneTexture(VolatileTexture * vt)
+{
+    switch (vt->m_eCashedImageType)
+    {
+        case kImageFile:
+        {
+            CCLOG("Reload texture: %s, pri = %d ", vt->m_strFileName.c_str(), vt->texture->getUseSequence());
+
+            std::string lowerCase(vt->m_strFileName.c_str());
+            for (unsigned int i = 0; i < lowerCase.length(); ++i)
+            {
+                lowerCase[i] = tolower(lowerCase[i]);
+            }
+            
+            if (std::string::npos != lowerCase.find(".pvr"))
+            {
+                CCTexture2DPixelFormat oldPixelFormat = CCTexture2D::defaultAlphaPixelFormat();
+                CCTexture2D::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
+                
+                vt->texture->initWithPVRFile(vt->m_strFileName.c_str());
+                CCTexture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
+            }
+            else
+            {
+                CCImage* pImage = new CCImage();
+                unsigned long nSize = 0;
+                unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
+                
+                if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
+                {
+                    CCTexture2DPixelFormat oldPixelFormat = CCTexture2D::defaultAlphaPixelFormat();
+                    CCTexture2D::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
+                    vt->texture->initWithImage(pImage);
+                    CCTexture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
+                }
+                
+                CC_SAFE_DELETE_ARRAY(pBuffer);
+                CC_SAFE_RELEASE(pImage);
+            }
+        }
+            break;
+        case kImageData:
+        {
+            vt->texture->initWithData(vt->m_pTextureData,
+                                      vt->m_PixelFormat,
+                                      vt->m_TextureSize.width,
+                                      vt->m_TextureSize.height,
+                                      vt->m_TextureSize);
+        }
+            break;
+        case kString:
+        {
+            vt->texture->initWithString(vt->m_strText.c_str(),
+                                        vt->m_strFontName.c_str(),
+                                        vt->m_fFontSize,
+                                        vt->m_size,
+                                        vt->m_alignment,
+                                        vt->m_vAlignment
+                                        );
+        }
+            break;
+        case kImage:
+        {
+            vt->texture->initWithImage(vt->uiImage);
+        }
+            break;
+        default:
+            break;
+    }
+    vt->texture->setTexParameters(&vt->m_texParams);
+}
+
+
 void VolatileTexture::reloadAllTextures()
 {
     isReloading = true;
 
     CCLOG("reload all texture");
+    
+    std::vector<bool> aIsNeedReload;
+    
     std::list<VolatileTexture *>::iterator iter = textures.begin();
-
+    
     while (iter != textures.end())
     {
         VolatileTexture *vt = *iter++;
-
+        aIsNeedReload.push_back(!glIsTexture(vt->texture->getName()));
+    }
+    
+    iter = textures.begin();
+    int i = 0;
+    while (iter != textures.end())
+    {
+        VolatileTexture *vt = *iter++;
+        if (!aIsNeedReload[i++])
+            continue;
+        
         switch (vt->m_eCashedImageType)
         {
         case kImageFile:
@@ -923,6 +1024,78 @@ void VolatileTexture::reloadAllTextures()
     }
 
     isReloading = false;
+}
+
+
+void VolatileTexture::reloadAllTexturesDelay()
+{
+    isReloading = true;
+    
+    CCLOG("reload all texture");
+    
+    std::vector<bool> aIsNeedReload;
+    
+    std::list<VolatileTexture *>::iterator iter = textures.begin();
+    
+    texturesReload.clear();
+    
+    struct VTCmp
+    {
+        bool operator()(const VolatileTexture* vt1, const VolatileTexture* vt2) const
+        {
+            return vt1->texture->getUseSequence() < vt1->texture->getUseSequence();
+        }
+    };
+    
+    std::priority_queue<VolatileTexture*, std::vector<VolatileTexture*>, VTCmp> texs;
+    
+    while (iter != textures.end())
+    {
+        VolatileTexture *vt = *iter++;
+        if (!glIsTexture(vt->texture->getName()))
+        {
+            vt->texture->ResetName();
+            texs.push(vt);
+        }
+    }
+    
+    while (!texs.empty())
+    {
+        texturesReload.push_back(texs.top());
+        texs.pop();
+    }
+    
+    CCLOG("Reload texture: %d  ", texturesReload.size());
+    isReloading = false;
+}
+
+
+void VolatileTexture::update()
+{
+    if (!texturesReload.empty())
+    {
+        CCLOG("texture reload num: %d ", texturesReload.size());
+        struct cc_timeval begin;
+        
+        if (CCTime::gettimeofdayCocos2d(&begin, NULL) != 0)
+        {
+            CCLOG("error in gettimeofday");
+            return;
+        }
+        
+        float deltaTime = 0;
+
+        while (!texturesReload.empty() && deltaTime < 30)
+        {
+            std::list<VolatileTexture *>::iterator iter = texturesReload.begin();
+            VolatileTexture *vt = *iter;
+            reloadOneTexture(vt);
+            texturesReload.pop_front();
+            struct cc_timeval now;
+            CCTime::gettimeofdayCocos2d(&now, NULL);
+            deltaTime = (now.tv_sec - begin.tv_sec) + (now.tv_usec - begin.tv_usec) / 1000.0f;
+        }
+    }
 }
 
 #endif // CC_ENABLE_CACHE_TEXTURE_DATA

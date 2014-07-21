@@ -245,6 +245,15 @@ public:
     virtual void update(float dt);
 };
 
+//interface
+struct ICustomCCBAminCallback
+{
+    virtual void PlaySoundFile(const char* szSoundFile) = 0;
+};
+
+
+void CCSetCustomCCBAminCallback(ICustomCCBAminCallback* pCallback);
+
 
 NS_CC_EXT_END
 

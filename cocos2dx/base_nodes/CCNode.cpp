@@ -887,7 +887,6 @@ void CCNode::transform()
 
     // Update Z vertex manually
     transfrom4x4.mat[14] = m_fVertexZ;
-
     kmGLMultMatrix( &transfrom4x4 );
 
 

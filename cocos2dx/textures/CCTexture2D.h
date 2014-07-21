@@ -267,6 +267,18 @@ public:
     
     bool hasPremultipliedAlpha();
     bool hasMipmaps();
+    
+    //New add, set name to null
+    void ResetName() { m_uName = 0; }
+
+    virtual GLuint getName();
+    int getUseSequence() const { return m_useSequence; }
+    
+protected:
+    GLuint m_uName;
+    int m_useSequence;
+    /** texture name */
+    
 private:
     bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
@@ -279,9 +291,6 @@ private:
     CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
     /** height in pixels */
     CC_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
-
-    /** texture name */
-    CC_PROPERTY_READONLY(GLuint, m_uName, Name)
 
     /** texture max S */
     CC_PROPERTY(GLfloat, m_fMaxS, MaxS)

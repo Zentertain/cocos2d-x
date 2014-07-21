@@ -551,12 +551,23 @@ void CCSprite::draw(void)
 
     CCAssert(!m_pobBatchNode, "If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
+    if (m_pobTexture != NULL && m_pobTexture->getName() == 0)
+        return;
+
     CC_NODE_DRAW_SETUP();
 
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
 
-    ccGLBindTexture2D( m_pobTexture->getName() );
-    ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+    if (m_pobTexture != NULL)
+    {
+        ccGLBindTexture2D( m_pobTexture->getName() );
+        ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+    }
+    else
+    {
+        ccGLBindTexture2D(0);
+        ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
+    }
 
 #define kQuadSize sizeof(m_sQuad.bl)
 #ifdef EMSCRIPTEN

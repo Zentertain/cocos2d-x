@@ -474,6 +474,9 @@
     <ClCompile Include="..\support\component\CCComponentContainer.cpp">
       <Filter>support\component</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\zip_support\ioapi_mem.cpp">
+      <Filter>support\zip_support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -951,6 +954,9 @@
     </ClInclude>
     <ClInclude Include="..\support\component\CCComponentContainer.h">
       <Filter>support\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\zip_support\ioapi_mem.h">
+      <Filter>support\zip_support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

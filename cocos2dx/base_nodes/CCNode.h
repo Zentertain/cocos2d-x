@@ -1007,7 +1007,7 @@ public:
      * @return A "local" axis aligned boudning box of the node.
      * @js getBoundingBox
      */
-    CCRect boundingBox(void);
+    virtual CCRect boundingBox(void);
 
     /// @{
     /// @name Actions
@@ -1226,7 +1226,7 @@ public:
     /**
      * Performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes.
      */
-    void transform(void);
+    virtual void transform(void);
     /**
      * Performs OpenGL view-matrix transformation of it's ancestors.
      * Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO)

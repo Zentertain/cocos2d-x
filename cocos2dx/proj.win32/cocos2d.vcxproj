@@ -231,6 +231,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\support\image_support\TGAlib.cpp" />
     <ClCompile Include="..\support\user_default\CCUserDefault.cpp" />
     <ClCompile Include="..\support\zip_support\ioapi.cpp" />
+    <ClCompile Include="..\support\zip_support\ioapi_mem.cpp" />
     <ClCompile Include="..\support\zip_support\unzip.cpp" />
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp" />
     <ClCompile Include="..\textures\CCTexture2D.cpp" />
@@ -393,6 +394,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\support\image_support\TGAlib.h" />
     <ClInclude Include="..\support\user_default\CCUserDefault.h" />
     <ClInclude Include="..\support\zip_support\ioapi.h" />
+    <ClInclude Include="..\support\zip_support\ioapi_mem.h" />
     <ClInclude Include="..\support\zip_support\unzip.h" />
     <ClInclude Include="..\support\zip_support\ZipUtils.h" />
     <ClInclude Include="..\textures\CCTexture2D.h" />

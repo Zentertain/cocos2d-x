@@ -1,29 +1,29 @@
 /****************************************************************************
-Copyright (c) 2012 cocos2d-x.org
-
-http://www.cocos2d-x.org
-
-Created by Jung Sang-Taik on 12. 3. 16..
-Copyright (c) 2012 Neofect. All rights reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Copyright (c) 2012 cocos2d-x.org
+ 
+ http://www.cocos2d-x.org
+ 
+ Created by Jung Sang-Taik on 12. 3. 16..
+ Copyright (c) 2012 Neofect. All rights reserved.
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "CCScale9Sprite.h"
 
@@ -64,7 +64,7 @@ CCScale9Sprite::CCScale9Sprite()
 , _opacity(255)
 , _color(ccWHITE)
 {
-
+    
 }
 
 CCScale9Sprite::~CCScale9Sprite()
@@ -104,20 +104,20 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 }
 
 #define    TRANSLATE_X(x, y, xtranslate) \
-    x+=xtranslate;                       \
+x+=xtranslate;                       \
 
 #define    TRANSLATE_Y(x, y, ytranslate) \
-    y+=ytranslate;                       \
+y+=ytranslate;                       \
 
 bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets)
 {
     m_bSpriteFrameRotated = rotated;
     GLubyte opacity = getOpacity();
     ccColor3B color = getColor();
-
+    
     // Release old sprites
     this->removeAllChildrenWithCleanup(true);
-
+    
     CC_SAFE_RELEASE(this->_centre);
     CC_SAFE_RELEASE(this->_top);
     CC_SAFE_RELEASE(this->_topLeft);
@@ -127,7 +127,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     CC_SAFE_RELEASE(this->_bottomLeft);
     CC_SAFE_RELEASE(this->_bottom);
     CC_SAFE_RELEASE(this->_bottomRight);
-
+    
     
     if(this->_scale9Image != batchnode)
     {
@@ -135,9 +135,9 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
         _scale9Image = batchnode;
         CC_SAFE_RETAIN(_scale9Image);
     }
-
+    
     _scale9Image->removeAllChildrenWithCleanup(true);
-
+    
     m_capInsets = capInsets;
     
     // If there is no given rect
@@ -145,7 +145,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     {
         // Get the texture size as original
         CCSize textureSize = _scale9Image->getTextureAtlas()->getTexture()->getContentSize();
-    
+        
         rect = CCRectMake(0, 0, textureSize.width, textureSize.height);
     }
     
@@ -157,87 +157,87 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     
     float w = rect.size.width;
     float h = rect.size.height;
-
+    
     // If there is no specified center region
     if ( m_capInsetsInternal.equals(CCRectZero) )
     {
         // CCLog("... cap insets not specified : using default cap insets ...");
         m_capInsetsInternal = CCRectMake(w/3, h/3, w/3, h/3);
     }
-
+    
     float left_w = m_capInsetsInternal.origin.x;
     float center_w = m_capInsetsInternal.size.width;
     float right_w = rect.size.width - (left_w + center_w);
-
+    
     float top_h = m_capInsetsInternal.origin.y;
     float center_h = m_capInsetsInternal.size.height;
     float bottom_h = rect.size.height - (top_h + center_h);
-
+    
     // calculate rects
-
+    
     // ... top row
     float x = 0.0;
     float y = 0.0;
-
+    
     // top left
     CCRect lefttopbounds = CCRectMake(x, y,
                                       left_w, top_h);
-
+    
     // top center
     TRANSLATE_X(x, y, left_w);
     CCRect centertopbounds = CCRectMake(x, y,
                                         center_w, top_h);
-        
+    
     // top right
     TRANSLATE_X(x, y, center_w);
     CCRect righttopbounds = CCRectMake(x, y,
                                        right_w, top_h);
-
+    
     // ... center row
     x = 0.0;
     y = 0.0;
     TRANSLATE_Y(x, y, top_h);
-
+    
     // center left
     CCRect leftcenterbounds = CCRectMake(x, y,
                                          left_w, center_h);
-
+    
     // center center
     TRANSLATE_X(x, y, left_w);
     CCRect centerbounds = CCRectMake(x, y,
                                      center_w, center_h);
-
+    
     // center right
     TRANSLATE_X(x, y, center_w);
     CCRect rightcenterbounds = CCRectMake(x, y,
                                           right_w, center_h);
-
+    
     // ... bottom row
     x = 0.0;
     y = 0.0;
     TRANSLATE_Y(x, y, top_h);
     TRANSLATE_Y(x, y, center_h);
-
+    
     // bottom left
     CCRect leftbottombounds = CCRectMake(x, y,
                                          left_w, bottom_h);
-
+    
     // bottom center
     TRANSLATE_X(x, y, left_w);
     CCRect centerbottombounds = CCRectMake(x, y,
                                            center_w, bottom_h);
-
+    
     // bottom right
     TRANSLATE_X(x, y, center_w);
     CCRect rightbottombounds = CCRectMake(x, y,
                                           right_w, bottom_h);
-
+    
     if (!rotated) {
         // CCLog("!rotated");
-
+        
         CCAffineTransform t = CCAffineTransformMakeIdentity();
         t = CCAffineTransformTranslate(t, rect.origin.x, rect.origin.y);
-
+        
         centerbounds = CCRectApplyAffineTransform(centerbounds, t);
         rightbottombounds = CCRectApplyAffineTransform(rightbottombounds, t);
         leftbottombounds = CCRectApplyAffineTransform(leftbottombounds, t);
@@ -247,7 +247,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
         leftcenterbounds = CCRectApplyAffineTransform(leftcenterbounds, t);
         centerbottombounds = CCRectApplyAffineTransform(centerbottombounds, t);
         centertopbounds = CCRectApplyAffineTransform(centertopbounds, t);
-
+        
         // Centre
         _centre = new CCSprite();
         _centre->initWithTexture(_scale9Image->getTexture(), centerbounds);
@@ -297,9 +297,9 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
         // to handle the case where the sprite is stored rotated
         // in the spritesheet
         // CCLog("rotated");
-
+        
         CCAffineTransform t = CCAffineTransformMakeIdentity();
-
+        
         CCRect rotatedcenterbounds = centerbounds;
         CCRect rotatedrightbottombounds = rightbottombounds;
         CCRect rotatedleftbottombounds = leftbottombounds;
@@ -322,7 +322,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
         leftcenterbounds = CCRectApplyAffineTransform(leftcenterbounds, t);
         centerbottombounds = CCRectApplyAffineTransform(centerbottombounds, t);
         centertopbounds = CCRectApplyAffineTransform(centertopbounds, t);
-
+        
         rotatedcenterbounds.origin = centerbounds.origin;
         rotatedrightbottombounds.origin = rightbottombounds.origin;
         rotatedleftbottombounds.origin = leftbottombounds.origin;
@@ -332,7 +332,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
         rotatedleftcenterbounds.origin = leftcenterbounds.origin;
         rotatedcenterbottombounds.origin = centerbottombounds.origin;
         rotatedcentertopbounds.origin = centertopbounds.origin;
-
+        
         // Centre
         _centre = new CCSprite();
         _centre->initWithTexture(_scale9Image->getTexture(), rotatedcenterbounds, true);
@@ -378,18 +378,18 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
         _bottomRight->initWithTexture(_scale9Image->getTexture(), rotatedrightbottombounds, true);
         _scale9Image->addChild(_bottomRight, 2, pBottomRight);
     }
-
+    
     this->setContentSize(rect.size);
     this->addChild(_scale9Image);
     
     if (m_bSpritesGenerated)
-        {
-            // Restore color and opacity
-            this->setOpacity(opacity);
-            this->setColor(color);
-        }
+    {
+        // Restore color and opacity
+        this->setOpacity(opacity);
+        this->setColor(color);
+    }
     m_bSpritesGenerated = true;
-
+    
     return true;
 }
 
@@ -410,24 +410,24 @@ void CCScale9Sprite::updatePositions()
         // if any of the above sprites are NULL, return
         return;
     }
-
+    
     CCSize size = this->m_obContentSize;
-
+    
     float sizableWidth = size.width - _topLeft->getContentSize().width - _topRight->getContentSize().width;
     float sizableHeight = size.height - _topLeft->getContentSize().height - _bottomRight->getContentSize().height;
     
     float horizontalScale = sizableWidth/_centre->getContentSize().width;
     float verticalScale = sizableHeight/_centre->getContentSize().height;
-
+    
     _centre->setScaleX(horizontalScale);
     _centre->setScaleY(verticalScale);
-
+    
     float rescaledWidth = _centre->getContentSize().width * horizontalScale;
     float rescaledHeight = _centre->getContentSize().height * verticalScale;
-
+    
     float leftWidth = _bottomLeft->getContentSize().width;
     float bottomHeight = _bottomLeft->getContentSize().height;
-
+    
     _bottomLeft->setAnchorPoint(ccp(0,0));
     _bottomRight->setAnchorPoint(ccp(0,0));
     _topLeft->setAnchorPoint(ccp(0,0));
@@ -437,13 +437,13 @@ void CCScale9Sprite::updatePositions()
     _top->setAnchorPoint(ccp(0,0));
     _bottom->setAnchorPoint(ccp(0,0));
     _centre->setAnchorPoint(ccp(0,0));
-
+    
     // Position corners
     _bottomLeft->setPosition(ccp(0,0));
     _bottomRight->setPosition(ccp(leftWidth+rescaledWidth,0));
     _topLeft->setPosition(ccp(0, bottomHeight+rescaledHeight));
     _topRight->setPosition(ccp(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
-
+    
     // Scale and position borders
     _left->setPosition(ccp(0, bottomHeight));
     _left->setScaleY(verticalScale);
@@ -453,7 +453,7 @@ void CCScale9Sprite::updatePositions()
     _bottom->setScaleX(horizontalScale);
     _top->setPosition(ccp(leftWidth,bottomHeight+rescaledHeight));
     _top->setScaleX(horizontalScale);
-
+    
     // Position centre
     _centre->setPosition(ccp(leftWidth, bottomHeight));
 }
@@ -540,10 +540,10 @@ bool CCScale9Sprite::initWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capI
 {
     CCTexture2D* texture = spriteFrame->getTexture();
     CCAssert(texture != NULL, "CCTexture must be not nil");
-
+    
     CCSpriteBatchNode *batchnode = CCSpriteBatchNode::createWithTexture(texture, 9);
     CCAssert(batchnode != NULL, "CCSpriteBatchNode must be not nil");
-
+    
     bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), capInsets);
     return pReturn;
 }
@@ -581,12 +581,12 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrame(CCSpriteFrame* spriteFrame
 bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets)
 {
     CCAssert((CCSpriteFrameCache::sharedSpriteFrameCache()) != NULL, "sharedSpriteFrameCache must be non-NULL");
-
+    
     CCSpriteFrame *frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName);
     CCAssert(frame != NULL, "CCSpriteFrame must be non-NULL");
-
+    
     if (NULL == frame) return false;
-
+    
     bool pReturn = this->initWithSpriteFrame(frame, capInsets);
     return pReturn;
 }
@@ -612,7 +612,7 @@ bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName)
 CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFrameName)
 {
     CCAssert(spriteFrameName != NULL, "spriteFrameName must be non-NULL");
-
+    
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
     {
@@ -620,7 +620,7 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFram
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-
+    
     CCLog("Could not allocate CCScale9Sprite()");
     return NULL;
     
@@ -639,13 +639,13 @@ CCScale9Sprite* CCScale9Sprite::resizableSpriteWithCapInsets(CCRect capInsets)
 }
 
 CCScale9Sprite* CCScale9Sprite::create()
-{ 
+{
     CCScale9Sprite *pReturn = new CCScale9Sprite();
     if (pReturn && pReturn->init())
-    { 
-        pReturn->autorelease();   
+    {
+        pReturn->autorelease();
         return pReturn;
-    } 
+    }
     CC_SAFE_DELETE(pReturn);
     return NULL;
 }
@@ -694,16 +694,16 @@ void CCScale9Sprite::updateCapInset()
         if (m_bSpriteFrameRotated)
         {
             insets = CCRectMake(m_insetBottom,
-                m_insetLeft,
-                m_spriteRect.size.width-m_insetRight-m_insetLeft,
-                m_spriteRect.size.height-m_insetTop-m_insetBottom);
+                                m_insetLeft,
+                                m_spriteRect.size.width-m_insetRight-m_insetLeft,
+                                m_spriteRect.size.height-m_insetTop-m_insetBottom);
         }
         else
         {
             insets = CCRectMake(m_insetLeft,
-                m_insetTop,
-                m_spriteRect.size.width-m_insetLeft-m_insetRight,
-                m_spriteRect.size.height-m_insetTop-m_insetBottom);
+                                m_insetTop,
+                                m_spriteRect.size.width-m_insetLeft-m_insetRight,
+                                m_spriteRect.size.height-m_insetTop-m_insetBottom);
         }
     }
     this->setCapInsets(insets);
@@ -750,7 +750,7 @@ void CCScale9Sprite::setSpriteFrame(CCSpriteFrame * spriteFrame)
 {
     CCSpriteBatchNode * batchnode = CCSpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
     this->updateWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), CCRectZero);
-
+    
     // Reset insets
     this->m_insetLeft = 0;
     this->m_insetTop = 0;
@@ -819,7 +819,7 @@ void CCScale9Sprite::setColor(const ccColor3B& color)
         return;
     }
     _color = color;
-
+    
     CCObject* child;
     CCArray* children = _scale9Image->getChildren();
     CCARRAY_FOREACH(children, child)
@@ -844,7 +844,7 @@ void CCScale9Sprite::setOpacity(GLubyte opacity)
         return;
     }
     _opacity = opacity;
-
+    
     CCObject* child;
     CCArray* children = _scale9Image->getChildren();
     CCARRAY_FOREACH(children, child)

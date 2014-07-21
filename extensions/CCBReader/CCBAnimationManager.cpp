@@ -14,6 +14,13 @@ using namespace std;
 
 NS_CC_EXT_BEGIN
 
+static ICustomCCBAminCallback* s_pCustomCallback = NULL;
+
+void CCSetCustomCCBAminCallback(ICustomCCBAminCallback* pCallback)
+{
+    s_pCustomCallback = pCallback;
+}
+
 // Implementation of CCBAinmationManager
 
 CCBAnimationManager::CCBAnimationManager()
@@ -1014,7 +1021,12 @@ CCObject* CCBSoundEffect::copyWithZone(CCZone *pZone)
 
 void CCBSoundEffect::update(float time)
 {
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(mSoundFile.c_str());
+    if (s_pCustomCallback) {
+        s_pCustomCallback->PlaySoundFile(mSoundFile.c_str());
+    }
+    else {
+        CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(mSoundFile.c_str());
+    }
 }
 
 
