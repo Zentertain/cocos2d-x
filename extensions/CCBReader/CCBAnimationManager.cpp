@@ -233,6 +233,9 @@ void CCBAnimationManager::addNode(CCNode *pNode, CCDictionary *pSeq)
 
 void CCBAnimationManager::setBaseValue(CCObject *pValue, CCNode *pNode, const char *pPropName)
 {
+    if (!pValue || !pNode || !pPropName)
+        return;
+    
     CCDictionary *props = (CCDictionary*)mBaseValues->objectForKey((intptr_t)pNode);
     if (! props)
     {
