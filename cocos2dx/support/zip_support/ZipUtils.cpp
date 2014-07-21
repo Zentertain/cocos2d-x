@@ -672,6 +672,7 @@ AssetZipFile::~AssetZipFile()
     CC_SAFE_DELETE(m_data);
     CC_SAFE_DELETE(m_buffer);
     CC_SAFE_DELETE(m_ourmemory);
+    CC_SAFE_DELETE(_dataThread);
 }
 
 bool AssetZipFile::initAssetZipFile(const std::string& filter)
