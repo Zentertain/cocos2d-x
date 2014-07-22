@@ -674,6 +674,7 @@ CCTexture2D* CCTextureCache::textureForKey(const char* key)
 
 void CCTextureCache::reloadAllTextures()
 {
+    sharedTextureCache()->removeUnusedTextures();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::reloadAllTexturesDelay();
 #endif
@@ -1085,7 +1086,7 @@ void VolatileTexture::update()
         
         float deltaTime = 0;
 
-        while (!texturesReload.empty() && deltaTime < 30)
+        while (!texturesReload.empty() && deltaTime < 10)
         {
             std::list<VolatileTexture *>::iterator iter = texturesReload.begin();
             VolatileTexture *vt = *iter;
