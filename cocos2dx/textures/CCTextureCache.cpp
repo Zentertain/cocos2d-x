@@ -674,9 +674,10 @@ CCTexture2D* CCTextureCache::textureForKey(const char* key)
 
 void CCTextureCache::reloadAllTextures()
 {
+    CCLog("CCTextureCache::reloadAllTextures");
     sharedTextureCache()->removeUnusedTextures();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTexture::reloadAllTexturesDelay();
+    VolatileTexture::reloadAllTextures();
 #endif
 }
 
@@ -865,7 +866,7 @@ void VolatileTexture::reloadOneTexture(VolatileTexture * vt)
     {
         case kImageFile:
         {
-            CCLOG("Reload texture: %s, pri = %d ", vt->m_strFileName.c_str(), vt->texture->getUseSequence());
+            CCLog("Reload texture: %s, pri = %d ", vt->m_strFileName.c_str(), vt->texture->getUseSequence());
 
             std::string lowerCase(vt->m_strFileName.c_str());
             for (unsigned int i = 0; i < lowerCase.length(); ++i)
@@ -936,20 +937,27 @@ void VolatileTexture::reloadAllTextures()
 {
     isReloading = true;
 
-    CCLOG("reload all texture");
+    CCLog("reload all texture");
     
     std::vector<bool> aIsNeedReload;
     
     std::list<VolatileTexture *>::iterator iter = textures.begin();
     
+    int nReload = 0;
     while (iter != textures.end())
     {
         VolatileTexture *vt = *iter++;
-        aIsNeedReload.push_back(!glIsTexture(vt->texture->getName()));
+        bool bReload = !glIsTexture(vt->texture->getName());
+        aIsNeedReload.push_back(bReload);
+        if (bReload)
+            nReload++;
     }
     
     iter = textures.begin();
     int i = 0;
+    
+    CCLog("Reload texture: %d  ", nReload);
+
     while (iter != textures.end())
     {
         VolatileTexture *vt = *iter++;
@@ -960,6 +968,8 @@ void VolatileTexture::reloadAllTextures()
         {
         case kImageFile:
             {
+                CCLog("Reload texture: %s, pri = %d ", vt->m_strFileName.c_str(), vt->texture->getUseSequence());
+
                 std::string lowerCase(vt->m_strFileName.c_str());
                 for (unsigned int i = 0; i < lowerCase.length(); ++i)
                 {
@@ -1032,7 +1042,7 @@ void VolatileTexture::reloadAllTexturesDelay()
 {
     isReloading = true;
     
-    CCLOG("reload all texture");
+    CCLog("reload all texture");
     
     std::vector<bool> aIsNeedReload;
     
@@ -1066,7 +1076,7 @@ void VolatileTexture::reloadAllTexturesDelay()
         texs.pop();
     }
     
-    CCLOG("Reload texture: %d  ", texturesReload.size());
+    CCLog("Reload texture: %d  ", texturesReload.size());
     isReloading = false;
 }
 
@@ -1075,12 +1085,12 @@ void VolatileTexture::update()
 {
     if (!texturesReload.empty())
     {
-        CCLOG("texture reload num: %d ", texturesReload.size());
+        CCLog("texture reload num: %d ", texturesReload.size());
         struct cc_timeval begin;
         
         if (CCTime::gettimeofdayCocos2d(&begin, NULL) != 0)
         {
-            CCLOG("error in gettimeofday");
+            CCLog("error in gettimeofday");
             return;
         }
         
