@@ -590,7 +590,10 @@ CCSpriteFrame * CCNodeLoader::parsePropTypeSpriteFrame(CCNode * pNode, CCNode * 
             pCCBReader->getAnimationManager()->setBaseValue(spriteFrame, pNode, pPropertyName);
         }
     }
-    
+    if (!spriteFrame)
+    {
+        CCLOG("miss: %s %s", spriteSheet.c_str(), spriteFile.c_str());
+    }
     return spriteFrame;
 }
 
