@@ -319,6 +319,7 @@ cocos2d::CCNode* NodeReader::loadNode(const rapidjson::Value& json, cocos2d::CCN
             else
             {
                 cocos2d::ui::TouchGroup* group = cocos2d::ui::TouchGroup::create();
+                group->setZOrder(widget->getZOrder());
                 group->addWidget(widget);
                 parent->addChild(group);
             }
@@ -396,12 +397,10 @@ void NodeReader::initNode(cocos2d::CCNode* node, const rapidjson::Value& json)
         if(alpha != 255)
         {
             rgbaProtocaol->setOpacity(alpha); 
-            rgbaProtocaol->setCascadeOpacityEnabled(true);
         }
         if(red != 255 || green != 255 || blue != 255)
         {
             rgbaProtocaol->setColor(ccc3(red, green, blue));
-            rgbaProtocaol->setCascadeColorEnabled(true);
         }
     }
 
@@ -485,6 +484,8 @@ CCNode* NodeReader::loadWidget(const rapidjson::Value& json, cocos2d::CCNode* pa
 {
     WidgetPropertiesReader* pReader = new WidgetPropertiesReader0300();
     cocos2d::ui::Widget* widget = pReader->widgetFromJsonDictionary(json);
+
+    initNode(widget, json);
 
     return widget;
 }
