@@ -15,7 +15,7 @@ USING_NS_CC;
 
 #define KEY_FB_INCOMING_REQUEST_IDS "FB_INCOMING_REQUEST_IDS"
 
-static EziFBIncomingRequestManager* sharedRequestManager;
+static EziFBIncomingRequestManager* sharedRequestManager = NULL;
 
 // Constructor
 EziFBIncomingRequestManager::EziFBIncomingRequestManager()

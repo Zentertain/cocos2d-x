@@ -43,6 +43,11 @@
 #define NUMBER_OF_AUTO_PURGE_TOP_COMPLETED_IDS 10
 
 #include <iostream>
+#include "cocos2d.h"
+
+typedef void (cocos2d::CCObject::*EziPhotoCallback)(cocos2d::CCSprite*, const char* fbID);
+#define ezi_selector(_SELECTOR) (EziPhotoCallback)(&_SELECTOR)
+
 
 namespace EziSocialWrapperNS
 {

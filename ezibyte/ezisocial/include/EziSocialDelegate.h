@@ -16,6 +16,9 @@
 class EziFacebookDelegate
 {
 public:
+    
+
+    
     virtual void fbSessionCallback(int responseCode, const char* responseMessage) {}
     virtual void fbUserDetailCallback(int responseCode, const char* responseMessage, EziFacebookUser* fbUser) {}
     virtual void fbMessageCallback(int responseCode, const char* responseMessage) {}
