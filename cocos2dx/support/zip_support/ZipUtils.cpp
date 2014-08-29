@@ -456,8 +456,8 @@ public:
 
 ZipFile::ZipFile(const std::string &zipFile, const std::string &filter)
 : _data(new ZipFilePrivate)
-, _dataThread(new ZipFilePrivate)
 {
+    _dataThread = new ZipFilePrivate;
     _data->zipFile = unzOpen(zipFile.c_str());
     _dataThread->zipFile = unzOpen(zipFile.c_str());
     if (_data->zipFile && _dataThread->zipFile)
@@ -630,11 +630,11 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, const std::stri
 
 AssetZipFile::AssetZipFile(const std::string& zipFile, const std::string& filter, const std::string& assetZipFile)
 : m_data (new ZipFilePrivate)
-, _dataThread(new ZipFilePrivate)
 , m_buffer (0)
 , m_size(0)
 , m_ourmemory(NULL)
 {
+    _dataThread = new ZipFilePrivate;
     std::auto_ptr<ZipFile> pZipFile(new ZipFile(zipFile, filter));
     unsigned long bufsize = 0;
     unsigned char* buffer = pZipFile->getFileData(assetZipFile, &bufsize);

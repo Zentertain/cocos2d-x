@@ -219,6 +219,10 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
 }
 
 
+void CCFileUtils::SetAssetZipFile(const char* szFileName)
+{
+}
+
 static NSFileManager* s_fileManager = [NSFileManager defaultManager];
 
 std::string CCFileUtilsIOS::getWritablePath()

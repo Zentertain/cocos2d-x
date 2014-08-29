@@ -31,7 +31,8 @@ using namespace std;
 NS_CC_BEGIN
 
 // record the zip on the resource path
-static AssetZipFile *s_pZipFile = NULL;
+static std::string s_strAssertZipFile = "";
+static IZipFile *s_pZipFile = NULL;
 //static ZipFile *s_pZipFile = NULL;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
@@ -41,10 +42,22 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
         s_sharedFileUtils = new CCFileUtilsAndroid();
         s_sharedFileUtils->init();
         std::string resourcePath = getApkPath();
-//        s_pZipFile = new ZipFile(resourcePath, "assets/");
-        s_pZipFile = new AssetZipFile(resourcePath, "assets/", "assets/gameres.001");
+        
+        if (s_strAssertZipFile == "")
+        {
+            s_pZipFile = new ZipFile(resourcePath, "assets/");
+        }
+        else
+        {
+            s_pZipFile = new AssetZipFile(resourcePath, "assets/", s_strAssertZipFile.c_str());
+        }
     }
     return s_sharedFileUtils;
+}
+
+void CCFileUtils::SetAssetZipFile(const char* szFileName)
+{
+    s_strAssertZipFile = szFileName;
 }
 
 CCFileUtilsAndroid::CCFileUtilsAndroid()

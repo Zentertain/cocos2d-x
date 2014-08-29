@@ -35,6 +35,8 @@ NS_CC_BEGIN
 
 class CCDictionary;
 class CCArray;
+class IZipFile;
+
 /**
  * @addtogroup platform
  * @{
@@ -64,6 +66,7 @@ public:
      */
     static CCFileUtils* sharedFileUtils();
     
+    static void SetAssetZipFile(const char* szFileName);
     /**
      *  Destroys the instance of CCFileUtils.
      */

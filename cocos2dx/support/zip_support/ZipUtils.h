@@ -55,6 +55,7 @@ namespace cocos2d
     class CC_DLL ZipUtils
     {
     public:
+    
         /** 
         * Inflates either zlib or gzip deflated memory. The inflated memory is
         * expected to be freed by the caller.
@@ -160,6 +161,51 @@ namespace cocos2d
     // forward declaration
     class ZipFilePrivate;
 
+    class CC_DLL IZipFile
+    {
+    public:
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        friend class CCFileUtilsAndroid;
+#endif
+        virtual ~IZipFile() {};
+        /**
+         * Regenerate accessible file list based on a new filter string.
+         *
+         * @param filter New filter string (first part of files names)
+         * @return true whenever zip file is open successfully and it is possible to locate
+         *              at least the first file, false otherwise
+         *
+         * @since v2.0.5
+         */
+        virtual bool setFilter(const std::string &filter) = 0;
+        
+        /**
+         * Check does a file exists or not in zip file
+         *
+         * @param fileName File to be checked on existance
+         * @return true whenever file exists, false otherwise
+         *
+         * @since v2.0.5
+         */
+        virtual bool fileExists(const std::string &fileName) const = 0;
+        
+        /**
+         * Get resource file data from a zip file.
+         * @param fileName File name
+         * @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+         * @return Upon success, a pointer to the data is returned, otherwise NULL.
+         * @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
+         *
+         * @since v2.0.5
+         */
+        virtual unsigned char *getFileData(const std::string &fileName, unsigned long *pSize) = 0;
+        
+        virtual unsigned char *getFileData(const std::string &fileName, const std::string& password, unsigned long *pSize) = 0;
+    protected:
+        virtual unsigned char *getFileData(const std::string &fileName, unsigned long *pSize, ZipFilePrivate *data) = 0;
+
+        ZipFilePrivate *_dataThread;
+    };
     /**
     * Zip file - reader helper class.
     *
@@ -168,12 +214,10 @@ namespace cocos2d
     *
     * @since v2.0.5
     */
-    class CC_DLL ZipFile
+    class CC_DLL ZipFile: public IZipFile
     {
     public:
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        friend class CCFileUtilsAndroid;
-#endif
+
         
         /**
         * Constructor, open zip file and store file list.
@@ -228,11 +272,10 @@ namespace cocos2d
         /** Internal data like zip file pointer / file list array and so on */
         ZipFilePrivate *_data;
         /** Another data used not in main thread */
-        ZipFilePrivate *_dataThread;
     };
 
     struct ourmemory_s;
-    class CC_DLL AssetZipFile
+    class CC_DLL AssetZipFile : public IZipFile
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         friend class CCFileUtilsAndroid;
@@ -248,6 +291,8 @@ namespace cocos2d
 
         unsigned char *getFileData(const std::string &fileName, unsigned long *pSize);
         unsigned char *getFileData(const std::string &fileName, const std::string& password, unsigned long *pSize);
+        bool setFilter(const std::string &filter) { return true; };
+
     private:
 
         unsigned char *getFileData(const std::string &fileName, unsigned long *pSize, ZipFilePrivate *data);
@@ -256,7 +301,7 @@ namespace cocos2d
         ourmemory_s* m_ourmemory;
         ZipFilePrivate * m_data;
         /** Another data used not in main thread */
-        ZipFilePrivate *_dataThread;
+        
     };
 
 
