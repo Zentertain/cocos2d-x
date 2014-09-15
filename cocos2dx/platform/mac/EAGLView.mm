@@ -327,7 +327,7 @@ static EAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 	
-    int ids[1] = {0};
+    intptr_t ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -351,7 +351,7 @@ static EAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 
-    int ids[1] = {0};
+    intptr_t ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -370,7 +370,7 @@ static EAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 
-    int ids[1] = {0};
+    intptr_t ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -487,3 +487,19 @@ static EAGLView *view;
 	DISPATCH_EVENT(theEvent, _cmd);
 }
 @end
+
+@implementation EAGLView (Editor)
+-(void)additionalInitForNib{
+    eventDelegate_ = [CCEventDispatcher sharedDispatcher];
+    NSRect frameRect = self.frame;
+    cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
+    
+    frameZoomFactor_ = 1.0f;
+	
+	view = self;
+}
+-(BOOL)acceptsFirstMouse:(NSEvent *)theEvent{
+    return YES;
+}
+@end
+

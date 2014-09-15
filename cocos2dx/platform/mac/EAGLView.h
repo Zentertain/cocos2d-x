@@ -115,5 +115,12 @@ THE SOFTWARE.
 -(void) setFullScreen:(BOOL)fullscreen;
 
 @end
+
+@interface EAGLView (Editor)
+-(BOOL)acceptsFirstMouse:(NSEvent *)theEvent;
+-(void)additionalInitForNib;
+@end
+
+
 #endif // __EAGLVIEW_MAC_H__
 
