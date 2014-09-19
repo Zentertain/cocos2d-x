@@ -1,3 +1,5 @@
+Dir['projects/*/Rakefile'].each {|f| load(f) }
+
 namespace :jenkins do
   namespace :engine do
     desc 'Archive Engine into Jenkins'
