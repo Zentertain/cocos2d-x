@@ -1,3 +1,4 @@
+#encoding: utf-8
 Dir['projects/*/Rakefile'].each {|f| load(f) }
 
 namespace :jenkins do
