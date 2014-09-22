@@ -5,7 +5,7 @@ namespace :jenkins do
   namespace :engine do
     desc 'Archive workspace for later use'
     task :archive do
-      sh %q{rsync -avczu --exclude='.git' "$WORKSPACE/." "$HUDSON_HOME/jobs/$JOB_NAME/builds/$BUILD_ID/codebase"}
+      sh %q{rsync -avcu --exclude='.git' "$WORKSPACE/." "$HUDSON_HOME/jobs/$JOB_NAME/builds/$BUILD_ID/codebase"}
     end
   end
 end
