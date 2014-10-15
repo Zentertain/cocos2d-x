@@ -36,14 +36,14 @@
 
 NS_CC_EXT_BEGIN
 
-static pthread_t        s_networkThread;
-static pthread_mutex_t  s_requestQueueMutex;
-static pthread_mutex_t  s_responseQueueMutex;
+static pthread_t        s_networkThread[HTTP_CLIENT_NUM];
+static pthread_mutex_t  s_requestQueueMutex[HTTP_CLIENT_NUM];
+static pthread_mutex_t  s_responseQueueMutex[HTTP_CLIENT_NUM];
 
-static pthread_mutex_t		s_SleepMutex;
-static pthread_cond_t		s_SleepCondition;
+static pthread_mutex_t		s_SleepMutex[HTTP_CLIENT_NUM];
+static pthread_cond_t		s_SleepCondition[HTTP_CLIENT_NUM];
 
-static unsigned long    s_asyncRequestCount = 0;
+static unsigned long    s_asyncRequestCount[HTTP_CLIENT_NUM];
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 typedef int int32_t;
@@ -51,12 +51,12 @@ typedef int int32_t;
 
 static bool need_quit = false;
 
-static CCArray* s_requestQueue = NULL;
-static CCArray* s_responseQueue = NULL;
+static CCArray* s_requestQueue[HTTP_CLIENT_NUM];
+static CCArray* s_responseQueue[HTTP_CLIENT_NUM];
 
-static CCHttpClient *s_pHttpClient = NULL; // pointer to singleton
+static CCHttpClient *s_pHttpClient[HTTP_CLIENT_NUM]; // pointer to singleton
 
-static char s_errorBuffer[CURL_ERROR_SIZE];
+static char s_errorBuffer[HTTP_CLIENT_NUM][CURL_ERROR_SIZE];
 
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 
@@ -96,7 +96,10 @@ static int processDeleteTask(CCHttpRequest *request, write_callback callback, vo
 
 // Worker thread
 static void* networkThread(void *data)
-{    
+{
+    int index = *((int*)data);
+    CCLog("network thread index %d\n", index);
+    
     CCHttpRequest *request = NULL;
     
     while (true) 
@@ -109,19 +112,19 @@ static void* networkThread(void *data)
         // step 1: send http request if the requestQueue isn't empty
         request = NULL;
         
-        pthread_mutex_lock(&s_requestQueueMutex); //Get request task from queue
-        if (0 != s_requestQueue->count())
+        pthread_mutex_lock(&s_requestQueueMutex[index]); //Get request task from queue
+        if (0 != s_requestQueue[index]->count())
         {
-            request = dynamic_cast<CCHttpRequest*>(s_requestQueue->objectAtIndex(0));
-            s_requestQueue->removeObjectAtIndex(0);  
+            request = dynamic_cast<CCHttpRequest*>(s_requestQueue[index]->objectAtIndex(0));
+            s_requestQueue[index]->removeObjectAtIndex(0);
             // request's refcount = 1 here
         }
-        pthread_mutex_unlock(&s_requestQueueMutex);
+        pthread_mutex_unlock(&s_requestQueueMutex[index]);
         
         if (NULL == request)
         {
         	// Wait for http request tasks from main thread
-        	pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
+        	pthread_cond_wait(&s_SleepCondition[index], &s_SleepMutex[index]);
             continue;
         }
         
@@ -187,7 +190,7 @@ static void* networkThread(void *data)
         if (retValue != 0) 
         {
             response->setSucceed(false);
-            response->setErrorBuffer(s_errorBuffer);
+            response->setErrorBuffer(s_errorBuffer[index]);
         }
         else
         {
@@ -196,32 +199,32 @@ static void* networkThread(void *data)
 
         
         // add response packet into queue
-        pthread_mutex_lock(&s_responseQueueMutex);
-        s_responseQueue->addObject(response);
-        pthread_mutex_unlock(&s_responseQueueMutex);
+        pthread_mutex_lock(&s_responseQueueMutex[index]);
+        s_responseQueue[index]->addObject(response);
+        pthread_mutex_unlock(&s_responseQueueMutex[index]);
         
         // resume dispatcher selector
-        CCDirector::sharedDirector()->getScheduler()->resumeTarget(CCHttpClient::getInstance());
+        CCDirector::sharedDirector()->getScheduler()->resumeTarget(CCHttpClient::getIndexInstance(index));
     }
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
-    pthread_mutex_lock(&s_requestQueueMutex);
-    s_requestQueue->removeAllObjects();
-    pthread_mutex_unlock(&s_requestQueueMutex);
-    s_asyncRequestCount -= s_requestQueue->count();
+    pthread_mutex_lock(&s_requestQueueMutex[index]);
+    s_requestQueue[index]->removeAllObjects();
+    pthread_mutex_unlock(&s_requestQueueMutex[index]);
+    s_asyncRequestCount[index] -= s_requestQueue[index]->count();
     
     if (s_requestQueue != NULL) {
         
-        pthread_mutex_destroy(&s_requestQueueMutex);
-        pthread_mutex_destroy(&s_responseQueueMutex);
+        pthread_mutex_destroy(&s_requestQueueMutex[index]);
+        pthread_mutex_destroy(&s_responseQueueMutex[index]);
         
-        pthread_mutex_destroy(&s_SleepMutex);
-        pthread_cond_destroy(&s_SleepCondition);
+        pthread_mutex_destroy(&s_SleepMutex[index]);
+        pthread_cond_destroy(&s_SleepCondition[index]);
 
-        s_requestQueue->release();
-        s_requestQueue = NULL;
-        s_responseQueue->release();
-        s_responseQueue = NULL;
+        s_requestQueue[index]->release();
+        s_requestQueue[index] = NULL;
+        s_responseQueue[index]->release();
+        s_responseQueue[index] = NULL;
     }
 
     pthread_exit(NULL);
@@ -384,23 +387,40 @@ static int processDeleteTask(CCHttpRequest *request, write_callback callback, vo
 // HttpClient implementation
 CCHttpClient* CCHttpClient::getInstance()
 {
-    if (s_pHttpClient == NULL) {
-        s_pHttpClient = new CCHttpClient();
+    return CCHttpClient::getIndexInstance(0);
+}
+
+CCHttpClient* CCHttpClient::getIndexInstance(int index)
+{
+    if (index >= HTTP_CLIENT_NUM || index < 0)
+    {
+        CCAssert(false, "CCHttpClient index is too large");
+        return NULL;
+    }
+    if (s_pHttpClient[index] == NULL) {
+        s_pHttpClient[index] = new CCHttpClient(index);
     }
     
-    return s_pHttpClient;
+    return s_pHttpClient[index];
 }
 
 void CCHttpClient::destroyInstance()
 {
-    CCAssert(s_pHttpClient, "");
-    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCHttpClient::dispatchResponseCallbacks), s_pHttpClient);
-    s_pHttpClient->release();
+    //CCAssert(s_pHttpClient, "");
+    for (int i = 0; i < HTTP_CLIENT_NUM; ++i)
+    {
+        if (s_pHttpClient[i] != NULL)
+        {
+            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCHttpClient::dispatchResponseCallbacks), s_pHttpClient[i]);
+            s_pHttpClient[i]->release();
+        }
+    }
 }
 
-CCHttpClient::CCHttpClient()
+CCHttpClient::CCHttpClient(int index)
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
+, _index(index)
 {
     CCDirector::sharedDirector()->getScheduler()->scheduleSelector(
                     schedule_selector(CCHttpClient::dispatchResponseCallbacks), this, 0, false);
@@ -411,34 +431,34 @@ CCHttpClient::~CCHttpClient()
 {
     need_quit = true;
     
-    if (s_requestQueue != NULL) {
-    	pthread_cond_signal(&s_SleepCondition);
+    if (s_requestQueue[_index] != NULL) {
+    	pthread_cond_signal(&s_SleepCondition[_index]);
     }
     
-    s_pHttpClient = NULL;
+    s_pHttpClient[_index] = NULL;
 }
 
 //Lazy create semaphore & mutex & thread
 bool CCHttpClient::lazyInitThreadSemphore()
 {
-    if (s_requestQueue != NULL) {
+    if (s_requestQueue[_index] != NULL) {
         return true;
     } else {
         
-        s_requestQueue = new CCArray();
-        s_requestQueue->init();
+        s_requestQueue[_index] = new CCArray();
+        s_requestQueue[_index]->init();
         
-        s_responseQueue = new CCArray();
-        s_responseQueue->init();
+        s_responseQueue[_index] = new CCArray();
+        s_responseQueue[_index]->init();
         
-        pthread_mutex_init(&s_requestQueueMutex, NULL);
-        pthread_mutex_init(&s_responseQueueMutex, NULL);
+        pthread_mutex_init(&s_requestQueueMutex[_index], NULL);
+        pthread_mutex_init(&s_responseQueueMutex[_index], NULL);
         
-        pthread_mutex_init(&s_SleepMutex, NULL);
-        pthread_cond_init(&s_SleepCondition, NULL);
+        pthread_mutex_init(&s_SleepMutex[_index], NULL);
+        pthread_cond_init(&s_SleepCondition[_index], NULL);
 
-        pthread_create(&s_networkThread, NULL, networkThread, NULL);
-        pthread_detach(s_networkThread);
+        pthread_create(&s_networkThread[_index], NULL, networkThread, (void*)&_index);
+        pthread_detach(s_networkThread[_index]);
         
         need_quit = false;
     }
@@ -459,16 +479,16 @@ void CCHttpClient::send(CCHttpRequest* request)
         return;
     }
         
-    ++s_asyncRequestCount;
+    ++s_asyncRequestCount[_index];
     
     request->retain();
         
-    pthread_mutex_lock(&s_requestQueueMutex);
-    s_requestQueue->addObject(request);
-    pthread_mutex_unlock(&s_requestQueueMutex);
+    pthread_mutex_lock(&s_requestQueueMutex[_index]);
+    s_requestQueue[_index]->addObject(request);
+    pthread_mutex_unlock(&s_requestQueueMutex[_index]);
     
     // Notify thread start to work
-    pthread_cond_signal(&s_SleepCondition);
+    pthread_cond_signal(&s_SleepCondition[_index]);
 }
 
 // Poll and notify main thread if responses exists in queue
@@ -478,17 +498,17 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
     
     CCHttpResponse* response = NULL;
     
-    pthread_mutex_lock(&s_responseQueueMutex);
-    if (s_responseQueue->count())
+    pthread_mutex_lock(&s_responseQueueMutex[_index]);
+    if (s_responseQueue[_index]->count())
     {
-        response = dynamic_cast<CCHttpResponse*>(s_responseQueue->objectAtIndex(0));
-        s_responseQueue->removeObjectAtIndex(0);
+        response = dynamic_cast<CCHttpResponse*>(s_responseQueue[_index]->objectAtIndex(0));
+        s_responseQueue[_index]->removeObjectAtIndex(0);
     }
-    pthread_mutex_unlock(&s_responseQueueMutex);
+    pthread_mutex_unlock(&s_responseQueueMutex[_index]);
     
     if (response)
     {
-        --s_asyncRequestCount;
+        --s_asyncRequestCount[_index];
         
         CCHttpRequest *request = response->getHttpRequest();
         CCObject *pTarget = request->getTarget();
@@ -502,7 +522,7 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
         response->release();
     }
     
-    if (0 == s_asyncRequestCount) 
+    if (0 == s_asyncRequestCount[_index]) 
     {
         CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
     }

@@ -45,13 +45,26 @@ NS_CC_EXT_BEGIN
  * @js NA
  * @lua NA
  */
+/* Change Singleton to HTTP_CLIENT_NUM instances, so requests to different servers can be sent simultaneously
+ * Such as instance 0 is used for requests to facebook server to download users photos
+ *         instance 1 is used for requests to game server
+ *         instance 2 is used for ... maybe other servers
+ * So requests to one server will not affect requests to others servers
+ * 20141011 liuyue
+ */
+
+#define HTTP_CLIENT_NUM    2
+
 class CCHttpClient : public CCObject
 {
 public:
-    /** Return the shared instance **/
+    /** Return the shared default instance: instance 0 **/
     static CCHttpClient *getInstance();
     
-    /** Relase the shared instance **/
+    /** Return specific instance, index should be less than HTTP_CLIENT_NUM **/
+    static CCHttpClient *getIndexInstance(int index);
+    
+    /** Relase all shared instances **/
     static void destroyInstance();
         
     /**
@@ -93,7 +106,7 @@ public:
     inline int getTimeoutForRead() {return _timeoutForRead;};
         
 private:
-    CCHttpClient();
+    CCHttpClient(int index);
     virtual ~CCHttpClient();
     bool init(void);
     
@@ -108,6 +121,7 @@ private:
 private:
     int _timeoutForConnect;
     int _timeoutForRead;
+    int _index;
     
     // std::string reqId;
 };
