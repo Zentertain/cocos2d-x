@@ -35,6 +35,8 @@
 
 NS_CC_EXT_BEGIN
 
+static const int MAX_RX_BUFFER_SIZE = 64*1024;
+
 class WsMessage
 {
 public:
@@ -319,6 +321,7 @@ bool WebSocket::init(const Delegate& delegate,
             strcpy(name, (*iter).c_str());
             _wsProtocols[i].name = name;
             _wsProtocols[i].callback = WebSocketCallbackWrapper::onSocketCallback;
+            _wsProtocols[i].rx_buffer_size = MAX_RX_BUFFER_SIZE;
         }
     }
     else
@@ -327,6 +330,7 @@ bool WebSocket::init(const Delegate& delegate,
         strcpy(name, "default-protocol");
         _wsProtocols[0].name = name;
         _wsProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
+        _wsProtocols[0].rx_buffer_size = MAX_RX_BUFFER_SIZE;
     }
     
     // WebSocket thread needs to be invoked at the end of this method.
