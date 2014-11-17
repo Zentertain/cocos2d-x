@@ -35,7 +35,7 @@
 
 NS_CC_EXT_BEGIN
 
-static const int MAX_RX_BUFFER_SIZE = 64*1024;
+static const int MAX_RX_BUFFER_SIZE = 16*1024;
 
 class WsMessage
 {
