@@ -1078,7 +1078,7 @@ void CCSprite::updateBlendFunc(void)
     else
     {
         m_sBlendFunc.src = CC_BLEND_SRC;
-        m_sBlendFunc.dst = CC_BLEND_DST;
+        //m_sBlendFunc.dst = CC_BLEND_DST;
         setOpacityModifyRGB(true);
     }
 }
