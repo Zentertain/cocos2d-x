@@ -726,6 +726,15 @@ static EAGLView *view = 0;
 
 #pragma mark -
 #pragma mark UIKeyboard notification
+UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrientation)
+{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        statusBarOrientation = UIInterfaceOrientationPortrait;
+    }
+    return statusBarOrientation;
+}
+
 
 - (void)onUIKeyboardNotification:(NSNotification *)notif;
 {
@@ -743,7 +752,7 @@ static EAGLView *view = 0;
     CGSize viewSize = self.frame.size;
     CGFloat tmp;
     
-    switch ([[UIApplication sharedApplication] statusBarOrientation])
+    switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
     {
         case UIInterfaceOrientationPortrait:
             begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
@@ -756,15 +765,9 @@ static EAGLView *view = 0;
             break;
             
         case UIInterfaceOrientationLandscapeLeft:
-            tmp = begin.size.width;
-            begin.size.width = begin.size.height;
-            begin.size.height = tmp;
-            tmp = end.size.width;
-            end.size.width = end.size.height;
-            end.size.height = tmp;
-            tmp = viewSize.width;
-            viewSize.width = viewSize.height;
-            viewSize.height = tmp;
+            std::swap(begin.size.width, begin.size.height);
+            std::swap(end.size.width, end.size.height);
+            std::swap(viewSize.width, viewSize.height);
             
             tmp = begin.origin.x;
             begin.origin.x = begin.origin.y;
@@ -775,15 +778,9 @@ static EAGLView *view = 0;
             break;
             
         case UIInterfaceOrientationLandscapeRight:
-            tmp = begin.size.width;
-            begin.size.width = begin.size.height;
-            begin.size.height = tmp;
-            tmp = end.size.width;
-            end.size.width = end.size.height;
-            end.size.height = tmp;
-            tmp = viewSize.width;
-            viewSize.width = viewSize.height;
-            viewSize.height = tmp;
+            std::swap(begin.size.width, begin.size.height);
+            std::swap(end.size.width, end.size.height);
+            std::swap(viewSize.width, viewSize.height);
             
             tmp = begin.origin.x;
             begin.origin.x = begin.origin.y;
@@ -879,7 +876,7 @@ static EAGLView *view = 0;
         dis /= 2.0f;
     }
     
-    switch ([[UIApplication sharedApplication] statusBarOrientation])
+    switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
     {
         case UIInterfaceOrientationPortrait:
             self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
