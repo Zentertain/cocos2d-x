@@ -941,6 +941,12 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     CC_SAFE_RETAIN(pCCBReader->_owner);
     reader->_owner = pCCBReader->_owner;
     
+    // NOTE: zentertain changed
+    if (!reader->_owner)
+    {
+        reader->_owner = pCCBReader->getAnimationManager()->getRootNode();
+    }
+    
     reader->getAnimationManager()->_owner = reader->_owner;
 
     // The assignments below are done in the CCBReader constructor.

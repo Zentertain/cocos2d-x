@@ -201,7 +201,7 @@ Rect GLView::getVisibleRect() const
 
 Size GLView::getVisibleSize() const
 {
-    if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
+    if (_resolutionPolicy == ResolutionPolicy::NO_BORDER || _resolutionPolicy == ResolutionPolicy::SHOW_ALL)
     {
         return Size(_screenSize.width/_scaleX, _screenSize.height/_scaleY);
     }
@@ -213,7 +213,7 @@ Size GLView::getVisibleSize() const
 
 Vec2 GLView::getVisibleOrigin() const
 {
-    if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
+    if (_resolutionPolicy == ResolutionPolicy::NO_BORDER || _resolutionPolicy == ResolutionPolicy::SHOW_ALL)
     {
         return Vec2((_designResolutionSize.width - _screenSize.width/_scaleX)/2, 
                            (_designResolutionSize.height - _screenSize.height/_scaleY)/2);

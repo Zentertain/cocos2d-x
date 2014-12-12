@@ -338,7 +338,9 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             _lifeVar = dictionary["particleLifespanVariance"].asFloat();
 
             // emission Rate
-            _emissionRate = _totalParticles / _life;
+            //_emissionRate = _totalParticles / _life;
+            // NOTE: zentertain change
+            _emissionRate = dictionary["emissionRate"].asFloat();
 
             //don't get the internal texture if a batchNode is used
             if (!_batchNode)
