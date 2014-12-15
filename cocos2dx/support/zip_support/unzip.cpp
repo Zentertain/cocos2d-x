@@ -69,7 +69,7 @@
 #include <string.h>
 
 #ifndef NOUNCRYPT
-        //#define NOUNCRYPT
+    //#define NOUNCRYPT
 #endif
 
 #include "zlib.h"
@@ -620,7 +620,6 @@ local unzFile unzOpenInternal (const void *path,
                                                  path,
                                                  ZLIB_FILEFUNC_MODE_READ |
                                                  ZLIB_FILEFUNC_MODE_EXISTING);
-
     if (us.filestream==NULL)
         return NULL;
 

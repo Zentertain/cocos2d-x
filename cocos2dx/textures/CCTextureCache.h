@@ -235,7 +235,6 @@ private:
     static VolatileTexture* findVolotileTexture(CCTexture2D *tt);
 
 protected:
-
     CCTexture2D *texture;
     
     CCImage *uiImage;

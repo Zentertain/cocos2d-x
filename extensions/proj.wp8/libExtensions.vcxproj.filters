@@ -139,6 +139,9 @@
     <Filter Include="CocoStudio\Reader\WidgetReader\TextFieldReader">
       <UniqueIdentifier>{b02fbf16-2a07-4956-bc4f-37eb8ebb912f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CocoStudio\ActionTimeLine">
+      <UniqueIdentifier>{3648ee31-4c28-44c4-9dee-0ba926207f9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp">
@@ -559,6 +562,28 @@
     <ClCompile Include="..\CocoStudio\Reader\WidgetReader\PageViewReader\PageViewReader.cpp">
       <Filter>CocoStudio\Reader\WidgetReader\PageViewReader</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\network\WebSocketWinRT.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Json\CocoLoader.cpp">
+      <Filter>CocoStudio\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCActionTimeline.cpp">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCActionTimelineCache.cpp">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCFrame.cpp">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCNodeReader.cpp">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\ActionTimeline\CCTimeLine.cpp">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
@@ -857,9 +882,6 @@
     <ClInclude Include="..\CocoStudio\Action\CCActionObject.h">
       <Filter>CocoStudio\Action</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.h">
-      <Filter>CocoStudio\GUI\BaseClasses</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIWidget.h">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClInclude>
@@ -887,9 +909,6 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISwitch.h">
-      <Filter>CocoStudio\GUI\UIWidgets</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
@@ -900,12 +919,6 @@
       <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\System\UIHelper.h">
-      <Filter>CocoStudio\GUI\System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\System\UIInputManager.h">
-      <Filter>CocoStudio\GUI\System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\System\UILayer.h">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h">
@@ -936,9 +949,6 @@
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.h">
@@ -1067,6 +1077,35 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Reader\WidgetReader\PageViewReader\PageViewReader.h">
       <Filter>CocoStudio\Reader\WidgetReader\PageViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\network\WebSocketWinRT.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\WebSocket.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExtensionExport.h" />
+    <ClInclude Include="..\CocoStudio\Json\CocoLoader.h">
+      <Filter>CocoStudio\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCActionTimeline.h">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCActionTimelineCache.h">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCFrame.h">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCNodeReader.h">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCTimeLine.h">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\ActionTimeline\CCTimelineMacro.h">
+      <Filter>CocoStudio\ActionTimeLine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

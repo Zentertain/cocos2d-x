@@ -65,7 +65,7 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
     {
         pobSprite->autorelease();
         return pobSprite;
-    }   
+    }
     CC_SAFE_DELETE(pobSprite);
     return NULL;
 }
@@ -230,8 +230,8 @@ bool CCSprite::initWithFile(const char *pszFilename)
     }
 
     // don't release here.
-    // when load texture failed, it's better to get a "transparent" sprite then a crashed program
-    // this->release(); 
+    // when load texture failed, it's better to get a "transparent" sprite than a crashed program
+    // this->release();
     return false;
 }
 
@@ -246,7 +246,7 @@ bool CCSprite::initWithFile(const char *pszFilename, const CCRect& rect)
     }
 
     // don't release here.
-    // when load texture failed, it's better to get a "transparent" sprite then a crashed program
+    // when load texture failed, it's better to get a "transparent" sprite than a crashed program
     // this->release(); 
     return false;
 }
@@ -1125,18 +1125,6 @@ void CCSprite::setTexture(CCTexture2D *texture)
             texture = CCTextureCache::sharedTextureCache()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
-    }
-
-    // shader program
-    if (texture)
-    {
-		if (m_pShaderProgram == NULL || m_pShaderProgram == CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor))
-			setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-    }
-    else
-    {
-		if (m_pShaderProgram == NULL || m_pShaderProgram == CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor))
-			setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor));
     }
 
     if (!m_pobBatchNode && m_pobTexture != texture)

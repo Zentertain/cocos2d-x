@@ -386,6 +386,7 @@ public:
     */
     static CCParticleSystem * create(const char *plistFile);
     
+    
     //! create a system with a fixed number of particles
     static CCParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
 

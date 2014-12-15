@@ -291,7 +291,6 @@ private:
     CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
     /** height in pixels */
     CC_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
-
     /** texture max S */
     CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
     /** texture max T */

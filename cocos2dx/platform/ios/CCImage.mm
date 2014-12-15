@@ -65,8 +65,8 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
     
     // get image info
     
-    pImageinfo->width = CGImageGetWidth(cgImage);
-    pImageinfo->height = CGImageGetHeight(cgImage);
+    pImageinfo->width = static_cast<unsigned int>(CGImageGetWidth(cgImage));
+    pImageinfo->height = static_cast<unsigned int>(CGImageGetHeight(cgImage));
     
     CGImageAlphaInfo info = CGImageGetAlphaInfo(cgImage);
     pImageinfo->hasAlpha = (info == kCGImageAlphaPremultipliedLast) 
@@ -186,6 +186,9 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
         
         dim.height += tmp.height;
     }
+    
+    dim.width = ceilf(dim.width);
+    dim.height = ceilf(dim.height);
     
     return dim;
 }
@@ -442,7 +445,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 				
     if (pBuffer != NULL && nSize > 0)
     {
-        bRet = initWithImageData(pBuffer, nSize, eImgFmt);
+        bRet = initWithImageData(pBuffer, static_cast<int>(nSize), eImgFmt);
     }
     CC_SAFE_DELETE_ARRAY(pBuffer);
     return bRet;
@@ -458,7 +461,7 @@ bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat ima
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
-        bRet = initWithImageData(pBuffer, nSize, imageType);
+        bRet = initWithImageData(pBuffer, static_cast<int>(nSize), imageType);
     }
     CC_SAFE_DELETE_ARRAY(pBuffer);
     return bRet;
@@ -606,7 +609,6 @@ bool CCImage::initWithStringShadowStroke(
     info.tintColorG             = textTintG;
     info.tintColorB             = textTintB;
     
-
     try {
         if (! _initWithString(pText, eAlignMask, pFontName, nSize, &info))
         {

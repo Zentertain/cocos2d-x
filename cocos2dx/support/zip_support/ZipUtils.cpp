@@ -363,7 +363,7 @@ int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
         
         // decrypt
         unsigned int* ints = (unsigned int*)(compressed+12);
-        int enclen = (fileLen-12)/4;
+        int enclen = static_cast<int>((fileLen-12)/4);
         
         ccDecodeEncodedPvr(ints, enclen);
                 
@@ -457,7 +457,7 @@ public:
 ZipFile::ZipFile(const std::string &zipFile, const std::string &filter)
 : _data(new ZipFilePrivate)
 {
-    _dataThread = new ZipFilePrivate;
+    _dataThread = new ZipFilePrivate();
     _data->zipFile = unzOpen(zipFile.c_str());
     _dataThread->zipFile = unzOpen(zipFile.c_str());
     if (_data->zipFile && _dataThread->zipFile)
@@ -512,7 +512,7 @@ bool ZipFile::setFilter(const std::string &filter, ZipFilePrivate *data)
                     ZipEntryInfo entry;
                     entry.pos = posInfo;
                     entry.uncompressed_size = (uLong)fileInfo.uncompressed_size;
-                    _data->fileList[currentFileName] = entry;
+                    data->fileList[currentFileName] = entry;
                 }
             }
             // next file - also get the information about it
@@ -574,7 +574,7 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *
         CC_BREAK_IF(UNZ_OK != nRet);
         
         pBuffer = new unsigned char[fileInfo.uncompressed_size];
-        int CC_UNUSED nSize = unzReadCurrentFile(data->zipFile, pBuffer, fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(data->zipFile, pBuffer,static_cast<unsigned int>(fileInfo.uncompressed_size));
         CCAssert(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
         
         if (pSize)
@@ -615,7 +615,7 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, const std::stri
         CC_BREAK_IF(UNZ_OK != nRet);
         
         pBuffer = new unsigned char[fileInfo.uncompressed_size];
-        int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, pBuffer, fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, pBuffer, static_cast<unsigned int>(fileInfo.uncompressed_size));
         CCAssert(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
         
         if (pSize)
@@ -771,7 +771,7 @@ unsigned char *AssetZipFile::getFileData(const std::string &fileName, unsigned l
         CC_BREAK_IF(UNZ_OK != nRet);
         
         pBuffer = new unsigned char[fileInfo.uncompressed_size];
-        int CC_UNUSED nSize = unzReadCurrentFile(data->zipFile, pBuffer, fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(data->zipFile, pBuffer, static_cast<int>(fileInfo.uncompressed_size));
         CCAssert(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
         
         if (pSize)
@@ -812,7 +812,7 @@ unsigned char *AssetZipFile::getFileData(const std::string &fileName, const std:
         CC_BREAK_IF(UNZ_OK != nRet);
         
         pBuffer = new unsigned char[fileInfo.uncompressed_size];
-        int CC_UNUSED nSize = unzReadCurrentFile(m_data->zipFile, pBuffer, fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(m_data->zipFile, pBuffer, static_cast<unsigned int>(fileInfo.uncompressed_size));
         CCAssert(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
         
         if (pSize)

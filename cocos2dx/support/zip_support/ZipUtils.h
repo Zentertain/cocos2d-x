@@ -55,8 +55,7 @@ namespace cocos2d
     class CC_DLL ZipUtils
     {
     public:
-    
-        /** 
+        /**
         * Inflates either zlib or gzip deflated memory. The inflated memory is
         * expected to be freed by the caller.
         *
@@ -218,7 +217,6 @@ namespace cocos2d
     {
     public:
 
-        
         /**
         * Constructor, open zip file and store file list.
         *
@@ -303,9 +301,7 @@ namespace cocos2d
         /** Another data used not in main thread */
         
     };
-
-
-
+    
 } // end of namespace cocos2d
 #endif // __SUPPORT_ZIPUTILS_H__
 

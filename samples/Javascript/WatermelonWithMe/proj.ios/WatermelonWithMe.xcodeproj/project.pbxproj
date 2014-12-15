@@ -206,6 +206,11 @@
 		2961DE6918C97C830017F5DB /* SliderReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DE5618C97C830017F5DB /* SliderReader.cpp */; };
 		2961DE6A18C97C830017F5DB /* TextFieldReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DE5918C97C830017F5DB /* TextFieldReader.cpp */; };
 		2961DE6B18C97C830017F5DB /* WidgetReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DE5B18C97C830017F5DB /* WidgetReader.cpp */; };
+		29D49642196E6598002DF8B5 /* CCActionTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D49637196E6598002DF8B5 /* CCActionTimeline.cpp */; };
+		29D49643196E6598002DF8B5 /* CCActionTimelineCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D49639196E6598002DF8B5 /* CCActionTimelineCache.cpp */; };
+		29D49644196E6598002DF8B5 /* CCFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D4963B196E6598002DF8B5 /* CCFrame.cpp */; };
+		29D49645196E6598002DF8B5 /* CCNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D4963D196E6598002DF8B5 /* CCNodeReader.cpp */; };
+		29D49646196E6598002DF8B5 /* CCTimeLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D4963F196E6598002DF8B5 /* CCTimeLine.cpp */; };
 		375BD498186840490024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD490186840490024609E /* ObjectFactory.cpp */; };
 		375BD499186840490024609E /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD492186840490024609E /* TriggerBase.cpp */; };
 		375BD49A186840490024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD494186840490024609E /* TriggerMng.cpp */; };
@@ -213,6 +218,7 @@
 		37FFCAD91860701E0078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAD71860701E0078F312 /* CCActionEaseEx.cpp */; };
 		3EC20BA218335A6C00F2C4D6 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20BA118335A6C00F2C4D6 /* jsb_cocos2d_studio.js */; };
 		3EC20BA318335A8100F2C4D6 /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EC20BA118335A6C00F2C4D6 /* jsb_cocos2d_studio.js */; };
+		43B91EF91949BAAB00F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91EF71949BAAB00F7F815 /* CocoLoader.cpp */; };
 		460E53B5182B75140040458A /* UILayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E53B1182B75140040458A /* UILayout.cpp */; };
 		460E53B6182B75140040458A /* UILayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E53B3182B75140040458A /* UILayoutParameter.cpp */; };
 		460E53BB182B755B0040458A /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460E53B7182B755B0040458A /* GUIReader.cpp */; };
@@ -616,6 +622,17 @@
 		2961DE5B18C97C830017F5DB /* WidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WidgetReader.cpp; sourceTree = "<group>"; };
 		2961DE5C18C97C830017F5DB /* WidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReader.h; sourceTree = "<group>"; };
 		2961DE5D18C97C830017F5DB /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
+		29D49637196E6598002DF8B5 /* CCActionTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTimeline.cpp; sourceTree = "<group>"; };
+		29D49638196E6598002DF8B5 /* CCActionTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTimeline.h; sourceTree = "<group>"; };
+		29D49639196E6598002DF8B5 /* CCActionTimelineCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTimelineCache.cpp; sourceTree = "<group>"; };
+		29D4963A196E6598002DF8B5 /* CCActionTimelineCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTimelineCache.h; sourceTree = "<group>"; };
+		29D4963B196E6598002DF8B5 /* CCFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFrame.cpp; sourceTree = "<group>"; };
+		29D4963C196E6598002DF8B5 /* CCFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrame.h; sourceTree = "<group>"; };
+		29D4963D196E6598002DF8B5 /* CCNodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNodeReader.cpp; sourceTree = "<group>"; };
+		29D4963E196E6598002DF8B5 /* CCNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeReader.h; sourceTree = "<group>"; };
+		29D4963F196E6598002DF8B5 /* CCTimeLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTimeLine.cpp; sourceTree = "<group>"; };
+		29D49640196E6598002DF8B5 /* CCTimeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimeLine.h; sourceTree = "<group>"; };
+		29D49641196E6598002DF8B5 /* CCTimelineMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimelineMacro.h; sourceTree = "<group>"; };
 		373B911D18788F8C00198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		375BD490186840490024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
 		375BD491186840490024609E /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
@@ -625,6 +642,7 @@
 		375BD495186840490024609E /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
 		375BD496186840490024609E /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
 		375BD497186840490024609E /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
+		37C62C0018E1552100D16FC4 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
 		37FFCAD71860701E0078F312 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		37FFCAD81860701E0078F312 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		37FFCADB1860702F0078F312 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
@@ -638,6 +656,8 @@
 		37FFCAE41860702F0078F312 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		37FFCAE51860702F0078F312 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3EC20BA118335A6C00F2C4D6 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_studio.js; sourceTree = "<group>"; };
+		43B91EF71949BAAB00F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
+		43B91EF81949BAAB00F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		460E53B1182B75140040458A /* UILayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayout.cpp; sourceTree = "<group>"; };
 		460E53B2182B75140040458A /* UILayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayout.h; sourceTree = "<group>"; };
 		460E53B3182B75140040458A /* UILayoutParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutParameter.cpp; sourceTree = "<group>"; };
@@ -955,6 +975,7 @@
 				15A3D6D41682F407002FB0C5 /* CCBReader */,
 				15A3D7091682F407002FB0C5 /* cocos-ext.h */,
 				15A3D70A1682F407002FB0C5 /* ExtensionMacros.h */,
+				37C62C0018E1552100D16FC4 /* ExtensionExport.h */,
 				15A3D70B1682F407002FB0C5 /* GUI */,
 				15A3D73E1682F407002FB0C5 /* physics_nodes */,
 			);
@@ -1137,6 +1158,7 @@
 		1A36F79617EFED6D000D0275 /* Armature */ = {
 			isa = PBXGroup;
 			children = (
+				29D49636196E6598002DF8B5 /* ActionTimeline */,
 				1A36F79717EFED6D000D0275 /* animation */,
 				1A36F79E17EFED6D000D0275 /* CCArmature.cpp */,
 				1A36F79F17EFED6D000D0275 /* CCArmature.h */,
@@ -1347,6 +1369,8 @@
 				37FFCADA1860702F0078F312 /* rapidjson */,
 				1A36F80B17EFED6D000D0275 /* DictionaryHelper.cpp */,
 				1A36F80C17EFED6D000D0275 /* DictionaryHelper.h */,
+				43B91EF71949BAAB00F7F815 /* CocoLoader.cpp */,
+				43B91EF81949BAAB00F7F815 /* CocoLoader.h */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -1511,6 +1535,25 @@
 				2961DE5A18C97C830017F5DB /* TextFieldReader.h */,
 			);
 			path = TextFieldReader;
+			sourceTree = "<group>";
+		};
+		29D49636196E6598002DF8B5 /* ActionTimeline */ = {
+			isa = PBXGroup;
+			children = (
+				29D49637196E6598002DF8B5 /* CCActionTimeline.cpp */,
+				29D49638196E6598002DF8B5 /* CCActionTimeline.h */,
+				29D49639196E6598002DF8B5 /* CCActionTimelineCache.cpp */,
+				29D4963A196E6598002DF8B5 /* CCActionTimelineCache.h */,
+				29D4963B196E6598002DF8B5 /* CCFrame.cpp */,
+				29D4963C196E6598002DF8B5 /* CCFrame.h */,
+				29D4963D196E6598002DF8B5 /* CCNodeReader.cpp */,
+				29D4963E196E6598002DF8B5 /* CCNodeReader.h */,
+				29D4963F196E6598002DF8B5 /* CCTimeLine.cpp */,
+				29D49640196E6598002DF8B5 /* CCTimeLine.h */,
+				29D49641196E6598002DF8B5 /* CCTimelineMacro.h */,
+			);
+			name = ActionTimeline;
+			path = ../ActionTimeline;
 			sourceTree = "<group>";
 		};
 		375BD48F186840490024609E /* Trigger */ = {
@@ -1782,6 +1825,7 @@
 				15A3D7531682F407002FB0C5 /* CCBReader.cpp in Sources */,
 				15A3D7541682F407002FB0C5 /* CCBSequence.cpp in Sources */,
 				15A3D7551682F407002FB0C5 /* CCBSequenceProperty.cpp in Sources */,
+				43B91EF91949BAAB00F7F815 /* CocoLoader.cpp in Sources */,
 				15A3D7561682F407002FB0C5 /* CCBValue.cpp in Sources */,
 				15A3D7571682F407002FB0C5 /* CCControlButtonLoader.cpp in Sources */,
 				15A3D7581682F407002FB0C5 /* CCControlLoader.cpp in Sources */,
@@ -1801,6 +1845,7 @@
 				15A3D7631682F407002FB0C5 /* CCNodeLoaderLibrary.cpp in Sources */,
 				15A3D7641682F407002FB0C5 /* CCParticleSystemQuadLoader.cpp in Sources */,
 				15A3D7651682F407002FB0C5 /* CCScale9SpriteLoader.cpp in Sources */,
+				29D49642196E6598002DF8B5 /* CCActionTimeline.cpp in Sources */,
 				15A3D7661682F407002FB0C5 /* CCScrollViewLoader.cpp in Sources */,
 				15A3D7671682F407002FB0C5 /* CCSpriteLoader.cpp in Sources */,
 				15A3D7681682F407002FB0C5 /* CCControl.cpp in Sources */,
@@ -1809,6 +1854,7 @@
 				2961DE6318C97C830017F5DB /* LabelReader.cpp in Sources */,
 				15A3D76A1682F407002FB0C5 /* CCControlColourPicker.cpp in Sources */,
 				375BD49A186840490024609E /* TriggerMng.cpp in Sources */,
+				29D49643196E6598002DF8B5 /* CCActionTimelineCache.cpp in Sources */,
 				15A3D76B1682F407002FB0C5 /* CCControlHuePicker.cpp in Sources */,
 				15A3D76C1682F407002FB0C5 /* CCControlPotentiometer.cpp in Sources */,
 				15A3D76D1682F407002FB0C5 /* CCControlSaturationBrightnessPicker.cpp in Sources */,
@@ -1830,6 +1876,7 @@
 				15A3D77D1682F407002FB0C5 /* CCPhysicsDebugNode.cpp in Sources */,
 				15A3D77E1682F407002FB0C5 /* CCPhysicsSprite.cpp in Sources */,
 				1AAF0C02169829E200C5F611 /* jsb_chipmunk.js in Sources */,
+				29D49644196E6598002DF8B5 /* CCFrame.cpp in Sources */,
 				1AAF0C03169829E200C5F611 /* jsb_cocos2d.js in Sources */,
 				1AAF0C04169829E200C5F611 /* jsb_cocosbuilder.js in Sources */,
 				460E53B5182B75140040458A /* UILayout.cpp in Sources */,
@@ -1845,6 +1892,7 @@
 				1A0B931B16EDC8730062524A /* jsb_cocos2dx_auto_api.js in Sources */,
 				1A0B931C16EDC8730062524A /* jsb_cocos2dx_auto.cpp in Sources */,
 				46513EAD187BFB1F00B5ABE1 /* UITouchGroup.cpp in Sources */,
+				29D49645196E6598002DF8B5 /* CCNodeReader.cpp in Sources */,
 				2961DE6518C97C830017F5DB /* ListViewReader.cpp in Sources */,
 				2961DE6618C97C830017F5DB /* LoadingBarReader.cpp in Sources */,
 				1A0B931D16EDC8730062524A /* jsb_cocos2dx_extension_auto_api.js in Sources */,
@@ -1873,6 +1921,7 @@
 				1A36F82C17EFED6D000D0275 /* CCArmature.cpp in Sources */,
 				1A36F82D17EFED6D000D0275 /* CCBone.cpp in Sources */,
 				1A36F82E17EFED6D000D0275 /* CCDatas.cpp in Sources */,
+				29D49646196E6598002DF8B5 /* CCTimeLine.cpp in Sources */,
 				1A36F82F17EFED6D000D0275 /* CCBatchNode.cpp in Sources */,
 				1A36F83017EFED6D000D0275 /* CCDecorativeDisplay.cpp in Sources */,
 				1A36F83117EFED6D000D0275 /* CCDisplayFactory.cpp in Sources */,
@@ -1982,6 +2031,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
@@ -2009,7 +2059,7 @@
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -2026,6 +2076,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -2050,7 +2101,7 @@
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
 				OTHER_LDFLAGS = (
 					"-lxml2",

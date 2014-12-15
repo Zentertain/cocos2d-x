@@ -148,6 +148,18 @@ CCParticleSystem * CCParticleSystem::create(const char *plistFile)
     return pRet;
 }
 
+CCParticleSystem* CCParticleSystem::createWithTotalParticles(unsigned int numberOfParticles)
+{
+    CCParticleSystem *pRet = new CCParticleSystem();
+    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    return pRet;
+}
+
 bool CCParticleSystem::init()
 {
     return initWithTotalParticles(150);
@@ -344,7 +356,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                     const char *textureData = dictionary->valueForKey("textureImageData")->getCString();
                     CCAssert(textureData, "");
                     
-                    int dataLen = strlen(textureData);
+                    int dataLen = static_cast<int>(strlen(textureData));
                     if(dataLen != 0)
                     {
                         // if it fails, try to get it from the base64-gzipped data    

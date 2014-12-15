@@ -79,7 +79,7 @@ typedef void (CCObject::*SEL_TouchEvent)(CCObject*,TouchEventType);
 *   @js NA
 *   @lua NA
 */
-class Widget : public CCNode
+class CC_EX_DLL Widget : public CCNodeRGBA
 {
 public:    
     /**
@@ -641,6 +641,23 @@ public:
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
+    
+    /**
+     * Returns a user assigned CCDictionary
+     *
+     * @return A user assigned CCDictionary
+     */
+    virtual cocos2d::CCDictionary* getScriptObjectDict() const;
+    /**
+     * Returns a user assigned CCDictionary
+     *
+     * The scriptObjectDict will be retained once in this method,
+     * and the previous scriptObjectDict (if existed) will be relese.
+     * The scriptObjectDict will be released in destructure.
+     *
+     * @param A user assigned CCObject
+     */
+    virtual void setScriptObjectDict(cocos2d::CCDictionary* scriptObjectDict);
 protected:
     //call back function called when size changed.
     virtual void onSizeChanged();
@@ -717,10 +734,16 @@ protected:
     bool _flippedX;
     bool _flippedY;
     
+    cocos2d::CCDictionary* _scriptObjectDict;
+    
     friend class TouchGroup;
 };
 }
 
+namespace gui = ui;
+
 NS_CC_END
+
+
 
 #endif /* defined(__Widget__) */

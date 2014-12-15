@@ -29,7 +29,7 @@
 
 NS_CC_EXT_BEGIN
 
-class ButtonReader : public WidgetReader
+class CC_EX_DLL ButtonReader : public WidgetReader
 {
 public:
     DECLARE_CLASS_WIDGET_READER_INFO
@@ -39,8 +39,11 @@ public:
     
     static ButtonReader* getInstance();
     static void purge();
-    
+    virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
+
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
+    
+    
 };
 
 NS_CC_EXT_END

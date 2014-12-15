@@ -22,8 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 #import <Foundation/Foundation.h>
+#import <OpenGLES/EAGL.h>
 #import "CCDirectorCaller.h"
 #import "CCDirector.h"
+#import "EAGLView.h"
 
 static id s_sharedDirectorCaller;
 
@@ -72,7 +74,7 @@ static id s_sharedDirectorCaller;
         displayLink = nil;
         
         displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-        [displayLink setFrameInterval: self.interval];
+        [(CADisplayLink*)displayLink setFrameInterval: self.interval];
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
@@ -85,12 +87,13 @@ static id s_sharedDirectorCaller;
         self.interval = 60.0 * intervalNew;
         
         displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-        [displayLink setFrameInterval: self.interval];
+        [(CADisplayLink*)displayLink setFrameInterval: self.interval];
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
                       
 -(void) doCaller: (id) sender
 {
+    [EAGLContext setCurrentContext: [[EAGLView sharedEGLView] context]];
     cocos2d::CCDirector::sharedDirector()->mainLoop();
 }
 

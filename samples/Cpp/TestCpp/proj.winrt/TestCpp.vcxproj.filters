@@ -313,6 +313,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget">
       <UniqueIdentifier>{75802142-c0d5-430a-884d-74f26422f28b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioActionTimelineTest">
+      <UniqueIdentifier>{cc089bd1-8843-4c79-9f21-628e267dbc3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -674,6 +677,16 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest</Filter>
     </ClCompile>
+    <ClCompile Include="EditBox.xaml.cpp" />
+    <ClCompile Include="..\..\..\..\extensions\GUI\CCEditBox\CCEditBox.cpp">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWinrt.cpp">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest</Filter>
     </ClCompile>
@@ -754,6 +767,10 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1094,7 +1111,6 @@
     <ClInclude Include="..\Classes\CocosDenshionTest\CocosDenshionTest.h">
       <Filter>Classes\CocoDenshionTest</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="MainPage.xaml.h" />
     <ClInclude Include="..\Classes\TextInputTest\TextInputTest.h">
       <Filter>Classes\TextInputTest</Filter>
@@ -1297,6 +1313,19 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest</Filter>
     </ClInclude>
+    <ClInclude Include="EditBox.xaml.h" />
+    <ClInclude Include="..\..\..\..\extensions\GUI\CCEditBox\CCEditBox.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWinrt.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\extensions\GUI\CCEditBox\CCEditBoxImpl.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest</Filter>
     </ClInclude>
@@ -1378,21 +1407,32 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TestCpp_TemporaryKey.pfx" />
-    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\ARM\D3Dcompiler_46.dll" />
     <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\Win32\D3Dcompiler_46.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="MainPage.xaml" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\ARM\D3Dcompiler_46.dll">
+      <Filter>Common</Filter>
+    </None>
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\Win32\libEGL.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\Win32\libGLESv2.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\ARM\libEGL.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\ARM\libGLESv2.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\WideLogo.png">
       <Filter>Assets</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainPage.xaml" />
+    <Page Include="EditBox.xaml" />
   </ItemGroup>
 </Project>

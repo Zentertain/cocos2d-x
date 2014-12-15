@@ -174,7 +174,7 @@ void CCTextFieldTTF::insertText(const char * text, int len)
     std::string sInsert(text, len);
 
     // insert \n means input end
-    int nPos = sInsert.find('\n');
+    int nPos = static_cast<int>(sInsert.find('\n'));
     if ((int)sInsert.npos != nPos)
     {
         len = nPos;
@@ -211,7 +211,7 @@ void CCTextFieldTTF::insertText(const char * text, int len)
 
 void CCTextFieldTTF::deleteBackward()
 {
-    int nStrLen = m_pInputText->length();
+    int nStrLen = static_cast<int>(m_pInputText->length());
     if (! nStrLen)
     {
         // there is no string
@@ -301,7 +301,7 @@ void CCTextFieldTTF::setString(const char *text)
         if (m_bSecureTextEntry)
         {
             displayText = "";
-            length = m_pInputText->length();
+            length = static_cast<int>(m_pInputText->length());
             while (length)
             {
                 displayText.append(bulletString);

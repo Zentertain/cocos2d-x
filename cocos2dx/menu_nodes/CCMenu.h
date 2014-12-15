@@ -101,7 +101,7 @@ public:
 	/** initializes a CCMenu with it's items */
 	bool initWithItems(CCMenuItem* item, va_list args);
 
-    /** initializes a CCMenu with a NSArray of CCMenuItem objects 
+    /** initializes a CCMenu with a NSArray of CCMenuItem objects
      * @lua NA
      */
     bool initWithArray(CCArray* pArrayOfItems);

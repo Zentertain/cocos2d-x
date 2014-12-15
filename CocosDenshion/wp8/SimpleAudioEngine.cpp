@@ -111,7 +111,10 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
-    return sharedAudioController()->PlaySoundEffect(pszFilePath, bLoop);
+    unsigned int sound;
+    sharedAudioController()->PlaySoundEffect(pszFilePath, bLoop, sound);
+
+    return sound;
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
@@ -158,13 +161,6 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
     sharedAudioController()->UnloadSoundEffect(pszFilePath);
 }
-
-/*
-void SimpleAudioEngine::unloadEffects()
-{
-	sharedAudioController()->UnloadSoundEffects();
-}
-*/
 
 //////////////////////////////////////////////////////////////////////////
 // volume interface

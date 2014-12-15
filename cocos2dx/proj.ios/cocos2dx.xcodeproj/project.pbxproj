@@ -271,9 +271,6 @@
 		15FBEE69164BBA98008CB2C3 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FBEE67164BBA98008CB2C3 /* CCDrawingPrimitives.h */; };
 		15FBEE6B164BBB20008CB2C3 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FBEE6A164BBB20008CB2C3 /* CCDrawNode.h */; };
 		15FBEE6D164BBF77008CB2C3 /* CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FBEE6C164BBF77008CB2C3 /* CCDrawNode.cpp */; };
-		173594F118F6BDC200577337 /* crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 173594EE18F6BDC200577337 /* crypt.h */; };
-		173594F218F6BDC200577337 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 173594EF18F6BDC200577337 /* ioapi_mem.cpp */; };
-		173594F318F6BDC200577337 /* ioapi_mem.h in Headers */ = {isa = PBXBuildFile; fileRef = 173594F018F6BDC200577337 /* ioapi_mem.h */; };
 		1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2802AE16DF1C5B00189CBF /* ccUTF8.cpp */; };
 		1A2802B116DF1C5B00189CBF /* ccUTF8.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2802AF16DF1C5B00189CBF /* ccUTF8.h */; };
 		1A3187F416C0B30600207637 /* CCImageCommonWebp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3187F316C0B30600207637 /* CCImageCommonWebp.cpp */; };
@@ -294,6 +291,9 @@
 		1AC6CE8816B910CD00330EFD /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */; };
 		1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8716B910CD00330EFD /* CCFileUtils.h */; };
 		2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2628297915EC7064002C4240 /* ccTypeInfo.h */; };
+		3759875B1A3F0DD30057799B /* crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 375987581A3F0DD30057799B /* crypt.h */; };
+		3759875C1A3F0DD30057799B /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375987591A3F0DD30057799B /* ioapi_mem.cpp */; };
+		3759875D1A3F0DD30057799B /* ioapi_mem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3759875A1A3F0DD30057799B /* ioapi_mem.h */; };
 		37EEEBF8175DDF3A003C1193 /* CCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37EEEBF4175DDF3A003C1193 /* CCComponent.cpp */; };
 		37EEEBF9175DDF3A003C1193 /* CCComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 37EEEBF5175DDF3A003C1193 /* CCComponent.h */; };
 		37EEEBFA175DDF3A003C1193 /* CCComponentContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37EEEBF6175DDF3A003C1193 /* CCComponentContainer.cpp */; };
@@ -589,9 +589,6 @@
 		15FBEE67164BBA98008CB2C3 /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
 		15FBEE6A164BBB20008CB2C3 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
 		15FBEE6C164BBF77008CB2C3 /* CCDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawNode.cpp; sourceTree = "<group>"; };
-		173594EE18F6BDC200577337 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
-		173594EF18F6BDC200577337 /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
-		173594F018F6BDC200577337 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
 		1A2802AE16DF1C5B00189CBF /* ccUTF8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccUTF8.cpp; sourceTree = "<group>"; };
 		1A2802AF16DF1C5B00189CBF /* ccUTF8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUTF8.h; sourceTree = "<group>"; };
 		1A3187F316C0B30600207637 /* CCImageCommonWebp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCImageCommonWebp.cpp; sourceTree = "<group>"; };
@@ -612,6 +609,9 @@
 		1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		1AC6CE8716B910CD00330EFD /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		2628297915EC7064002C4240 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
+		375987581A3F0DD30057799B /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		375987591A3F0DD30057799B /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
+		3759875A1A3F0DD30057799B /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
 		37EEEBF4175DDF3A003C1193 /* CCComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponent.cpp; sourceTree = "<group>"; };
 		37EEEBF5175DDF3A003C1193 /* CCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponent.h; sourceTree = "<group>"; };
 		37EEEBF6175DDF3A003C1193 /* CCComponentContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponentContainer.cpp; sourceTree = "<group>"; };
@@ -1111,25 +1111,25 @@
 			isa = PBXGroup;
 			children = (
 				1551A5E8158F2ADE00E66CFE /* base64.cpp */,
-				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
-				1551A5EA158F2ADE00E66CFE /* CCPointExtension.cpp */,
-				1551A5EC158F2ADE00E66CFE /* CCProfiling.cpp */,
-				1A2802AE16DF1C5B00189CBF /* ccUTF8.cpp */,
-				1551A5F0158F2ADE00E66CFE /* ccUtils.cpp */,
-				1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */,
-				1551A5FC158F2ADE00E66CFE /* TransformUtils.cpp */,
 				1551A5E9158F2ADE00E66CFE /* base64.h */,
+				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
 				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
+				1551A5EA158F2ADE00E66CFE /* CCPointExtension.cpp */,
 				1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */,
+				1551A5EC158F2ADE00E66CFE /* CCProfiling.cpp */,
 				1551A5ED158F2ADE00E66CFE /* CCProfiling.h */,
+				1A2802AE16DF1C5B00189CBF /* ccUTF8.cpp */,
 				1A2802AF16DF1C5B00189CBF /* ccUTF8.h */,
+				1551A5F0158F2ADE00E66CFE /* ccUtils.cpp */,
 				1551A5F1158F2ADE00E66CFE /* ccUtils.h */,
+				1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
-				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
 				37EEEBF3175DDF3A003C1193 /* component */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
 				469A7DF016C24787006FFCB2 /* tinyxml2 */,
+				1551A5FC158F2ADE00E66CFE /* TransformUtils.cpp */,
+				1551A5FD158F2ADE00E66CFE /* TransformUtils.h */,
 				46A393F116E5D01B00210B16 /* user_default */,
 				1551A5FE158F2ADE00E66CFE /* zip_support */,
 			);
@@ -1159,9 +1159,9 @@
 		1551A5FE158F2ADE00E66CFE /* zip_support */ = {
 			isa = PBXGroup;
 			children = (
-				173594EE18F6BDC200577337 /* crypt.h */,
-				173594EF18F6BDC200577337 /* ioapi_mem.cpp */,
-				173594F018F6BDC200577337 /* ioapi_mem.h */,
+				375987581A3F0DD30057799B /* crypt.h */,
+				375987591A3F0DD30057799B /* ioapi_mem.cpp */,
+				3759875A1A3F0DD30057799B /* ioapi_mem.h */,
 				1551A5FF158F2ADE00E66CFE /* ioapi.cpp */,
 				1551A600158F2ADE00E66CFE /* ioapi.h */,
 				1551A601158F2ADE00E66CFE /* unzip.cpp */,
@@ -1358,7 +1358,7 @@
 				1551A6C0158F2ADE00E66CFE /* quaternion.h in Headers */,
 				1551A6C1158F2ADE00E66CFE /* ray2.h in Headers */,
 				1551A6C2158F2ADE00E66CFE /* utility.h in Headers */,
-				173594F318F6BDC200577337 /* ioapi_mem.h in Headers */,
+				3759875D1A3F0DD30057799B /* ioapi_mem.h in Headers */,
 				1551A6C3158F2ADE00E66CFE /* vec2.h in Headers */,
 				1551A6C4158F2ADE00E66CFE /* vec3.h in Headers */,
 				1551A6C5158F2ADE00E66CFE /* vec4.h in Headers */,
@@ -1391,7 +1391,7 @@
 				1551A725158F2ADE00E66CFE /* CCSAXParser.h in Headers */,
 				1551A727158F2ADE00E66CFE /* CCThread.h in Headers */,
 				1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */,
-				173594F118F6BDC200577337 /* crypt.h in Headers */,
+				3759875B1A3F0DD30057799B /* crypt.h in Headers */,
 				1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */,
 				1551A72C158F2ADE00E66CFE /* CCApplication.h in Headers */,
 				1551A72F158F2ADE00E66CFE /* CCDirectorCaller.h in Headers */,
@@ -1513,7 +1513,7 @@
 		1551A336158F2AB200E66CFE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "cocos2d-x";
 			};
 			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2dx" */;
@@ -1659,7 +1659,7 @@
 				1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */,
 				1A4646DC16DC901A00DE131F /* ccFPSImages.c in Sources */,
 				1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */,
-				173594F218F6BDC200577337 /* ioapi_mem.cpp in Sources */,
+				3759875C1A3F0DD30057799B /* ioapi_mem.cpp in Sources */,
 				4EF8999016E207E70040A527 /* CCParallaxNode.cpp in Sources */,
 				4EF8999216E207E70040A527 /* CCTileMapAtlas.cpp in Sources */,
 				4EF8999416E207E70040A527 /* CCTMXLayer.cpp in Sources */,
@@ -1683,14 +1683,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1700,10 +1704,14 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
@@ -1714,24 +1722,31 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NS_BLOCK_ASSERTIONS=1",
 					"NDEBUG=1",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -1767,10 +1782,11 @@
 					"\"$(SRCROOT)/../platform/third_party/tizen/prebuilt/libwebp/libs/armv7l\"",
 					"\"$(SRCROOT)/../platform/third_party/tizen/prebuilt/libwebp/libs/x86\"",
 				);
-				OTHER_LDFLAGS = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -1800,10 +1816,10 @@
 					"\"$(SRCROOT)/../platform/third_party/tizen/prebuilt/libwebp/libs/armv7l\"",
 					"\"$(SRCROOT)/../platform/third_party/tizen/prebuilt/libwebp/libs/x86\"",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};

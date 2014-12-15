@@ -2065,10 +2065,10 @@ void CCTintTo::update(float time)
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
     if (pRGBAProtocol)
     {
-        pRGBAProtocol->setColor(ccc3(GetByte(m_from.r + (m_to.r - m_from.r) * time), 
+        pRGBAProtocol->setColor(ccc3(GetByte(m_from.r + (m_to.r - m_from.r) * time),
             GetByte(m_from.g + (m_to.g - m_from.g) * time),
             GetByte(m_from.b + (m_to.b - m_from.b) * time)));
-    }    
+    }
 }
 
 //
@@ -2135,8 +2135,6 @@ void CCTintBy::startWithTarget(CCNode *pTarget)
     }    
 }
 
-inline 
-
 void CCTintBy::update(float time)
 {
     CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
@@ -2145,7 +2143,7 @@ void CCTintBy::update(float time)
         pRGBAProtocol->setColor(ccc3(GetByte(m_fromR + m_deltaR * time),
             GetByte(m_fromG + m_deltaG * time),
             GetByte(m_fromB + m_deltaB * time)));
-    }    
+    }
 }
 
 CCActionInterval* CCTintBy::reverse(void)

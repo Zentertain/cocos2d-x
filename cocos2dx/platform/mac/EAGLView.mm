@@ -502,4 +502,3 @@ static EAGLView *view;
     return YES;
 }
 @end
-

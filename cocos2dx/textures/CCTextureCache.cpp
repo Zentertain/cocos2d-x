@@ -91,7 +91,6 @@ static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
 
 static std::queue<ImageInfo*>*   s_pImageQueue = NULL;
 
-
 static CCImage::EImageFormat computeImageFormatType(string& filename)
 {
     CCImage::EImageFormat ret = CCImage::kFmtUnKnown;

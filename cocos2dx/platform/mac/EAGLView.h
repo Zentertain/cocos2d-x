@@ -121,6 +121,5 @@ THE SOFTWARE.
 -(void)additionalInitForNib;
 @end
 
-
 #endif // __EAGLVIEW_MAC_H__
 

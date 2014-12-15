@@ -206,10 +206,15 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(const char* szPlist, CCDi
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture)
 {
+    if (m_pLoadedFileNames->find(pszPlist) != m_pLoadedFileNames->end())
+    {
+        return;//We already added it
+    }
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszPlist);
     CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
 
     addSpriteFramesWithDictionary(pszPlist, dict, pobTexture);
+    m_pLoadedFileNames->insert(pszPlist);
 
     dict->release();
 }

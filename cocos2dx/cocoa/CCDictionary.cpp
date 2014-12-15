@@ -40,7 +40,7 @@ CCDictElement::CCDictElement(const char* pszKey, CCObject* pObject)
     m_iKey = 0;
     const char* pStart = pszKey;
     
-    int len = strlen(pszKey);
+    size_t len = strlen(pszKey);
     if (len > MAX_KEY_LEN )
     {
         char* pEnd = (char*)&pszKey[len-1];
@@ -107,7 +107,7 @@ CCArray* CCDictionary::allKeys()
     {
         HASH_ITER(hh, m_pElements, pElement, tmp) 
         {
-            CCInteger* pOneKey = new CCInteger(pElement->m_iKey);
+            CCInteger* pOneKey = new CCInteger(static_cast<int>(pElement->m_iKey));
             pArray->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
@@ -142,7 +142,7 @@ CCArray* CCDictionary::allKeysForObject(CCObject* object)
         {
             if (object == pElement->m_pObject)
             {
-                CCInteger* pOneKey = new CCInteger(pElement->m_iKey);
+                CCInteger* pOneKey = new CCInteger(static_cast<int>(pElement->m_iKey));
                 pArray->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }

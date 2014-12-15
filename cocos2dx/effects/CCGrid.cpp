@@ -114,8 +114,8 @@ bool CCGridBase::initWithSize(const CCSize& gridSize)
     CCDirector *pDirector = CCDirector::sharedDirector();
     CCSize s = pDirector->getWinSizeInPixels();
     
-    unsigned long POTWide = ccNextPOT((unsigned int)s.width);
-    unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
+    unsigned int POTWide = static_cast<unsigned int>(ccNextPOT((unsigned int)s.width));
+    unsigned int POTHigh = static_cast<unsigned int>(ccNextPOT((unsigned int)s.height));
 
     // we only use rgba8888
     CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;

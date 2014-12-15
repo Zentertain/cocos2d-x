@@ -355,6 +355,7 @@ Developers:
     Zecken (gelldur)
         Fixing a profiling compilation error in CCParticleBatchNode.
         Fixing linking errors for TestCPP with libcurl on linux.
+        Fixed memoery leak in CCSpriteFrameCache
 
     flamingo (flaming0)
         Null pointer check in order to prevent crashes.
@@ -464,6 +465,18 @@ Developers:
         
     xhcnb
         Fixed a bug that it will get wrong custom properties when use different count custom properties in CocosBuilder.
+
+    lewellyn
+        Updated BlackBerry project template.
+        
+    kienvn
+        Fixed CCLabelBMFont crashes when there are invalid characters which aren't in fnt file
+        
+    mikeweib
+        Fixed bone's position is wrong  when animation has only a single bone
+        
+    Dale Stammen (Microsoft Open Technologies, Inc.)
+        Author of WP8 & Windows8 platform
 
 Retired Core Developers:
     WenSheng Yang

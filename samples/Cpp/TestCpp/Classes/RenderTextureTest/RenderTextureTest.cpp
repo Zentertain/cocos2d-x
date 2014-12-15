@@ -133,10 +133,10 @@ RenderTextureSave::RenderTextureSave()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    m_pTarget = CCRenderTexture::create(s.width / 2, s.height / 2, kCCTexture2DPixelFormat_RGBA8888);
+    m_pTarget = CCRenderTexture::create(s.width, s.height, kCCTexture2DPixelFormat_RGBA8888);
     m_pTarget->retain();
     m_pTarget->setPosition(ccp(s.width / 2, s.height / 2));
-    m_pTarget->clear(0.5f, 0.1f, 0.8f, 1.0f);
+
     // note that the render texture is a CCNode, and contains a sprite of its texture for convience,
     // so we can just parent it to the scene like any other CCNode
     this->addChild(m_pTarget, -1);
@@ -219,11 +219,6 @@ void RenderTextureSave::ccTouchesMoved(CCSet* touches, CCEvent* event)
 
     // begin drawing to the render texture
     m_pTarget->begin();
-    
-    CCPoint ptStart = m_pTarget->convertToWorldSpace(CCPointZero);
-    CCPoint ptSize = ccp(240, 160);
-    CCPoint ptEnd = m_pTarget->convertToWorldSpace(ptSize);
-    
 
     // for extra points, we'll draw this smoothly from the last position and vary the sprite's
     // scale/rotation/offset

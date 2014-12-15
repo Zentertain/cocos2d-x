@@ -901,10 +901,6 @@ CCNode * CCNodeLoader::parsePropTypeCCBFile(CCNode * pNode, CCNode * pParent, CC
     
     CC_SAFE_RETAIN(ccbReader->mOwner);
     
-    if (NULL != ccbReader->mOwner) {
-        CCLOG("DDD");
-    }
-    
     ccbReader->getAnimationManager()->mOwner = ccbReader->mOwner;
 
     // The assignments below are done in the CCBReader constructor.

@@ -88,7 +88,7 @@ uLong ZCALLBACK fwrite_mem_func (voidpf opaque, voidpf stream, const void* buf, 
     {
         if (mem->grow)
         {
-            newmemsize = mem->size;
+            newmemsize = static_cast<int>(mem->size);
             if (size < IOMEM_BUFFERSIZE)
                 newmemsize += IOMEM_BUFFERSIZE;
             else

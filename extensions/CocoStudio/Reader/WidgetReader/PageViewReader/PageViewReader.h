@@ -29,7 +29,7 @@
 
 NS_CC_EXT_BEGIN
 
-class PageViewReader : public LayoutReader
+class CC_EX_DLL PageViewReader : public LayoutReader
 {
 public:
     DECLARE_CLASS_WIDGET_READER_INFO
@@ -41,6 +41,8 @@ public:
     static void purge();
     
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
+    virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode) ;
+
 };
 
 NS_CC_EXT_END

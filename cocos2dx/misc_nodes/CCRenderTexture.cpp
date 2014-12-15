@@ -272,8 +272,8 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         }
         else
         {
-            powW = ccNextPOT(w);
-            powH = ccNextPOT(h);
+            powW = static_cast<unsigned int>(ccNextPOT(w));
+            powH = static_cast<unsigned int>(ccNextPOT(h));
         }
 
         data = malloc((int)(powW * powH * 4));

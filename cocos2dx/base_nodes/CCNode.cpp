@@ -880,13 +880,13 @@ void CCNode::transformAncestors()
 void CCNode::transform()
 {    
     kmMat4 transfrom4x4;
-
     // Convert 3x3 into 4x4 matrix
     CCAffineTransform tmpAffine = this->nodeToParentTransform();
     CGAffineToGL(&tmpAffine, transfrom4x4.mat);
 
     // Update Z vertex manually
     transfrom4x4.mat[14] = m_fVertexZ;
+
     kmGLMultMatrix( &transfrom4x4 );
 
 
@@ -911,7 +911,6 @@ void CCNode::onEnter()
 {
     //fix setTouchEnabled not take effect when called the function in onEnter in JSBinding.
     m_bRunning = true;
-
     if (m_eScriptType != kScriptTypeNone)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnter);
@@ -931,8 +930,7 @@ void CCNode::onEnter()
             }            
         }
     }
-
-    this->resumeSchedulerAndActions();   
+    this->resumeSchedulerAndActions();
 }
 
 void CCNode::onEnterTransitionDidFinish()
@@ -1231,7 +1229,6 @@ CCAffineTransform CCNode::parentToNodeTransform(void)
         m_sInverse = CCAffineTransformInvert(this->nodeToParentTransform());
         m_bInverseDirty = false;
     }
-
     return m_sInverse;
 }
 

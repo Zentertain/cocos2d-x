@@ -133,7 +133,7 @@ void CCPointArray::insertControlPoint(CCPoint &controlPoint, unsigned int index)
 
 CCPoint CCPointArray::getControlPointAtIndex(unsigned int index)
 {
-    index = MIN(m_pControlPoints->size()-1, MAX(index, 0));
+    index = static_cast<unsigned int>(MIN(m_pControlPoints->size()-1, MAX(index, 0)));
     return *(m_pControlPoints->at(index));
 }
 
@@ -155,7 +155,7 @@ void CCPointArray::removeControlPointAtIndex(unsigned int index)
 
 unsigned int CCPointArray::count()
 {
-    return m_pControlPoints->size();
+    return static_cast<unsigned int>(m_pControlPoints->size());
 }
 
 CCPointArray* CCPointArray::reverse()
@@ -176,7 +176,7 @@ CCPointArray* CCPointArray::reverse()
 
 void CCPointArray::reverseInline()
 {
-    unsigned int l = m_pControlPoints->size();
+    unsigned int l = static_cast<unsigned int>(m_pControlPoints->size());
     CCPoint *p1 = NULL;
     CCPoint *p2 = NULL;
     int x, y;
