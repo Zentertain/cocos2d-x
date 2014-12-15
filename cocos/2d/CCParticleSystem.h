@@ -404,6 +404,11 @@ CC_CONSTRUCTOR_ACCESS:
     
     //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(int numberOfParticles);
+    
+    // NOTE: zentertain change
+    bool initWithParticle(const ParticleSystem *pParticle);
+    
+    virtual ParticleSystem* copyParticle() const;
 
 protected:
     virtual void updateBlendFunc();

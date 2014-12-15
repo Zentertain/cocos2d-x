@@ -610,4 +610,12 @@ std::string ParticleSystemQuad::getDescription() const
     return StringUtils::format("<ParticleSystemQuad | Tag = %d, Total Particles = %d>", _tag, _totalParticles);
 }
 
+ParticleSystem* ParticleSystemQuad::copyParticle() const
+{
+    ParticleSystemQuad* pParticle = new ParticleSystemQuad();
+    pParticle->autorelease();
+    pParticle->initWithParticle(this);
+    return pParticle;
+}
+
 NS_CC_END

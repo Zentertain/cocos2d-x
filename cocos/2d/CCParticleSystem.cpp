@@ -1180,6 +1180,89 @@ void ParticleSystem::setScaleY(float newScaleY)
     Node::setScaleY(newScaleY);
 }
 
+bool ParticleSystem::initWithParticle(const ParticleSystem *pParticle)
+{
+    bool bRet = false;
+    
+    do
+    {
+        int maxParticles = pParticle->_totalParticles;
+        // self, not super
+        if(this->initWithTotalParticles(maxParticles))
+        {
+            // angle
+            _plistFile = pParticle->_plistFile;
+            _angle = pParticle->_angle;;
+            _angleVar = pParticle->_angleVar;
+            
+            // duration
+            _duration = pParticle->_duration;
+            
+            // blend function
+            _blendFunc = _blendFunc;
+            
+            // color
+            _startColor = pParticle->_startColor;
+            
+            _startColorVar = pParticle->_startColorVar;
+            
+            _endColor = pParticle->_endColor;
+            
+            _endColorVar = pParticle->_endColorVar;
+            
+            // particle size
+            _startSize = pParticle->_startSize;
+            _startSizeVar = pParticle->_startSizeVar;
+            _endSize = pParticle->_endSize;
+            _endSizeVar = pParticle->_endSizeVar;
+            
+            // position
+            this->setPosition3D( pParticle->getPosition3D() );
+            _posVar = pParticle->_posVar;
+            
+            // Spinning
+            _startSpin = pParticle->_startSpin;
+            _startSpinVar = pParticle->_startSpinVar;
+            _endSpin= pParticle->_endSpin;
+            _endSpinVar= pParticle->_endSpinVar;
+            
+            _emitterMode = pParticle->_emitterMode;
+            
+            memcpy(&modeA, &pParticle->modeA, sizeof(modeA));
+            memcpy(&modeB, &pParticle->modeB, sizeof(modeB));
+            
+            // life span
+            _life = pParticle->_life;
+            _lifeVar = pParticle->_lifeVar;
+            
+            // emission Rate
+            _emissionRate = pParticle->_emissionRate;
+            
+            //don't get the internal texture if a batchNode is used
+            if (!_batchNode)
+            {
+                // Set a compatible default for the alpha transfer
+                _opacityModifyRGB = false;
+                
+                setTexture(pParticle->getTexture());
+                // texture
+                CCAssert( this->_texture != NULL, "CCParticleSystem: error loading the texture");
+            }
+            bRet = true;
+        }
+    } while (0);
+    return bRet;
+
+}
+
+ParticleSystem* ParticleSystem::copyParticle() const
+{
+    ParticleSystem* pParticle = new ParticleSystem();
+    pParticle->autorelease();
+    pParticle->initWithParticle(this);
+    return pParticle;
+}
+
 
 NS_CC_END
 

@@ -139,6 +139,8 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool initWithTotalParticles(int numberOfParticles) override;
 
+    virtual ParticleSystem* copyParticle() const override;
+    
 protected:
     /** initializes the indices for the vertices*/
     void initIndices();
