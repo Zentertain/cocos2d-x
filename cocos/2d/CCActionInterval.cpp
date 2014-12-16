@@ -1900,6 +1900,13 @@ FadeTo* FadeOut::reverse() const
 // FadeTo
 //
 
+static inline GLubyte GetByte(float x)
+{
+    if (x < 0) x = 0;
+    if (x > 255) x = 255;
+    return GLubyte(x);
+}
+
 FadeTo* FadeTo::create(float duration, GLubyte opacity)
 {
     FadeTo *fadeTo = new (std::nothrow) FadeTo();
@@ -1950,7 +1957,7 @@ void FadeTo::update(float time)
 {
     if (_target)
     {
-        _target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
+        _target->setOpacity(GetByte((_fromOpacity + (_toOpacity - _fromOpacity) * time)));
     }
     /*_target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));*/
 }
@@ -2007,9 +2014,9 @@ void TintTo::update(float time)
 {
     if (_target)
     {
-        _target->setColor(Color3B(GLubyte(_from.r + (_to.r - _from.r) * time),
-            (GLubyte)(_from.g + (_to.g - _from.g) * time),
-            (GLubyte)(_from.b + (_to.b - _from.b) * time)));
+        _target->setColor(Color3B(GetByte(_from.r + (_to.r - _from.r) * time),
+            GetByte(_from.g + (_to.g - _from.g) * time),
+            GetByte(_from.b + (_to.b - _from.b) * time)));
     }    
 }
 
@@ -2066,9 +2073,9 @@ void TintBy::update(float time)
 {
     if (_target)
     {
-        _target->setColor(Color3B((GLubyte)(_fromR + _deltaR * time),
-            (GLubyte)(_fromG + _deltaG * time),
-            (GLubyte)(_fromB + _deltaB * time)));
+        _target->setColor(Color3B(GetByte(_fromR + _deltaR * time),
+            GetByte(_fromG + _deltaG * time),
+            GetByte(_fromB + _deltaB * time)));
     }    
 }
 
