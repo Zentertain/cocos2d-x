@@ -118,6 +118,11 @@ extern "C"
 
             jclass classID = getClassID_(className, pEnv);
 
+            if (classID == 0)
+            {
+                break;
+            }
+
             methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
             if (! methodID)
             {
