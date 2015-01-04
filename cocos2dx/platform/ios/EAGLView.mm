@@ -405,7 +405,7 @@ static EAGLView *view = 0;
     
     int i = 0;
     for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
+        ids[i] = (intptr_t)touch;
         xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
@@ -425,7 +425,7 @@ static EAGLView *view = 0;
     
     int i = 0;
     for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
+        ids[i] = (intptr_t)touch;
         xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
@@ -446,7 +446,7 @@ static EAGLView *view = 0;
     
     int i = 0;
     for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
+        ids[i] = (intptr_t)touch;
         xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
@@ -467,7 +467,7 @@ static EAGLView *view = 0;
     
     int i = 0;
     for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
+        ids[i] = (intptr_t)touch;
         xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
@@ -724,6 +724,15 @@ static EAGLView *view = 0;
     return nil;
 }
 
+UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrientation)
+{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        statusBarOrientation = UIInterfaceOrientationPortrait;
+    }
+    return statusBarOrientation;
+}
+
 #pragma mark -
 #pragma mark UIKeyboard notification
 UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrientation)
@@ -798,13 +807,8 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
 	float scaleY = cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
     
     
-    if (self.contentScaleFactor == 2.0f)
-    {
-        // Convert to pixel coordinate
-        
-        begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, 2.0f, 2.0f));
-        end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 2.0f, 2.0f));
-    }
+    begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
+    end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
     
     float offestY = cocos2d::CCEGLView::sharedOpenGLView()->getViewPortRect().origin.y;
     CCLOG("offestY = %f", offestY);
@@ -871,9 +875,8 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
 
 	dis *= cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
     
-    if (self.contentScaleFactor == 2.0f)
-    {
-        dis /= 2.0f;
+    if (self.contentScaleFactor != 0) {
+        dis /= self.contentScaleFactor;
     }
     
     switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
