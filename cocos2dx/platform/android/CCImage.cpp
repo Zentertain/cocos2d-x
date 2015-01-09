@@ -108,17 +108,17 @@ public:
            */
            jstring jstrText = methodInfo.env->NewStringUTF(text);
            jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
-
+           bool bSuccess = true;
            if (!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID, jstrText,
                jstrFont, (int)fontSize, textTintR, textTintG, textTintB, eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize)) {
-                return false;
+                bSuccess = false;
            }
 
            methodInfo.env->DeleteLocalRef(jstrText);
            methodInfo.env->DeleteLocalRef(jstrFont);
            methodInfo.env->DeleteLocalRef(methodInfo.classID);
 
-           return true;
+           return bSuccess;
     }
 
 
