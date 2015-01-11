@@ -281,6 +281,9 @@
 		37EEEC06175DDF83003C1193 /* CCComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 37EEEC02175DDF83003C1193 /* CCComponent.h */; };
 		37EEEC07175DDF83003C1193 /* CCComponentContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37EEEC03175DDF83003C1193 /* CCComponentContainer.cpp */; };
 		37EEEC08175DDF83003C1193 /* CCComponentContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 37EEEC04175DDF83003C1193 /* CCComponentContainer.h */; };
+		3CB3CD0B1A623518007FA2C6 /* crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB3CD081A623518007FA2C6 /* crypt.h */; };
+		3CB3CD0C1A623518007FA2C6 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3CD091A623518007FA2C6 /* ioapi_mem.cpp */; };
+		3CB3CD0D1A623518007FA2C6 /* ioapi_mem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB3CD0A1A623518007FA2C6 /* ioapi_mem.h */; };
 		41BC70B915BF7EA2006A0A6C /* CCThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70B815BF7EA2006A0A6C /* CCThread.mm */; };
 		41CD6C3515BF7382005E6F29 /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2215BF7382005E6F29 /* CCAccelerometer.h */; };
 		41CD6C3615BF7382005E6F29 /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 41CD6C2315BF7382005E6F29 /* CCApplication.h */; };
@@ -588,6 +591,10 @@
 		37EEEC02175DDF83003C1193 /* CCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponent.h; sourceTree = "<group>"; };
 		37EEEC03175DDF83003C1193 /* CCComponentContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponentContainer.cpp; sourceTree = "<group>"; };
 		37EEEC04175DDF83003C1193 /* CCComponentContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponentContainer.h; sourceTree = "<group>"; };
+		3C7625311A53D8AC00BBA8E2 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		3CB3CD081A623518007FA2C6 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		3CB3CD091A623518007FA2C6 /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
+		3CB3CD0A1A623518007FA2C6 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
 		41BC70B815BF7EA2006A0A6C /* CCThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread.mm; sourceTree = "<group>"; };
 		41CD6C2215BF7382005E6F29 /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
 		41CD6C2315BF7382005E6F29 /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
@@ -661,6 +668,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C7625311A53D8AC00BBA8E2 /* OpenGL.framework */,
 				1A94D34C16C2014900D79D09 /* libwebp.a */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
 			);
@@ -1103,6 +1111,9 @@
 		1551A5FE158F2ADE00E66CFE /* zip_support */ = {
 			isa = PBXGroup;
 			children = (
+				3CB3CD081A623518007FA2C6 /* crypt.h */,
+				3CB3CD091A623518007FA2C6 /* ioapi_mem.cpp */,
+				3CB3CD0A1A623518007FA2C6 /* ioapi_mem.h */,
 				1551A5FF158F2ADE00E66CFE /* ioapi.cpp */,
 				1551A600158F2ADE00E66CFE /* ioapi.h */,
 				1551A601158F2ADE00E66CFE /* unzip.cpp */,
@@ -1314,6 +1325,7 @@
 				1551A6B5158F2ADE00E66CFE /* ccTypes.h in Headers */,
 				1551A6B6158F2ADE00E66CFE /* cocos2d.h in Headers */,
 				1551A6B8158F2ADE00E66CFE /* aabb.h in Headers */,
+				3CB3CD0D1A623518007FA2C6 /* ioapi_mem.h in Headers */,
 				1551A6B9158F2ADE00E66CFE /* mat4stack.h in Headers */,
 				1551A6BA158F2ADE00E66CFE /* matrix.h in Headers */,
 				1551A6BB158F2ADE00E66CFE /* kazmath.h in Headers */,
@@ -1414,6 +1426,7 @@
 				1551A872158F2ADF00E66CFE /* CCTouchHandler.h in Headers */,
 				1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */,
 				154269DD15B5653000712A7F /* CCNotificationCenter.h in Headers */,
+				3CB3CD0B1A623518007FA2C6 /* crypt.h in Headers */,
 				41CD6C3515BF7382005E6F29 /* CCAccelerometer.h in Headers */,
 				41CD6C3615BF7382005E6F29 /* CCApplication.h in Headers */,
 				41CD6C3915BF7382005E6F29 /* CCDirectorCaller.h in Headers */,
@@ -1534,6 +1547,7 @@
 				1551A6C7158F2ADE00E66CFE /* mat4stack.c in Sources */,
 				1551A6C8158F2ADE00E66CFE /* matrix.c in Sources */,
 				1551A6C9158F2ADE00E66CFE /* mat3.c in Sources */,
+				3CB3CD0C1A623518007FA2C6 /* ioapi_mem.cpp in Sources */,
 				1551A6CA158F2ADE00E66CFE /* mat4.c in Sources */,
 				1551A6CB158F2ADE00E66CFE /* neon_matrix_impl.c in Sources */,
 				1551A6CC158F2ADE00E66CFE /* plane.c in Sources */,
