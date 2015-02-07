@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   02 01 00
-#define COCOS2D_VERSION 0x00020100
+// 00   02 02 05
+#define COCOS2D_VERSION 0x00020206
 
 //
 // all cocos2d include files
@@ -172,18 +172,16 @@ THE SOFTWARE.
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
 	#include "platform/winrt/CCAccelerometer.h"
+	#include "platform/winrt/CCPrecompiledShaders.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	#include "platform/winrt/CCApplication.h"
-#ifdef WP8_XAML
-	#include "platform/wp8-xaml/CCEGLView.h"
-#else
 	#include "platform/wp8/CCEGLView.h"
-#endif // WP8_XAML
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
 	#include "platform/winrt/CCAccelerometer.h"
+	#include "platform/winrt/CCPrecompiledShaders.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

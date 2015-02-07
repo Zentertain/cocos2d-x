@@ -111,7 +111,6 @@ void CCConfiguration::gatherGPUInfo()
 	m_pValueDict->setObject( CCString::create( (const char*)glGetString(GL_VENDOR)), "gl.vendor");
 	m_pValueDict->setObject( CCString::create( (const char*)glGetString(GL_RENDERER)), "gl.renderer");
 	m_pValueDict->setObject( CCString::create( (const char*)glGetString(GL_VERSION)), "gl.version");
-    m_pValueDict->setObject(CCString::create((const char*)glGetString(GL_EXTENSIONS)), "gl.extensions");
 
     m_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
 

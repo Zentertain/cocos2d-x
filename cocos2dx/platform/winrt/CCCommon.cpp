@@ -27,7 +27,8 @@ THE SOFTWARE.
 #include "CCWinRTUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#include "WP8ModalLayer.h"
+#include "ModalLayer.h"
+#include "CCEGLView.h"
 #endif
 
 #if defined(VLD_DEBUG_MEMORY)
@@ -40,7 +41,7 @@ NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
-#if COCOS2D_DEBUG != 0
+#if defined(COCOS2D_DEBUG)
     char szBuf[MAX_LEN];
 
     va_list ap;
@@ -77,10 +78,14 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     // Show the message dialog
     msg->ShowAsync();
 #else
-	WP8ModalLayer *messageBox = WP8ModalLayer::create();
-	messageBox->setMessage(pszMsg);
-	CCDirector::sharedDirector()->getRunningScene()->addChild(messageBox);
 
+    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+    if(!pEGLView->ShowMessageBox(title, message))
+    {
+	    ModalLayer *messageBox = ModalLayer::create();
+	    messageBox->setMessage(pszMsg);
+	    CCDirector::sharedDirector()->getRunningScene()->addChild(messageBox);
+    }
 #endif
 
 }
@@ -88,11 +93,12 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 
 void CCLuaLog(const char *pszMsg)
 {
-#if COCOS2D_DEBUG != 0
+#if defined(COCOS2D_DEBUG)
     int bufflen = MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, NULL, 0);
     WCHAR* widebuff = new WCHAR[bufflen + 1];
     memset(widebuff, 0, sizeof(WCHAR) * (bufflen + 1));
     MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, widebuff, bufflen);
+
 
     OutputDebugStringW(widebuff);
     OutputDebugStringA("\n");

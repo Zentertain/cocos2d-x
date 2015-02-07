@@ -45,7 +45,7 @@ CCAction::CCAction()
 
 CCAction::~CCAction()
 {
-    //CCLOGINFO("cocos2d: deallocing");
+    CCLOGINFO("cocos2d: deallocing");
 }
 
 CCAction* CCAction::create()

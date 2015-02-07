@@ -26,11 +26,7 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "platform/winrt/CCEGLView.h"
 #else
-#ifdef WP8_XAML
-#include "platform/wp8-xaml/CCEGLView.h"
-#else
 #include "platform/wp8/CCEGLView.h"
-#endif
 #endif
 #include "CCDirector.h"
 #include <algorithm>
@@ -183,6 +179,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
         else if (wcscmp(primary, L"es") == 0)
         {
             ret = kLanguageSpanish;
+        }
+        else if (wcscmp(primary, L"nl") == 0)
+        {
+            ret = kLanguageDutch;
         }
         else if (wcscmp(primary, L"ru") == 0)
         {
