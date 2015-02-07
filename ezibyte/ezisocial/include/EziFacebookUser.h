@@ -11,8 +11,11 @@
 
 #include <iostream>
 #include "cocos2d.h"
+#include "EziSocialDefinition.h"
 
-class EziFacebookUser: public cocos2d::CCObject
+USING_NS_CC;
+
+class EziFacebookUser: public CCObject
 {
     
     std::string username;
@@ -27,11 +30,19 @@ class EziFacebookUser: public cocos2d::CCObject
     std::string gender;
     bool        installed;
     std::string userPhotoPath;
+    std::string _photoURL;
+    std::string _birthday;
+    
+    CCSprite* _profilePic;
+
     
 public:
     
     EziFacebookUser();
     virtual ~EziFacebookUser();
+    
+    void setPhotoURL(const char* newPhotoURL);
+    
     
     void saveData(const char* key, std::string dataValue);
     
@@ -45,12 +56,25 @@ public:
     const char*  getEmailID();
     const char*  getGender();
     const char*  getFullName();
+    const char*  getPhotoURL();
+    const char*  getBirthday();
     
     bool isGameInstalled();
     
     void saveUserPhotoPath(std::string photoPath);
 
     const char* getPhotoPath();
+    
+    CCSprite* getProfilePic(cocos2d::CCLayer *sender, bool forceDownload, EziPhotoCallback callback);
+    
+private:
+    
+    EziPhotoCallback _selector;
+    CCLayer* _target;
+    void onHttpRequestCompleted(cocos2d::CCNode *sender, void *data);
+    //EziFacebookDelegate::EziPhotoCallback _selector;
+    
+    
 };
 
 #endif /* defined(__FacebookGameDemo__EziFacebookUser__) */

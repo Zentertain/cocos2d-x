@@ -24,6 +24,7 @@
 #define ENABLE_MAIL_FUNCTIONALITY
 #define ENABLE_TWITTER_FUNCTIONALITY
 
+#define KEY_FB_USER_BIRTHDAY            "birthday"
 #define KEY_FB_USER_ERROR               "error"
 #define KEY_FB_USER_NAME                "username"
 #define KEY_FB_USER_EMAIL               "email"
@@ -42,6 +43,11 @@
 #define NUMBER_OF_AUTO_PURGE_TOP_COMPLETED_IDS 10
 
 #include <iostream>
+#include "cocos2d.h"
+
+typedef void (cocos2d::CCObject::*EziPhotoCallback)(cocos2d::CCSprite*, const char* fbID);
+#define ezi_selector(_SELECTOR) (EziPhotoCallback)(&_SELECTOR)
+
 
 namespace EziSocialWrapperNS
 {
