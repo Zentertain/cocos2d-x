@@ -148,6 +148,8 @@ public:
     static std::string getLuaTagBegin() { return "TABLE_BEGIN"; }
     static std::string getLuaTagEnd() { return "TABLE_END"; }
     static std::string getLuaTagMid() { return "TABLE_MID"; }
+    
+    virtual bool parseConfig(CCScriptEngineProtocol::ConfigType type, const std::string& str);
 private:
     CCLuaEngine(void)
     : m_stack(NULL)
