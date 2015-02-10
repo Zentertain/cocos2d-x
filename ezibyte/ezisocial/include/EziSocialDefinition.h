@@ -189,6 +189,7 @@ namespace EziSocialWrapperNS
             FB_CHALLENGE_RECEIVE  = 705,
             FB_GIFT_RECEIVE       = 706,
             FB_INVITE_RECEIVE     = 707,
+            FB_CUSTOM_REQUEST_RECEIVE     = 708,
             
             // Share Dialog
             FB_SHARE_DIALOG_ERROR       = 800,

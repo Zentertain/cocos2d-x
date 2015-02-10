@@ -307,7 +307,8 @@ void internalRequestRecieveCallback(int responseCode,
     
     if (responseCode == EziSocialWrapperNS::RESPONSE_CODE::FB_CHALLENGE_RECEIVE ||
         responseCode == EziSocialWrapperNS::RESPONSE_CODE::FB_GIFT_RECEIVE ||
-        responseCode == EziSocialWrapperNS::RESPONSE_CODE::FB_INVITE_RECEIVE)
+        responseCode == EziSocialWrapperNS::RESPONSE_CODE::FB_INVITE_RECEIVE ||
+        responseCode == EziSocialWrapperNS::RESPONSE_CODE::FB_CUSTOM_REQUEST_RECEIVE)
     {
         // We can mark this request ID as complete in the List.
         //EziFBIncomingRequestManager::sharedManager()->requestComepleted(requestID);
@@ -325,6 +326,10 @@ void internalRequestRecieveCallback(int responseCode,
 
             case EziSocialWrapperNS::RESPONSE_CODE::FB_GIFT_RECEIVE:
                 incomingRequest->setRequestType(EziSocialWrapperNS::FB_REQUEST::REQUEST_GIFT);
+                break;
+                
+            case EziSocialWrapperNS::RESPONSE_CODE::FB_CUSTOM_REQUEST_RECEIVE:
+                incomingRequest->setRequestType(EziSocialWrapperNS::FB_REQUEST::REQUEST_CUSTOM);
                 break;
 
             default:
