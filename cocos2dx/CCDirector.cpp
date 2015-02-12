@@ -458,7 +458,7 @@ void CCDirector::purgeCachedData(void)
     CCLabelBMFont::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
-        CCSpriteFrameCache::sharedSpriteFrameCache()->purgeSharedSpriteFrameCache();
+//        CCSpriteFrameCache::sharedSpriteFrameCache()->purgeSharedSpriteFrameCache();
         CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
         CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
