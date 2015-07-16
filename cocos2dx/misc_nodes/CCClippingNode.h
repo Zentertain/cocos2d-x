@@ -114,6 +114,9 @@ public:
     
 protected:
     CCClippingNode();
+    
+private:
+    void drawFullScreenQuadClearStencil();
 };
 
 NS_CC_END
