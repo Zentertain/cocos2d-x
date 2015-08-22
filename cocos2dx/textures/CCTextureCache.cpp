@@ -129,20 +129,23 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
         delete pAsyncStruct;
         return;
     }
-        
-    // generate image            
+
+    // generate image info
+    ImageInfo *pImageInfo = new ImageInfo();
+    pImageInfo->asyncStruct = pAsyncStruct;
+    
+    // generate image
     CCImage *pImage = new CCImage();
     if (pImage && !pImage->initWithImageFileThreadSafe(filename, imageType))
     {
         CC_SAFE_RELEASE(pImage);
         CCLOG("can not load %s", filename);
-        return;
+        pImageInfo->image = nullptr;
     }
-
-    // generate image info
-    ImageInfo *pImageInfo = new ImageInfo();
-    pImageInfo->asyncStruct = pAsyncStruct;
-    pImageInfo->image = pImage;
+    else
+    {
+        pImageInfo->image = pImage;
+    }
     pImageInfo->imageType = imageType;
     // put the image info into the queue
     pthread_mutex_lock(&s_ImageInfoMutex);
@@ -354,35 +357,45 @@ void CCTextureCache::addImageAsyncCallBack(float dt)
 
         AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
         CCImage *pImage = pImageInfo->image;
-
         CCObject *target = pAsyncStruct->target;
         SEL_CallFuncO selector = pAsyncStruct->selector;
-        const char* filename = pAsyncStruct->filename.c_str();
-
-        // generate texture in render thread
-        CCTexture2D *texture = new CCTexture2D();
-#if 0 //TODO: (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        texture->initWithImage(pImage, kCCResolutioniPhone);
-#else
-        texture->initWithImage(pImage);
-#endif
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-       // cache the texture file name
-       VolatileTexture::addImageTexture(texture, filename, pImageInfo->imageType);
-#endif
-
-        // cache the texture
-        m_pTextures->setObject(texture, filename);
-        texture->autorelease();
-
-        if (target && selector)
+        if (pImage == nullptr)
         {
-            (target->*selector)(texture);
-            target->release();
-        }        
+            if (target && selector)
+            {
+                (target->*selector)(nullptr);
+                target->release();
+            }
+        }
+        else
+        {
+            const char* filename = pAsyncStruct->filename.c_str();
 
-        pImage->release();
+            // generate texture in render thread
+            CCTexture2D *texture = new CCTexture2D();
+    #if 0 //TODO: (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+            texture->initWithImage(pImage, kCCResolutioniPhone);
+    #else
+            texture->initWithImage(pImage);
+    #endif
+
+    #if CC_ENABLE_CACHE_TEXTURE_DATA
+           // cache the texture file name
+           VolatileTexture::addImageTexture(texture, filename, pImageInfo->imageType);
+    #endif
+
+            // cache the texture
+            m_pTextures->setObject(texture, filename);
+            texture->autorelease();
+
+            if (target && selector)
+            {
+                (target->*selector)(texture);
+                target->release();
+            }
+            pImage->release();
+        }
+
         delete pAsyncStruct;
         delete pImageInfo;
 
