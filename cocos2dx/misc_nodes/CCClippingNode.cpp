@@ -142,6 +142,24 @@ void CCClippingNode::onExit()
     CCNode::onExit();
 }
 
+void CCClippingNode::drawFullScreenQuadClearStencil()
+{
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPushMatrix();
+    kmGLLoadIdentity();
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPushMatrix();
+    kmGLLoadIdentity();
+    
+    ccDrawSolidRect(ccp(-1,-1), ccp(1,1), ccc4f(1, 1, 1, 1));
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPopMatrix();
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPopMatrix();
+}
+
 void CCClippingNode::visit()
 {
     // if stencil buffer disabled
@@ -257,7 +275,7 @@ void CCClippingNode::visit()
     
     // draw a fullscreen solid rectangle to clear the stencil buffer
     //ccDrawSolidRect(CCPointZero, ccpFromSize([[CCDirector sharedDirector] winSize]), ccc4f(1, 1, 1, 1));
-    ccDrawSolidRect(CCPointZero, ccpFromSize(CCDirector::sharedDirector()->getWinSize()), ccc4f(1, 1, 1, 1));
+    drawFullScreenQuadClearStencil();
     
     ///////////////////////////////////
     // DRAW CLIPPING STENCIL
