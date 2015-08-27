@@ -77,6 +77,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 
 	@Override
 	public void onSurfaceChanged(final GL10 pGL10, final int pWidth, final int pHeight) {
+		nativeInit(pWidth, pHeight);
 	}
 
 	@Override
