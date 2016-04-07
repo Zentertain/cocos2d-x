@@ -381,7 +381,7 @@ private:
     cocos2d::Ref *_owner;
     
     CCBAnimationManager* _animationManager; //retain
-    CCBAnimationManagerMapPtr _animationManagers;
+//    CCBAnimationManagerMapPtr _animationManagers;
     
     std::set<std::string> *_animatedProps;
     
@@ -399,6 +399,8 @@ private:
     cocos2d::Vector<cocos2d::Node*> _ownerCallbackNodes;
     cocos2d::ValueVector _ownerOwnerCallbackControlEvents;
     std::string _CCBRootPath;
+    
+    CCBAnimationManagerMapPtr _animationManagers;
     
     bool _jsControlled;
 };
