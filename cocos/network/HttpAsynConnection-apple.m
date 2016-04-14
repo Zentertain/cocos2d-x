@@ -25,7 +25,7 @@
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#import "HttpAsynConnection-apple.h"
+#import "network/HttpAsynConnection-apple.h"
 
 @interface HttpAsynConnection ()
 
@@ -141,7 +141,7 @@
 }
 
 /**
- * This delegate methodis called if the connection cannot be established to the server.  
+ * This delegate method is called if the connection cannot be established to the server.  
  * The error object will have a description of the error
  **/
 - (void)connection:(NSURLConnection *)connection 

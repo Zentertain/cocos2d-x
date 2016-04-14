@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -65,7 +65,7 @@ class CC_GUI_DLL PageView : public ListView
     
 public:
     /**
-     * Page turn event tpye.
+     * Page turn event type.
      */
     enum class EventType
     {
@@ -238,7 +238,7 @@ public:
      * @param callback A page turning callback.
      */
     void addEventListener(const ccPageViewCallback& callback);
-    
+    using ScrollView::addEventListener;
     //override methods
     virtual std::string getDescription() const override;
 
@@ -341,6 +341,8 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE bool isUsingCustomScrollThreshold()const;
 
+    void setAutoScrollStopEpsilon(float epsilon);
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
@@ -349,7 +351,9 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     void pageTurningEvent();
+    virtual float getAutoScrollStopEpsilon() const override;
 
+    virtual void remedyLayoutParameter(Widget* item)override;
     virtual void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack) override;
     virtual void onItemListChanged() override;
     virtual void onSizeChanged() override;
@@ -382,6 +386,7 @@ protected:
 #pragma warning (pop)
 #endif
     ccPageViewCallback _eventCallback;
+    float _autoScrollStopEpsilon;
 };
 
 }

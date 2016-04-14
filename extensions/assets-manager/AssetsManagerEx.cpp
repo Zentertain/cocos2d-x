@@ -833,7 +833,7 @@ void AssetsManagerEx::onError(const network::DownloadTask& task,
                               int errorCodeInternal,
                               const std::string& errorStr)
 {
-    // Skip version error occured
+    // Skip version error occurred
     if (task.identifier == VERSION_ID)
     {
         CCLOG("AssetsManagerEx : Fail to download version file, step skipped\n");
@@ -850,6 +850,8 @@ void AssetsManagerEx::onError(const network::DownloadTask& task,
         // Found unit and add it to failed units
         if (unitIt != _downloadUnits.end())
         {
+            _totalWaitToDownload--;
+            
             DownloadUnit unit = unitIt->second;
             _failedUnits.emplace(unit.customId, unit);
         }

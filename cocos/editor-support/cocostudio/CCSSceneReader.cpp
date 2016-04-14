@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "base/ObjectFactory.h"
@@ -110,7 +110,6 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
                         {
                             pCom = createComponent(comName);
                         }
-                        CCLOG("classname = %s", comName);
                         if (pCom != nullptr)
                         {
                             data->_rData = nullptr;
@@ -270,7 +269,6 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             }
             const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
             Component *com = this->createComponent(comName);
-            CCLOG("classname = %s", comName);
             SerData *data = new (std::nothrow) SerData();
             if (com != nullptr)
             {
@@ -388,7 +386,6 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
             {
                 pCom = createComponent(comName);
             }
-            CCLOG("classname = %s", comName);
             if (pCom != nullptr)
             {
                 data->_rData = nullptr;
