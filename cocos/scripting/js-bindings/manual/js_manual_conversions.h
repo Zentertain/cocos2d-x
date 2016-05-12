@@ -27,11 +27,11 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "js_bindings_core.h"
-#include "js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_core.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
 #include "cocos2d.h"
-#include "spidermonkey_specifics.h"
-#include "js-BindingsExport.h"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/js-BindingsExport.h"
 
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
@@ -263,7 +263,7 @@ jsval ushort_to_jsval( JSContext *cx, unsigned short number );
 jsval long_to_jsval( JSContext *cx, long number );
 jsval ulong_to_jsval(JSContext* cx, unsigned long v);
 jsval long_long_to_jsval(JSContext* cx, long long v);
-jsval std_string_to_jsval(JSContext* cx, const std::string& v);
+CC_JS_DLL jsval std_string_to_jsval(JSContext* cx, const std::string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
 jsval ccpoint_to_jsval(JSContext* cx, const cocos2d::Point& v);
 jsval ccrect_to_jsval(JSContext* cx, const cocos2d::Rect& v);

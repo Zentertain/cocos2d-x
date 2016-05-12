@@ -30,9 +30,10 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
-#include "UIEditBoxImpl-common.h"
+#include "ui/UIEditBox/UIEditBoxImpl-common.h"
 
 @class UIEditBoxImplMac;
+@class NSFont;
 
 NS_CC_BEGIN
 

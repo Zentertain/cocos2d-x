@@ -1,14 +1,16 @@
 
 
-#include "ScrollViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.h"
 
 #include "ui/UIScrollView.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -524,9 +526,9 @@ namespace cocostudio
 
         bool scrollbarEnabled = options->scrollbarEnabeld() != 0;
         scrollView->setScrollBarEnabled(scrollbarEnabled);
-        bool scrollbarAutoHide = options->scrollbarAutoHide() != 0;
         if (scrollbarEnabled)
         {
+            bool scrollbarAutoHide = options->scrollbarAutoHide() != 0;
             scrollView->setScrollBarAutoHideEnabled(scrollbarAutoHide);
             float barAutoHideTime = options->scrollbarAutoHideTime();
             scrollView->setScrollBarAutoHideTime(barAutoHideTime);

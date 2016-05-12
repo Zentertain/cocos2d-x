@@ -24,7 +24,7 @@
 #ifndef __JS_COCOS2D_X_SPECIFICS_H__
 #define __JS_COCOS2D_X_SPECIFICS_H__
 
-#include "ScriptingCore.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "platform/CCSAXParser.h"
 
 class JSScheduleWrapper;
@@ -82,6 +82,11 @@ inline js_type_class_t *js_get_type_from_native(T* native_obj) {
     }
     return found ? typeProxyIter->second : nullptr;
 }
+
+/**
+* get type from a cocos2d::Node, call function(js_get_type_from_native) above.
+*/
+CC_JS_DLL js_type_class_t *js_get_type_from_node(cocos2d::Node* native_obj);
 
 /**
  * Gets or creates a JSObject based on native_obj.
