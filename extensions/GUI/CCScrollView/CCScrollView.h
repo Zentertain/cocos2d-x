@@ -260,6 +260,8 @@ public:
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void removeChild(Node* child, bool cleaup = true) override;
+    
+    virtual void interceptTouchEvent(Node::TouchEventType eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch) override;
     /**
      * CCActionTweenDelegate
      */

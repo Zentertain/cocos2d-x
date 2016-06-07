@@ -118,6 +118,8 @@ Node::Node()
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
 , _cameraMask(1)
+,_propagateTouchEvents(false)
+,_touchHandleEnable(true)
 #if CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
@@ -2154,6 +2156,37 @@ void Node::setCameraMask(unsigned short mask, bool applyChildren)
         }
     }
 }
+void Node::propagateTouchEvent(Node::TouchEventType eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch)
+{
+    Node* parent = getParent();
+    if (parent)
+    {
+        parent->interceptTouchEvent(eventType, event, sender, touch);
+    }
+}
+
+void Node::interceptTouchEvent(Node::TouchEventType eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch)
+{
+    Node* parent = getParent();
+    if (parent)
+    {
+        parent->interceptTouchEvent(eventType, event,sender,touch);
+    }
+    
+}
+
+
+Vec2 Node::getTouchBeganPosition()
+{
+    return _touchBeganPosition;
+}
+
+bool Node::setTouchHandleEnable(bool enable)
+{
+    _touchHandleEnable = enable;
+}
+
+
 
 // MARK: Deprecated
 

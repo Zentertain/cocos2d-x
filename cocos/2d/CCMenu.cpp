@@ -267,13 +267,19 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
         }
     }
     
+    _touchBeganPosition = touch->getLocation();
     _selectedItem = this->getItemForTouch(touch, camera);
+    
     if (_selectedItem)
     {
         _state = Menu::State::TRACKING_TOUCH;
         _selectedWithCamera = camera;
         _selectedItem->selected();
         
+        //       if (_propagateTouchEvents)
+        {
+            this->propagateTouchEvent(TouchEventType::BEGAN, event, this, touch);
+        }
         return true;
     }
     
@@ -282,27 +288,40 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
 
 void Menu::onTouchEnded(Touch* touch, Event* event)
 {
-    CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
+  //  CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
     this->retain();
     if (_selectedItem)
     {
         _selectedItem->unselected();
         _selectedItem->activate();
     }
+    setTouchHandleEnable(true);
     _state = Menu::State::WAITING;
     _selectedWithCamera = nullptr;
+    
+    //    if (_propagateTouchEvents)
+    {
+        this->propagateTouchEvent(TouchEventType::ENDED, event, this, touch);
+    }
+    
     this->release();
 }
 
 void Menu::onTouchCancelled(Touch* touch, Event* event)
 {
-    CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
+   // CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
     this->retain();
     if (_selectedItem)
     {
         _selectedItem->unselected();
     }
+    setTouchHandleEnable(true);
     _state = Menu::State::WAITING;
+    
+    //    if (_propagateTouchEvents)
+    {
+        this->propagateTouchEvent(TouchEventType::CANCELED, event, this, touch);
+    }
     this->release();
 }
 
@@ -321,6 +340,10 @@ void Menu::onTouchMoved(Touch* touch, Event* event)
         {
             _selectedItem->selected();
         }
+    }
+    //   if (_propagateTouchEvents)
+    {
+        this->propagateTouchEvent(TouchEventType::MOVED, event, this, touch);
     }
 }
 

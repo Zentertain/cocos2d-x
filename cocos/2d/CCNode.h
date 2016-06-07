@@ -111,6 +111,15 @@ class CC_DLL Node : public Ref
 public:
     /** Default tag used for all the nodes */
     static const int INVALID_TAG = -1;
+    
+    enum TouchEventType
+    {
+        BEGAN,
+        MOVED,
+        ENDED,
+        CANCELED
+    };
+    
 
     enum {
         FLAGS_TRANSFORM_DIRTY = (1 << 0),
@@ -1816,6 +1825,14 @@ public:
      * @param applyChildren A boolean value to determine whether the mask bit should apply to its children or not.
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
+    
+    virtual void interceptTouchEvent(Node::TouchEventType eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch);
+    virtual void propagateTouchEvent(Node::TouchEventType eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch);
+    
+    virtual Vec2 getTouchBeganPosition();
+    
+    virtual bool setTouchHandleEnable(bool enable);
+
 
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
@@ -1961,7 +1978,11 @@ protected:
     std::function<void()> _onEnterTransitionDidFinishCallback;
     std::function<void()> _onExitTransitionDidStartCallback;
 
-//Physics:remaining backwardly compatible  
+    bool _propagateTouchEvents;
+    bool _touchHandleEnable;
+    Vec2 _touchBeganPosition;
+
+//Physics:remaining backwardly compatible
 #if CC_USE_PHYSICS
     PhysicsBody* _physicsBody;
 public:

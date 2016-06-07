@@ -92,7 +92,7 @@ public:
     /// @{
 
     /**
-     * Creates an empty sprite without texture. You can call setTexture method subsequently.
+up     * Creates an empty sprite without texture. You can call setTexture method subsequently.
      *
      * @memberof Sprite
      * @return An autoreleased sprite object.

@@ -383,7 +383,7 @@ void EditBox::setContentSize(const Size& size)
     
 void EditBox::adaptRenderers()
 {
-    if (_contentSizeDirty)
+   if (_contentSizeDirty && _backgroundSprite)
     {
         _backgroundSprite->setContentSize(_contentSize);
         _backgroundSprite->setPosition(Vec2(_contentSize.width/2, _contentSize.height/2));
