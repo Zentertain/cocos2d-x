@@ -21,10 +21,8 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
-
-"[WebSocket module] is based in part on the work of the libwebsockets  project
-(http://libwebsockets.org)"
-
+ "[WebSocket module] is based in part on the work of the libwebsockets  project
+ (http://libwebsockets.org)"
  ****************************************************************************/
 #ifndef __CC_WEBSOCKET_H__
 #define __CC_WEBSOCKET_H__
@@ -77,7 +75,7 @@ public:
         kErrorConnectionFailure,
         kErrorUnknown
     };
-
+    
     /**
      *  @brief The delegate class to process websocket events.
      *  @js NA
@@ -120,7 +118,7 @@ public:
      *  @brief Closes the connection to server.
      */
     void close();
-
+    
     /**
      *  Websocket state
      */
@@ -142,15 +140,14 @@ private:
     virtual void onSubThreadEnded();
     virtual void onUIThreadReceiveMessage(WsMessage* msg);
     
-
+    
     friend class WebSocketCallbackWrapper;
-    int onSocketCallback(struct libwebsocket_context *ctx,
-                         struct libwebsocket *wsi,
-                         enum libwebsocket_callback_reasons reason,
+    int onSocketCallback(struct lws *wsi,
+                         enum lws_callback_reasons reason,
                          void *user, void *in, size_t len);
     
 private:
-	State        _readyState;
+    State        _readyState;
     std::string  _host;
     unsigned int _port;
     std::string  _path;
@@ -158,11 +155,11 @@ private:
     friend class WsThreadHelper;
     WsThreadHelper* _wsHelper;
     
-    struct libwebsocket*         _wsInstance;
-    struct libwebsocket_context* _wsContext;
+    struct lws*         _wsInstance;
+    struct lws_context* _wsContext;
     Delegate* _delegate;
     int _SSLConnection;
-    struct libwebsocket_protocols* _wsProtocols;
+    struct lws_protocols* _wsProtocols;
 };
 
 NS_CC_EXT_END
