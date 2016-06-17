@@ -327,7 +327,7 @@ void Menu::onTouchCancelled(Touch* touch, Event* event)
 
 void Menu::onTouchMoved(Touch* touch, Event* event)
 {
-    CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
+   // CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
     MenuItem *currentItem = this->getItemForTouch(touch, _selectedWithCamera);
     if (currentItem != _selectedItem)
     {

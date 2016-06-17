@@ -445,10 +445,15 @@ void ScrollView::deaccelerateScrolling(float dt)
     _scrollDistance     = _scrollDistance * SCROLL_DEACCEL_RATE;
     this->setContentOffset(Vec2(newX,newY));
     
+//    if ((fabsf(_scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
+//         fabsf(_scrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
+//        ((_direction == Direction::BOTH || _direction == Direction::VERTICAL) && (newY >= maxInset.y || newY <= minInset.y)) ||
+//        ((_direction == Direction::BOTH || _direction == Direction::HORIZONTAL) && (newX >= maxInset.x || newX <= minInset.x)))
+    //revert to old version, the logical is not right, but it current work for our project
     if ((fabsf(_scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(_scrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
-        ((_direction == Direction::BOTH || _direction == Direction::VERTICAL) && (newY >= maxInset.y || newY <= minInset.y)) ||
-        ((_direction == Direction::BOTH || _direction == Direction::HORIZONTAL) && (newX >= maxInset.x || newX <= minInset.x)))
+        ((newY >= maxInset.y || newY <= minInset.y)) ||
+        ((newX >= maxInset.x || newX <= minInset.x)))
     {
         this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
