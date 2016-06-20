@@ -111,7 +111,18 @@ tools/jenkins_scripts/mac/android/userconf.ini
 # CTags
 tags
 /CocosDenshion/third_party/
-/cocos2dx/platform/third_party/
+
+/cocos2dx/platform/third_party/blackberry
+/cocos2dx/platform/third_party/emscripten
+/cocos2dx/platform/third_party/ios
+/cocos2dx/platform/third_party/linux
+/cocos2dx/platform/third_party/mac
+/cocos2dx/platform/third_party/marmalade
+/cocos2dx/platform/third_party/tizen
+/cocos2dx/platform/third_party/win32
+/cocos2dx/platform/third_party/winrt
+/cocos2dx/platform/third_party/wp8
+
 /external/emscripten/
 /external/libwebsockets/
 /external/sqlite3/
