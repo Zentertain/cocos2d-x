@@ -293,6 +293,7 @@ void Menu::onTouchEnded(Touch* touch, Event* event)
     if (_selectedItem)
     {
         _selectedItem->unselected();
+        if(_touchHandleEnable)
         _selectedItem->activate();
     }
     setTouchHandleEnable(true);
