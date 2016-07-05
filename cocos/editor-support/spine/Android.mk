@@ -26,7 +26,6 @@ IkConstraint.c \
 IkConstraintData.c \
 Json.c \
 MeshAttachment.c \
-PolygonBatch.cpp \
 RegionAttachment.c \
 Skeleton.c \
 SkeletonAnimation.cpp \
@@ -34,10 +33,13 @@ SkeletonBounds.c \
 SkeletonData.c \
 SkeletonJson.c \
 SkeletonRenderer.cpp \
+SkeletonBatch.cpp \
 Skin.c \
 WeightedMeshAttachment.c \
 Slot.c \
 SlotData.c \
+AttachmentVertices.cpp \
+Cocos2dAttachmentLoader.cpp \
 TransformConstraint.c \
 TransformConstraintData.c \
 spine-cocos2dx.cpp
