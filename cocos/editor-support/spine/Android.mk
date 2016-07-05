@@ -35,9 +35,11 @@ SkeletonData.c \
 SkeletonJson.c \
 SkeletonRenderer.cpp \
 Skin.c \
-SkinnedMeshAttachment.c \
+WeightedMeshAttachment.c \
 Slot.c \
 SlotData.c \
+TransformConstraint.c \
+TransformConstraintData.c \
 spine-cocos2dx.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..

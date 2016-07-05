@@ -114,15 +114,15 @@ jsval spbone_to_jsval(JSContext* cx, spBone& v)
         JS_DefineProperty(cx, tmp, "rotation", v.rotation, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "scaleX", v.scaleX, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "scaleY", v.scaleY, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "m00", v.m00, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "m01", v.m01, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "a", v.a, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "b", v.b, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "worldX", v.worldX, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "m10", v.m10, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "m11", v.m11, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "c", v.c, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "d", v.d, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "worldY", v.worldY, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "worldRotation", v.worldRotation, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "worldScaleX", v.worldScaleX, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "worldScaleY", v.worldScaleY, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+        JS_DefineProperty(cx, tmp, "appliedRotation", v.appliedRotation, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "appliedScaleX", v.appliedScaleX, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "appliedScaleY", v.appliedScaleY, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     if (ok)
     {

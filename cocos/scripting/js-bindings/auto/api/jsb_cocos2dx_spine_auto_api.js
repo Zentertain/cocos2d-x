@@ -99,18 +99,6 @@ getBlendFunc : function (
 },
 
 /**
- * @method drawSkeleton
- * @param {mat4_object} arg0
- * @param {unsigned int} arg1
- */
-drawSkeleton : function (
-mat4, 
-int 
-)
-{
-},
-
-/**
  * @method updateWorldTransform
  */
 updateWorldTransform : function (
@@ -203,15 +191,27 @@ getSkeleton : function (
 },
 
 /**
+ * @method drawDebug
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ */
+drawDebug : function (
+mat4, 
+int 
+)
+{
+},
+
+/**
  * @method createWithFile
 * @param {String|String} str
-* @param {String|spAtlas} str
+* @param {spAtlas|String} spatlas
 * @param {float|float} float
-* @return {sp.SkeletonRenderer|sp.SkeletonRenderer}
+* @return {sp.SkeletonRenderer|sp.SkeletonRenderer|sp.SkeletonRenderer}
 */
 createWithFile : function(
 str,
-spatlas,
+str,
 float 
 )
 {
@@ -421,13 +421,13 @@ int
 /**
  * @method createWithFile
 * @param {String|String} str
-* @param {String|spAtlas} str
+* @param {spAtlas|String} spatlas
 * @param {float|float} float
-* @return {sp.SkeletonAnimation|sp.SkeletonAnimation}
+* @return {sp.SkeletonAnimation|sp.SkeletonAnimation|sp.SkeletonAnimation}
 */
 createWithFile : function(
 str,
-spatlas,
+str,
 float 
 )
 {
