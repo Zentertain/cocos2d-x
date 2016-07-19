@@ -2731,6 +2731,24 @@ jsval ssize_to_jsval(JSContext *cx, ssize_t v)
     return int32_to_jsval(cx, static_cast<int>(v));
 }
 
+jsval std_vector_point_to_jsval( JSContext *cx, const std::vector<cocos2d::Point>& v)
+{
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
+    
+    int i = 0;
+    for (const cocos2d::Point obj : v)
+    {
+        JS::RootedValue arrElement(cx);
+        arrElement = ccpoint_to_jsval(cx, obj);
+        
+        if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
+            break;
+        }
+        ++i;
+    }
+    return OBJECT_TO_JSVAL(jsretArr);
+}
+
 jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>& v)
 {
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));

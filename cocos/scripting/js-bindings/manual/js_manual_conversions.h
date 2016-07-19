@@ -347,6 +347,7 @@ jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v);
 jsval ccvaluemapintkey_to_jsval(JSContext* cx, const cocos2d::ValueMapIntKey& v);
 jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v);
 jsval ssize_to_jsval(JSContext *cx, ssize_t v);
+jsval std_vector_point_to_jsval(JSContext *cx, const std::vector<cocos2d::Point>& v);
 jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>& v);
 jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v);
 jsval std_vector_float_to_jsval( JSContext *cx, const std::vector<float>& v);
