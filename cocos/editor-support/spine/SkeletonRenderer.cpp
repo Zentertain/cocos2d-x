@@ -74,6 +74,10 @@ void SkeletonRenderer::initialize () {
 }
 
 void SkeletonRenderer::setSkeletonData (spSkeletonData *skeletonData, bool ownsSkeletonData) {
+    if (skeletonData && skeletonData->width && skeletonData->height) {
+        setContentSize(Size(skeletonData->width / Director::getInstance()->getContentScaleFactor(), skeletonData->height / Director::getInstance()->getContentScaleFactor()));
+    }
+    
 	_skeleton = spSkeleton_create(skeletonData);
 	_ownsSkeletonData = ownsSkeletonData;
 }
