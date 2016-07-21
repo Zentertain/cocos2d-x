@@ -236,7 +236,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
             case CCBReader::PropertyType::SPRITEFRAME:
             {
                 SpriteFrame * ccSpriteFrame = this->parsePropTypeSpriteFrame(pNode, pParent, ccbReader, propertyName.c_str());
-                if(setProp) 
+                if(setProp && ccSpriteFrame)
                 {
                     this->onHandlePropTypeSpriteFrame(pNode, pParent, propertyName.c_str(), ccSpriteFrame, ccbReader);
                 }
