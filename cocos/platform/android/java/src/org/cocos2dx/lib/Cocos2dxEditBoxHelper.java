@@ -182,6 +182,7 @@ public class Cocos2dxEditBoxHelper {
                                 }
                             });
                             mFrameLayout.setEnableForceDoLayout(false);
+                            mCocos2dxActivity.hideVirtualButton();
                             Log.d(TAG, "edit box lose focus");
                         }
                     }
