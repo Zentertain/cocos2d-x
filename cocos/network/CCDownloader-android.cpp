@@ -57,14 +57,14 @@ static void _eraseDownloaderAndroid(int id)
 /**
  * If not found, return nullptr, otherwise return the right iterator
  */
-static unordered_map<int, cocos2d::network::DownloaderAndroid*>::iterator _findDownloaderAndroid(int id)
+static std::pair<bool, std::unordered_map<int, cocos2d::network::DownloaderAndroid*>::iterator> _findDownloaderAndroid(int id)
 {
     std::lock_guard<std::mutex> guard(sDownloaderMutex);
     auto iter = sDownloaderMap.find(id);
     if (sDownloaderMap.end() == iter) {
-        return nullptr;
+        return std::make_pair(false, iter);
     } else {
-        return iter;
+        return std::make_pair(true, iter);
     }
 }
 
@@ -220,12 +220,13 @@ static void _nativeOnProgress(JNIEnv *env, jclass clazz, jint id, jint taskId, j
 {
     DLLOG("_nativeOnProgress(id: %d, taskId: %d, dl: %lld, dlnow: %lld, dltotal: %lld)", id, taskId, dl, dlnow, dltotal);
     //It's not thread-safe here, use thread-safe method instead
-    auto iter = _findDownloaderAndroid(id);
-    if (nullptr == iter)
+    auto findResult = _findDownloaderAndroid(id);
+    if (!findResult.first)
     {
         DLLOG("_nativeOnProgress can't find downloader by key: %p for task: %d", clazz, id);
         return;
     }
+    auto iter = findResult.second;
     cocos2d::network::DownloaderAndroid *downloader = iter->second;
     downloader->_onProcess((int)taskId, (int64_t)dl, (int64_t)dlnow, (int64_t)dltotal);
 }
@@ -234,12 +235,13 @@ static void _nativeOnFinish(JNIEnv *env, jclass clazz, jint id, jint taskId, jin
 {
     DLLOG("_nativeOnFinish(id: %d, taskId: %d)", id, taskId);
     //It's not thread-safe here, use thread-safe method instead
-    auto iter = _findDownloaderAndroid(id);
-    if (nullptr == iter)
+    auto findResult = _findDownloaderAndroid(id);
+    if (!findResult.first)
     {
         DLLOG("_nativeOnFinish can't find downloader id: %d for task: %d", id, taskId);
         return;
     }
+    auto iter = findResult.second;
     cocos2d::network::DownloaderAndroid *downloader = iter->second;
     vector<unsigned char> buf;
     if (errStr)
