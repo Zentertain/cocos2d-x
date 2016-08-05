@@ -57,7 +57,7 @@ static void _eraseDownloaderAndroid(int id)
 /**
  * If not found, return nullptr, otherwise return the right iterator
  */
-static auto _findDownloaderAndroid(int id)
+static unordered_map<int, cocos2d::network::DownloaderAndroid*>::iterator _findDownloaderAndroid(int id)
 {
     std::lock_guard<std::mutex> guard(sDownloaderMutex);
     auto iter = sDownloaderMap.find(id);
