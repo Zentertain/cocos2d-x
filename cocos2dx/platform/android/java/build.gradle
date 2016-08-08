@@ -8,7 +8,11 @@ android {
         minSdkVersion 9
         targetSdkVersion 8
     }
-
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
