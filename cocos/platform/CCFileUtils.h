@@ -431,6 +431,15 @@ public:
     virtual bool createDirectory(const std::string& dirPath);
 
     /**
+     *  Copy a directory.
+     *
+     *  @param srcPath The path of the directory, it must be an absolute path.
+     *  @param dstPath The path of the directory, it must be an absolute path.
+     *  @return True if the directory have been copyed successfully, false if not.
+     */
+    virtual bool copyDirectory(const std::string &srcPath, const std::string &dstPath);
+
+    /**
      *  Removes a directory.
      *
      *  @param dirPath  The full path of the directory, it must be an absolute path.

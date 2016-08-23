@@ -54,7 +54,7 @@ const std::string AssetsManagerEx::MANIFEST_ID = "@manifest";
 
 // Implementation of AssetsManagerEx
 
-AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath)
+AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath, bool needPrependSearchPaths)
 : _updateState(State::UNCHECKED)
 , _assets(nullptr)
 , _storagePath("")
@@ -71,6 +71,7 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
 , _totalToDownload(0)
 , _totalWaitToDownload(0)
 , _inited(false)
+, _needPrependSearchPaths(needPrependSearchPaths)
 {
     // Init variables
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
@@ -113,9 +114,9 @@ AssetsManagerEx::~AssetsManagerEx()
     CC_SAFE_RELEASE(_remoteManifest);
 }
 
-AssetsManagerEx* AssetsManagerEx::create(const std::string& manifestUrl, const std::string& storagePath)
+AssetsManagerEx* AssetsManagerEx::create(const std::string& manifestUrl, const std::string& storagePath, bool needPrependSearchPaths)
 {
-    AssetsManagerEx* ret = new (std::nothrow) AssetsManagerEx(manifestUrl, storagePath);
+    AssetsManagerEx* ret = new (std::nothrow) AssetsManagerEx(manifestUrl, storagePath, needPrependSearchPaths);
     if (ret)
     {
         ret->autorelease();
@@ -180,7 +181,9 @@ void AssetsManagerEx::prepareLocalManifest()
     _assets = &(_localManifest->getAssets());
 
     // Add search paths
-    _localManifest->prependSearchPaths();
+    if(_needPrependSearchPaths){
+        _localManifest->prependSearchPaths();
+    }
 }
 
 void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)

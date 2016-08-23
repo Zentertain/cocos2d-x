@@ -1097,6 +1097,11 @@ bool FileUtils::renameFile(const std::string &path, const std::string &oldname, 
     CCASSERT(false, "FileUtils not support renameFile");
     return false;
 }
+bool FileUtils::copyDirectory(const std::string &srcPath, const std::string &dstPath)
+{
+    CCASSERT(false, "FileUtils not support copyDirectorys");
+    return false;
+}
 
 std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
 {
@@ -1115,6 +1120,7 @@ long FileUtils::getFileSize(const std::string &filepath)
 #include <sys/types.h>
 #include <errno.h>
 #include <dirent.h>
+#include<sys/stat.h>
 
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 {
@@ -1243,6 +1249,38 @@ bool FileUtils::renameFile(const std::string &path, const std::string &oldname, 
     std::string newPath = path + name;
 
     return this->renameFile(oldPath, newPath);
+}
+
+bool FileUtils::copyDirectory(const std::string &srcPath, const std::string &dstPath)
+{
+    CCASSERT(!srcPath.empty(), "Invalid path");
+    CCASSERT(!dstPath.empty(), "Invalid path");
+
+    this->createDirectory(dstPath);
+
+    struct dirent* filename;
+    DIR* dp=opendir(srcPath.c_str());//用DIR指针指向这个文件夹
+    while(filename=readdir(dp)){//遍历DIR指针指向的文件夹，也就是文件数组。
+        std::string fname = filename->d_name;
+
+        std::string srcFilePath = srcPath + "/" + fname;
+        std::string dstFilePath = dstPath + "/" + fname;
+
+        CCLOG("fname:%s",fname.c_str());
+        CCLOG("srcFilePath:%s",srcFilePath.c_str());
+        CCLOG("dstFilePath:%s",dstFilePath.c_str());
+        if(this->isDirectoryExistInternal(srcFilePath)){//如果是目录
+            if(fname!="." && fname!=".."){
+                this->copyDirectory(srcFilePath,dstFilePath);
+            }
+        }
+        else{
+            Data data = this->getDataFromFile(srcFilePath);
+            this->writeDataToFile(data,dstFilePath);
+        }
+    }
+    closedir(dp);
+    return true;
 }
 
 std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
