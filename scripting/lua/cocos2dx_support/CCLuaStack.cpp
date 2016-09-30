@@ -182,33 +182,41 @@ void CCLuaStack::removeScriptHandler(int nHandler)
 
 int CCLuaStack::executeString(const char *codes)
 {
-    luaL_loadstring(m_state, codes);
-    return executeFunction(0);
-}
-
-int CCLuaStack::executeScriptFile(const char* filename)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    std::string code("require \"");
-    code.append(filename);
-    code.append("\"");
-    return executeString(code.c_str());
-#else
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename);
-    ++m_callFromLua;
-    int nRet = luaL_dofile(m_state, fullPath.c_str());
-    --m_callFromLua;
-    CC_ASSERT(m_callFromLua >= 0);
-    // lua_gc(m_state, LUA_GCCOLLECT, 0);
-    
+    //From BigCasino,Johny--2016.9.7
+    //Fix: no compile hint
+    int nRet = luaL_dostring(m_state, codes);
     if (nRet != 0)
     {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
         lua_pop(m_state, 1);
         return nRet;
     }
-    return 0;
-#endif
+    return executeFunction(0);
+}
+
+int CCLuaStack::executeScriptFile(const char* filename)
+{
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    std::string code("require \"");
+    code.append(filename);
+    code.append("\"");
+    return executeString(code.c_str());
+//#else
+//    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename);
+//    ++m_callFromLua;
+//    int nRet = luaL_dofile(m_state, fullPath.c_str());
+//    --m_callFromLua;
+//    CC_ASSERT(m_callFromLua >= 0);
+//    // lua_gc(m_state, LUA_GCCOLLECT, 0);
+//    
+//    if (nRet != 0)
+//    {
+//        CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
+//        lua_pop(m_state, 1);
+//        return nRet;
+//    }
+//    return 0;
+//#endif
 }
 
 int CCLuaStack::executeGlobalFunction(const char* functionName)

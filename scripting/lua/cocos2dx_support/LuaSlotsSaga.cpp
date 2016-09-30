@@ -19,6 +19,9 @@ extern "C" {
 
 #include "LuaSlotsSaga.h"
 
+
+#include "SlotRetProtocol.h"
+
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
@@ -457,6 +460,299 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+
+
+
+
+//--------------------CLuaBridge----------------------------------
+int lua_slotsnew_cluabridge_GetLuaInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"CLuaBridge",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        CLuaBridge* ret = CLuaBridge::GetLuaInstance();
+        tolua_pushusertype(tolua_S,(void*)ret,"CLuaBridge");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "GetLuaInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_slotsnew_cluabridge_GetLuaInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+
+
+int lua_slotsnew_cluabridge_RegisterLuaHandler(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S, 1, "CLuaBridge", 0, &tolua_err) ||
+        !toluafix_isfunction(tolua_S, 2, "LUA_FUNCTION", 0, &tolua_err) ||
+        !tolua_isnoobj(tolua_S, 3, &tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        int handler = (toluafix_ref_function(tolua_S, 2, 0));
+        CLuaBridge::GetLuaInstance()->RegisterLuaHandler(handler);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+    tolua_lerror :
+    tolua_error(tolua_S, "#ferror in function 'lua_slotsnew_cluabridge_RegisterLuaHandler'.", &tolua_err);
+    return 0;
+#endif
+}
+
+
+int lua_slotsnew_cluabridge_RegisterLuaTickHandler(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S, 1, "CLuaBridge", 0, &tolua_err) ||
+        !toluafix_isfunction(tolua_S, 2, "LUA_FUNCTION", 0, &tolua_err) ||
+        !tolua_isnoobj(tolua_S, 3, &tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        int handler = (toluafix_ref_function(tolua_S, 2, 0));
+        CLuaBridge::GetLuaInstance()->RegisterLuaTickHandler(handler);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+    tolua_lerror :
+    tolua_error(tolua_S, "#ferror in function 'lua_slotsnew_cluabridge_RegisterLuaTickHandler'.", &tolua_err);
+    return 0;
+#endif
+}
+
+
+int lua_slotsnew_cluabridge_onResultFromLua(lua_State* tolua_S)
+{
+    int argc = 0;
+    CLuaBridge* cobj = nullptr;
+//    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"CLuaBridge",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (CLuaBridge*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_slotsnew_cluabridge_onResultFromLua'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2)
+    {
+        int arg0;
+        arg0 = tolua_tonumber(tolua_S, 2, -1);
+        std::string arg1;
+        arg1= tolua_tostring(tolua_S, 3, "error");
+        cobj->onResultFromLua(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "onResultFromLua",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_slotsnew_cluabridge_retFromLua'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_slotsnew_cluabridge_getSubjectInfo(lua_State* tolua_S)
+{
+    int argc = 0;
+    CLuaBridge* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"CLuaBridge",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (CLuaBridge*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_slotsnew_cluabridge_getSubjectInfo'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1)
+    {
+        int arg0;
+        arg0= ((int)tolua_tonumber(tolua_S, 2, -1));
+        if(!ok)
+            return 0;
+        std::string str = cobj->getSubjectInfo(arg0);
+        tolua_pushcppstring(tolua_S, str);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getSubjectInfo",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_slotsnew_cluabridge_getSubjectInfo'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_slotsnew_cluabridge_save2DB(lua_State* tolua_S)
+{
+    int argc = 0;
+    CLuaBridge* cobj = nullptr;
+//    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"CLuaBridge",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (CLuaBridge*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_slotsnew_cluabridge_save2DB'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2)
+    {
+        int arg0;
+        arg0= ((int)tolua_tonumber(tolua_S, 2, -1));
+        std::string arg1;
+        arg1= tolua_tostring(tolua_S, 3, "error");
+        cobj->save2DB(arg0,arg1);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "save2DB",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_slotsnew_cluabridge_getSubjectInfo'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_slotsnew_cluabridge_getJsonStringFromDB(lua_State* tolua_S)
+{
+    int argc = 0;
+    CLuaBridge* cobj = nullptr;
+//    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"CLuaBridge",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (CLuaBridge*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_slotsnew_cluabridge_getJsonStringFromDB'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1)
+    {
+        int arg0;
+        arg0= ((int)tolua_tonumber(tolua_S, 2, -1));
+        std::string str = cobj->getJsonStringFromDB(arg0);
+        tolua_pushcppstring(tolua_S, str);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getJsonStringFromDB",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_slotsnew_cluabridge_getSubjectInfo'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+
+//From BigCasino,Johny--2016.9.7
+int lua_register_slotsnew_CLuaBridge(lua_State* tolua_S){
+    tolua_usertype(tolua_S,"CLuaBridge");
+    tolua_cclass(tolua_S,"CLuaBridge","CLuaBridge","",NULL);
+    tolua_beginmodule(tolua_S,"CLuaBridge");
+    tolua_function(tolua_S, "GetLuaInstance", lua_slotsnew_cluabridge_GetLuaInstance);
+    tolua_function(tolua_S, "RegisterLuaHandler", lua_slotsnew_cluabridge_RegisterLuaHandler);
+    tolua_function(tolua_S, "RegisterLuaTickHandler", lua_slotsnew_cluabridge_RegisterLuaTickHandler);
+    tolua_function(tolua_S, "onResultFromLua", lua_slotsnew_cluabridge_onResultFromLua);
+    tolua_function(tolua_S, "getSubjectInfo", lua_slotsnew_cluabridge_getSubjectInfo);
+    tolua_function(tolua_S, "save2DB", lua_slotsnew_cluabridge_save2DB);
+    tolua_function(tolua_S, "getJsonStringFromDB", lua_slotsnew_cluabridge_getJsonStringFromDB);
+    tolua_endmodule(tolua_S);
+    
+    return 1;
+}
+
+
+
+
 /* Open function */
 TOLUA_API int tolua_SlotsSaga_open (lua_State* tolua_S)
 {
@@ -485,6 +781,10 @@ TOLUA_API int tolua_SlotsSaga_open (lua_State* tolua_S)
     tolua_function(tolua_S, "getInstance", tolua_User_Define_LogicMan_getInstance00);
     tolua_function(tolua_S, "forceUpdateClient", tolua_User_Define_LogicMan_forceUpdateClient00);
     tolua_endmodule(tolua_S);
+    
+    //From BigCasino,Johny--2016.9.7
+    lua_register_slotsnew_CLuaBridge(tolua_S);
+
     
  tolua_endmodule(tolua_S);
  return 1;
