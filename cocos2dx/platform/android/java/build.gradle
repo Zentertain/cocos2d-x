@@ -3,16 +3,15 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 19
     buildToolsVersion '22.0.1'
-
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 8
     }
-    android {
-        lintOptions {
-            abortOnError false
-        }
+    lintOptions {
+        abortOnError false
     }
+
+
     buildTypes {
         release {
             minifyEnabled false
