@@ -32,6 +32,9 @@ THE SOFTWARE.
 #include <stack>
 #include <algorithm>
 
+
+#include "support/xxtea/xxtea.h"
+
 using namespace std;
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
@@ -465,6 +468,11 @@ void CCFileUtils::purgeFileUtils()
 
 CCFileUtils::CCFileUtils()
 : m_pFilenameLookupDict(NULL)
+,_xxteaKey(nullptr)
+,_xxteaSign(nullptr)
+,_xxteaSignLen(0)
+,_xxteaKeyLen(0)
+,_xxteaEnabled(false)
 {
 }
 
@@ -483,6 +491,44 @@ bool CCFileUtils::init()
 void CCFileUtils::purgeCachedEntries()
 {
     m_fullPathCache.clear();
+}
+
+//追加
+void CCFileUtils::setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen){
+    cleanupXXTEAKeyAndSign();
+    
+    if (key && keyLen && sign && signLen)
+    {
+        _xxteaKey = (char*)malloc(keyLen);
+        memcpy(_xxteaKey, key, keyLen);
+        _xxteaKeyLen = keyLen;
+        
+        _xxteaSign = (char*)malloc(signLen);
+        memcpy(_xxteaSign, sign, signLen);
+        _xxteaSignLen = signLen;
+        
+        _xxteaEnabled = true;
+    }
+    else
+    {
+        _xxteaEnabled = false;
+    }
+}
+//追加
+void CCFileUtils::cleanupXXTEAKeyAndSign()
+{
+    if (_xxteaKey)
+    {
+        free(_xxteaKey);
+        _xxteaKey = nullptr;
+        _xxteaKeyLen = 0;
+    }
+    if (_xxteaSign)
+    {
+        free(_xxteaSign);
+        _xxteaSign = nullptr;
+        _xxteaSignLen = 0;
+    }
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
@@ -511,7 +557,23 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         msg.append(pszFileName).append(") failed!");
         
         CCLOG("%s", msg.c_str());
+    }else{
+        //追加xxtea解密
+        if (strncmp((char*)pBuffer, _xxteaSign, _xxteaSignLen) == 0)
+        {
+            // decrypt XXTEA
+            xxtea_long len = 0;
+            unsigned char* result = xxtea_decrypt(pBuffer + _xxteaSignLen,
+                                                  (xxtea_long)*pSize - _xxteaSignLen,
+                                                  (unsigned char*)_xxteaKey,
+                                                  (xxtea_long)_xxteaKeyLen,
+                                                  &len);
+            free(pBuffer);
+            pBuffer = result;
+        }
     }
+    
+    
     return pBuffer;
 }
 

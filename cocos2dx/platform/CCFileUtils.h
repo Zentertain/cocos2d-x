@@ -329,6 +329,15 @@ public:
      */
     virtual void setPopupNotify(bool bNotify);
     virtual bool isPopupNotify();
+    
+    
+    //追加
+    virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
+    virtual void cleanupXXTEAKeyAndSign();
+    const char* getXXTTEAKey() const { return _xxteaKey; }
+    const char* getXXTEASign() const { return _xxteaSign; }
+    int getXXTTEAKeyLen() const { return _xxteaKeyLen; }
+    int getXXTTEASignLen() const { return _xxteaSignLen; }
 
 protected:
     /**
@@ -434,6 +443,14 @@ protected:
      *  The singleton pointer of CCFileUtils.
      */
     static CCFileUtils* s_sharedFileUtils;
+    
+    
+    //追加
+    bool _xxteaEnabled;
+    char* _xxteaSign;
+    int   _xxteaSignLen;
+    char* _xxteaKey;
+    int   _xxteaKeyLen;
     
 };
 
