@@ -557,20 +557,6 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         msg.append(pszFileName).append(") failed!");
         
         CCLOG("%s", msg.c_str());
-    }else{
-        //追加xxtea解密
-        if (strncmp((char*)pBuffer, _xxteaSign, _xxteaSignLen) == 0)
-        {
-            // decrypt XXTEA
-            xxtea_long len = 0;
-            unsigned char* result = xxtea_decrypt(pBuffer + _xxteaSignLen,
-                                                  (xxtea_long)*pSize - _xxteaSignLen,
-                                                  (unsigned char*)_xxteaKey,
-                                                  (xxtea_long)_xxteaKeyLen,
-                                                  &len);
-            free(pBuffer);
-            pBuffer = result;
-        }
     }
     
     
