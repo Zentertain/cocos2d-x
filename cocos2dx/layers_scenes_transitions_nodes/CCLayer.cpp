@@ -50,6 +50,7 @@ CCLayer::CCLayer()
 , m_pScriptKeypadHandlerEntry(NULL)
 , m_pScriptAccelerateHandlerEntry(NULL)
 , m_nTouchPriority(0)
+, m_bSwallowTouches(true)
 , m_eTouchMode(kCCTouchesAllAtOnce)
 {
     m_bIgnoreAnchorPointForPosition = true;
@@ -121,7 +122,7 @@ void CCLayer::registerWithTouchDispatcher()
         if( m_eTouchMode == kCCTouchesAllAtOnce ) {
             pDispatcher->addStandardDelegate(this, 0);
         } else {
-            pDispatcher->addTargetedDelegate(this, m_nTouchPriority, true);
+            pDispatcher->addTargetedDelegate(this, m_nTouchPriority, m_bSwallowTouches);
         }
     }
 }
@@ -205,6 +206,17 @@ void CCLayer::setTouchPriority(int priority)
 int CCLayer::getTouchPriority()
 {
     return m_nTouchPriority;
+}
+
+void CCLayer::setSwallowTouches(bool swallow)
+{
+    m_bSwallowTouches = swallow;
+    CCTouchDispatcher* pDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
+    if( m_eTouchMode == kCCTouchesAllAtOnce ) {
+        pDispatcher->addStandardDelegate(this, 0);
+    } else {
+        pDispatcher->addTargetedDelegate(this, m_nTouchPriority, m_bSwallowTouches);
+    }
 }
 
 int CCLayer::getTouchMode()

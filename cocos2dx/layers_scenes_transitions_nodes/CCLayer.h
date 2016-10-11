@@ -142,6 +142,9 @@ public:
     /** priority of the touch events. Default is 0 */
     virtual void setTouchPriority(int priority);
     virtual int getTouchPriority();
+    
+    virtual void setSwallowTouches(bool swallow);
+    virtual bool getSwallowTouches() {return m_bSwallowTouches;};
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
@@ -181,6 +184,7 @@ private:
     CCScriptHandlerEntry* m_pScriptAccelerateHandlerEntry;
     
     int m_nTouchPriority;
+    bool m_bSwallowTouches;
     ccTouchesMode m_eTouchMode;
     
     int  excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
