@@ -853,7 +853,10 @@ void ScrollView::onTouchCancelled(Touch* touch, Event* event)
     }
     
     auto touchIter = std::find(_touches.begin(), _touches.end(), touch);
-    _touches.erase(touchIter);
+    if(touchIter != _touches.end())
+    {
+        _touches.erase(touchIter);
+    }
     
     if (_touches.size() == 0)
     {
@@ -888,4 +891,34 @@ Rect ScrollView::getViewRect()
 
     return Rect(screenPos.x, screenPos.y, _viewSize.width*scaleX, _viewSize.height*scaleY);
 }
+
+void ScrollView::interceptTouchEvent(cocos2d::EventTouch::EventCode eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch)
+{
+    if(!this->isTouchEnabled()) return;
+    Vec2 touchPoint = touch->getLocation();
+    switch (eventType) {
+        case cocos2d::EventTouch::EventCode::BEGAN:
+            this->onTouchBegan(touch, event);
+            break;
+        case cocos2d::EventTouch::EventCode::ENDED:
+            this->onTouchEnded(touch, event);
+            break;
+        case cocos2d::EventTouch::EventCode::MOVED:
+        {
+            float offset = (sender->getTouchBeganPosition() - touchPoint).getLength();
+            if (offset > 5)
+            {
+                sender->setTouchHandleEnabled(false);
+            }
+            this->onTouchMoved(touch, event);
+        }
+            break;
+        case cocos2d::EventTouch::EventCode::CANCELLED:
+            this->onTouchCancelled(touch, event);
+            break;
+        default:
+            break;
+    }
+}
+
 NS_CC_EXT_END

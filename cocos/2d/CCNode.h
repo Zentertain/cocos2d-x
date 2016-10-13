@@ -33,6 +33,7 @@
 #include "base/CCVector.h"
 #include "base/CCProtocols.h"
 #include "base/CCScriptSupport.h"
+#include "base/CCEventTouch.h"
 #include "math/CCAffineTransform.h"
 #include "math/CCMath.h"
 #include "2d/CCComponentContainer.h"
@@ -1818,6 +1819,11 @@ public:
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
 
+    virtual void interceptTouchEvent(cocos2d::EventTouch::EventCode eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch);
+    virtual void propagateTouchEvent(cocos2d::EventTouch::EventCode eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch);
+    virtual Vec2 getTouchBeganPosition();
+    virtual void setTouchHandleEnabled(bool enabled);
+
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
     Node();
@@ -1962,6 +1968,10 @@ protected:
     std::function<void()> _onEnterTransitionDidFinishCallback;
     std::function<void()> _onExitTransitionDidStartCallback;
 
+    bool _propagateTouchEvents;
+    bool _touchHandleEnabled;
+    Vec2 _touchBeganPosition;
+    
 //Physics:remaining backwardly compatible  
 #if CC_USE_PHYSICS
     PhysicsBody* _physicsBody;
