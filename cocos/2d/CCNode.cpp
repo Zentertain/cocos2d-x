@@ -118,7 +118,7 @@ Node::Node()
 , _cascadeOpacityEnabled(false)
 , _cameraMask(1)
 , _propagateTouchEvents(false)
-, _touchHandleEnabled(false)
+, _touchHandleEnabled(true)
 #if CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
