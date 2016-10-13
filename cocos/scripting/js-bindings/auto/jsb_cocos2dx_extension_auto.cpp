@@ -6784,10 +6784,10 @@ bool js_cocos2dx_extension_AssetsManagerEx_create(JSContext *cx, uint32_t argc, 
     if (argc == 2) {
         std::string arg0;
         std::string arg1;
-        std::string arg2;
+        int arg2;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+        ok &= jsval_to_int(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_AssetsManagerEx_create : Error processing arguments");
 
         auto ret = cocos2d::extension::AssetsManagerEx::create(arg0, arg1, arg2);
@@ -6806,10 +6806,10 @@ bool js_cocos2dx_extension_AssetsManagerEx_constructor(JSContext *cx, uint32_t a
     bool ok = true;
     std::string arg0;
     std::string arg1;
-    std::string arg2;
+    int arg2;
     ok &= jsval_to_std_string(cx, args.get(0), &arg0);
     ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-    ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+    ok &= jsval_to_int(cx, args.get(2), &arg2);
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_AssetsManagerEx_constructor : Error processing arguments");
     cocos2d::extension::AssetsManagerEx* cobj = new (std::nothrow) cocos2d::extension::AssetsManagerEx(arg0, arg1, arg2);
 
