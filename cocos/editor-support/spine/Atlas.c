@@ -213,11 +213,10 @@ spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* r
 			if (!readTuple(&begin, end, tuple)) return abortAtlas(self);
 			page->minFilter = (spAtlasFilter)indexOf(textureFilterNames, 7, tuple);
 			page->magFilter = (spAtlasFilter)indexOf(textureFilterNames, 7, tuple + 1);
-
+            page->uWrap = SP_ATLAS_CLAMPTOEDGE;
+            page->vWrap = SP_ATLAS_CLAMPTOEDGE;
 			if (!readValue(&begin, end, &str)) return abortAtlas(self);
 			if (!equals(&str, "none")) {
-				page->uWrap = SP_ATLAS_CLAMPTOEDGE;
-				page->vWrap = SP_ATLAS_CLAMPTOEDGE;
 				if (*str.begin == 'x')
 					page->uWrap = SP_ATLAS_REPEAT;
 				else if (*str.begin == 'y')
