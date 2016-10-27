@@ -337,6 +337,9 @@ public class Cocos2dxHelper {
     }
     
     public static void terminateProcess() {
+        if (sActivity != null) {
+            ((Cocos2dxActivity)sActivity).beforeProcessTerminate();
+        }
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
