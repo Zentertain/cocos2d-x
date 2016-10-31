@@ -446,4 +446,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     // ===========================================================
     // Inner and Anonymous Classes
     // ===========================================================
+
+
+    public void beforeProcessTerminate() {
+    }
+
 }
