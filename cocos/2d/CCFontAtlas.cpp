@@ -273,7 +273,7 @@ void FontAtlas::findNewCharacters(const std::u16string& u16Text, std::unordered_
         // as `Label::_utf16Text` holds. If doing a `memset` or other memory operations, the orignal `Label::_utf16Text`
         // will be in an unknown state. Meanwhile, a bunch lots of logic which depends on `Label::_utf16Text`
         // will be broken.
-
+        
         // newChars = u16Text;
 
         // Using `append` method is a workaround for this issue. So please be carefuly while using the assignment operator
