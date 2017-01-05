@@ -47,6 +47,7 @@ public class Cocos2dxMusic {
     // ===========================================================
 
     private static final String TAG = Cocos2dxMusic.class.getSimpleName();
+    private static final int MAX_MEDIA_CACHE_COUNT = 3;
 
     // ===========================================================
     // Fields
@@ -60,11 +61,11 @@ public class Cocos2dxMusic {
     private boolean mManualPaused = false; // whether music is paused manually before the program is switched to the background.
     private String mCurrentPath;
 
-
     private class MediaMusic {
         private MediaPlayer mediaPlayer;
         private boolean isLoop;
         private MediaStatus status;
+        private int useCount = 0;
 
         public MediaPlayer getMediaPlayer() {
             return mediaPlayer;
@@ -92,6 +93,14 @@ public class Cocos2dxMusic {
 
         public boolean isPaused() {
             return this.status == MediaStatus.MEDIA_STATUS_PAUSE;
+        }
+
+        public int getUseCount() {
+            return useCount;
+        }
+
+        public void addUseCount() {
+            useCount++;
         }
     }
 
@@ -126,7 +135,7 @@ public class Cocos2dxMusic {
             // preload new background music
             this.mBackgroundMediaPlayer = this.createMediaPlayer(path);
 
-            this.mBackgroundMediaPlayerMap.put(path, this.mBackgroundMediaPlayer);
+            this.addToMediaPlayerMap(path, this.mBackgroundMediaPlayer);
 
             // record the path
             this.mCurrentPath = path;
@@ -138,7 +147,7 @@ public class Cocos2dxMusic {
             // it is the first time to play background music or end() was called
             mBackgroundMediaPlayer = createMediaPlayer(path);
             mBackgroundMediaPlayer.setLoop(isLoop);
-            this.mBackgroundMediaPlayerMap.put(path, this.mBackgroundMediaPlayer);
+            this.addToMediaPlayerMap(path, this.mBackgroundMediaPlayer);
             mCurrentPath = path;
         } else {
             if (this.mBackgroundMediaPlayerMap.containsKey(path)) {
@@ -147,7 +156,7 @@ public class Cocos2dxMusic {
             } else if (!mCurrentPath.equals(path)) {
                 // play new background music
                 mBackgroundMediaPlayer = createMediaPlayer(path);
-                this.mBackgroundMediaPlayerMap.put(path, this.mBackgroundMediaPlayer);
+                this.addToMediaPlayerMap(path, this.mBackgroundMediaPlayer);
                 mBackgroundMediaPlayer.setLoop(isLoop);
                 // record the path
                 mCurrentPath = path;
@@ -170,6 +179,7 @@ public class Cocos2dxMusic {
                 }
                 mBackgroundMediaPlayer.getMediaPlayer().setLooping(isLoop);
                 mBackgroundMediaPlayer.setStatus(MediaStatus.MEDIA_STATUS_PLAYING);
+                mBackgroundMediaPlayer.addUseCount();
             } catch (final Exception e) {
                 Log.e(Cocos2dxMusic.TAG, "playBackgroundMusic: error state");
             }
@@ -338,6 +348,31 @@ public class Cocos2dxMusic {
         mediaMusic.setMediaPlayer(mediaPlayer);
         mediaMusic.setStatus(MediaStatus.MEDIA_STATUS_READY);
         return mediaMusic;
+    }
+
+    private void addToMediaPlayerMap(String path, MediaMusic mediaMusic) {
+        if (!this.mBackgroundMediaPlayerMap.containsKey(path)) {
+            if (this.mBackgroundMediaPlayerMap.size() >= MAX_MEDIA_CACHE_COUNT) {
+                int minCount = Integer.MAX_VALUE;
+                String minCountKey = null;
+                for(String key : this.mBackgroundMediaPlayerMap.keySet()){
+                    MediaMusic tempMediaMusic = this.mBackgroundMediaPlayerMap.get(key);
+                    if (tempMediaMusic != null) {
+                        if (tempMediaMusic.getUseCount() < minCount) {
+                            minCount = tempMediaMusic.getUseCount();
+                            minCountKey = key;
+                        }
+                        Log.i(TAG, "media player:" + key + ", use count:" + tempMediaMusic.getUseCount());
+                    }
+                }
+                if (minCountKey != null) {
+                    this.mBackgroundMediaPlayerMap.remove(minCountKey);
+
+                    Log.i(TAG, "remove min count media player:" + minCountKey + ", use count:" + minCount);
+                }
+            }
+            this.mBackgroundMediaPlayerMap.put(path, mediaMusic);
+        }
     }
 
     // ===========================================================
