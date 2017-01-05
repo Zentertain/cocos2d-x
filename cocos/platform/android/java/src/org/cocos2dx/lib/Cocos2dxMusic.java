@@ -49,7 +49,7 @@ public class Cocos2dxMusic {
     // ===========================================================
 
     private static final String TAG = Cocos2dxMusic.class.getSimpleName();
-    private static final int MAX_MEDIA_CACHE_COUNT = 3;
+    private static final int MAX_MEDIA_CACHE_COUNT = 5;
 
     // ===========================================================
     // Fields
@@ -63,16 +63,32 @@ public class Cocos2dxMusic {
     private boolean mManualPaused = false; // whether music is paused manually before the program is switched to the background.
     private String mCurrentPath;
 
+
+    public interface OnLRUCacheRemovedListener<K, V> {
+        void onCacheRemoved(Map.Entry<K, V> eldest);
+    };
+
     public class LRUCache<K, V> extends LinkedHashMap<K, V> {
-        private int cacheSize;
+        private int cacheSize = 0;
+        private OnLRUCacheRemovedListener listener = null;
 
         public LRUCache(int cacheSize) {
-            super(16, 0.75f, true);
+            super(8, 0.75f, true);
             this.cacheSize = cacheSize;
         }
 
+        public void setLRUCacheOnRemovedListener(OnLRUCacheRemovedListener listener) {
+            this.listener = listener;
+        }
+
         protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-            return size() > cacheSize;
+            if (size() > cacheSize) {
+                if (this.listener != null) {
+                    this.listener.onCacheRemoved(eldest);
+                }
+                return true;
+            }
+            return false;
         }
     }
 
@@ -119,6 +135,15 @@ public class Cocos2dxMusic {
 
     public Cocos2dxMusic(final Context context) {
         this.mContext = context;
+
+        this.mBackgroundMediaPlayerMap.setLRUCacheOnRemovedListener(new OnLRUCacheRemovedListener<String, MediaMusic>() {
+            @Override
+            public void onCacheRemoved(Map.Entry<String, MediaMusic> eldest) {
+                if (eldest != null) {
+                    eldest.getValue().getMediaPlayer().release();
+                }
+            }
+        });
 
         this.initData();
     }
