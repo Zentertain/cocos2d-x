@@ -205,6 +205,8 @@ public class Cocos2dxMusic {
                     mBackgroundMediaPlayer.getMediaPlayer().start();
                 } else if (mBackgroundMediaPlayer.getMediaPlayer().isPlaying()) {
                     mBackgroundMediaPlayer.getMediaPlayer().seekTo(0);
+                } else if (mBackgroundMediaPlayer.getStatus() == MediaStatus.MEDIA_STATUS_STOP) {
+                    mBackgroundMediaPlayer.getMediaPlayer().seekTo(0);
                 } else {
                     mBackgroundMediaPlayer.getMediaPlayer().start();
                 }
