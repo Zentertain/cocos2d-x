@@ -542,7 +542,7 @@ void ParticleSystemQuad::setTotalParticles(int tp)
     
     // fixed issue #5762
     // reset the emission rate
-    setEmissionRate(_totalParticles / _life);
+    //setEmissionRate(_totalParticles / _life);
     
     resetSystem();
 }
