@@ -112,7 +112,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = nullptr*/)
         if (!this->_container)
         {
             _container = Layer::create();
-            _container->ignoreAnchorPointForPosition(false);
+            _container->setIgnoreAnchorPointForPosition(false);
             _container->setAnchorPoint(Vec2(0.0f, 0.0f));
         }
 
@@ -346,7 +346,7 @@ void ScrollView::setContainer(Node * pContainer)
     this->removeAllChildrenWithCleanup(true);
     this->_container = pContainer;
 
-    this->_container->ignoreAnchorPointForPosition(false);
+    this->_container->setIgnoreAnchorPointForPosition(false);
     this->_container->setAnchorPoint(Vec2(0.0f, 0.0f));
 
     this->addChild(this->_container);
@@ -573,21 +573,23 @@ void ScrollView::onBeforeDraw()
         Rect frame = getViewRect();
         auto glview = Director::getInstance()->getOpenGLView();
 
-        if (glview->isScissorEnabled()) {
-            _scissorRestored = true;
-            _parentScissorRect = glview->getScissorRect();
-            //set the intersection of _parentScissorRect and frame as the new scissor rect
-            if (frame.intersectsRect(_parentScissorRect)) {
-                float x = MAX(frame.origin.x, _parentScissorRect.origin.x);
-                float y = MAX(frame.origin.y, _parentScissorRect.origin.y);
-                float xx = MIN(frame.origin.x+frame.size.width, _parentScissorRect.origin.x+_parentScissorRect.size.width);
-                float yy = MIN(frame.origin.y+frame.size.height, _parentScissorRect.origin.y+_parentScissorRect.size.height);
-                glview->setScissorInPoints(x, y, xx-x, yy-y);
+        if (glview->getVR() == nullptr) {
+            if (glview->isScissorEnabled()) {
+                _scissorRestored = true;
+                _parentScissorRect = glview->getScissorRect();
+                //set the intersection of _parentScissorRect and frame as the new scissor rect
+                if (frame.intersectsRect(_parentScissorRect)) {
+                    float x = MAX(frame.origin.x, _parentScissorRect.origin.x);
+                    float y = MAX(frame.origin.y, _parentScissorRect.origin.y);
+                    float xx = MIN(frame.origin.x + frame.size.width, _parentScissorRect.origin.x + _parentScissorRect.size.width);
+                    float yy = MIN(frame.origin.y + frame.size.height, _parentScissorRect.origin.y + _parentScissorRect.size.height);
+                    glview->setScissorInPoints(x, y, xx - x, yy - y);
+                }
             }
-        }
-        else {
-            glEnable(GL_SCISSOR_TEST);
-            glview->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+            else {
+                glEnable(GL_SCISSOR_TEST);
+                glview->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+            }
         }
     }
 }
@@ -607,13 +609,14 @@ void ScrollView::onAfterDraw()
 {
     if (_clippingToBounds)
     {
-        if (_scissorRestored) {//restore the parent's scissor rect
-            auto glview = Director::getInstance()->getOpenGLView();
-
-            glview->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
-        }
-        else {
-            glDisable(GL_SCISSOR_TEST);
+        auto glview = Director::getInstance()->getOpenGLView();
+        if (glview->getVR() == nullptr) {
+            if (_scissorRestored) {//restore the parent's scissor rect
+                glview->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
+            }
+            else {
+                glDisable(GL_SCISSOR_TEST);
+            }
         }
     }
 }
@@ -850,7 +853,10 @@ void ScrollView::onTouchCancelled(Touch* touch, Event* event)
     }
     
     auto touchIter = std::find(_touches.begin(), _touches.end(), touch);
-    _touches.erase(touchIter);
+    if(touchIter != _touches.end())
+    {
+        _touches.erase(touchIter);
+    }
     
     if (_touches.size() == 0)
     {
@@ -885,4 +891,34 @@ Rect ScrollView::getViewRect()
 
     return Rect(screenPos.x, screenPos.y, _viewSize.width*scaleX, _viewSize.height*scaleY);
 }
+
+void ScrollView::interceptTouchEvent(cocos2d::EventTouch::EventCode eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch)
+{
+    if(!this->isTouchEnabled()) return;
+    Vec2 touchPoint = touch->getLocation();
+    switch (eventType) {
+        case cocos2d::EventTouch::EventCode::BEGAN:
+            this->onTouchBegan(touch, event);
+            break;
+        case cocos2d::EventTouch::EventCode::ENDED:
+            this->onTouchEnded(touch, event);
+            break;
+        case cocos2d::EventTouch::EventCode::MOVED:
+        {
+            float offset = (sender->getTouchBeganPosition() - touchPoint).getLength();
+            if (offset > 5)
+            {
+                sender->setTouchHandleEnabled(false);
+            }
+            this->onTouchMoved(touch, event);
+        }
+            break;
+        case cocos2d::EventTouch::EventCode::CANCELLED:
+            this->onTouchCancelled(touch, event);
+            break;
+        default:
+            break;
+    }
+}
+
 NS_CC_EXT_END

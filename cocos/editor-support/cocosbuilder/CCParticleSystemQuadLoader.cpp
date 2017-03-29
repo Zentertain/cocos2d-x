@@ -128,10 +128,11 @@ void ParticleSystemQuadLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pP
 void ParticleSystemQuadLoader::onHandlePropTypeTexture(Node * pNode, Node * pParent, const char * pPropertyName, Texture2D * pTexture2D, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_TEXTURE) == 0) {
         static_cast<ParticleSystemQuad*>(pNode)->setTexture(pTexture2D);
-//        if(pTexture2D)
-//        {
-//            static_cast<ParticleSystemQuad*>(pNode)->setBlendAdditive(true);
-//        }
+        /*
+        if(pTexture2D)
+        {
+            static_cast<ParticleSystemQuad*>(pNode)->setBlendAdditive(true);
+        }*/
     } else {
         NodeLoader::onHandlePropTypeTexture(pNode, pParent, pPropertyName, pTexture2D, ccbReader);
     }

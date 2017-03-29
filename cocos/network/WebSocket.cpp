@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -313,7 +313,7 @@ WebSocket::WebSocket()
 , _wsHelper(nullptr)
 , _wsInstance(nullptr)
 , _wsContext(nullptr)
-, _isDestroyed(std::make_shared<bool>(false))
+, _isDestroyed(std::make_shared<std::atomic<bool>>(false))
 , _delegate(nullptr)
 , _SSLConnection(0)
 , _wsProtocols(nullptr)
@@ -327,7 +327,7 @@ WebSocket::WebSocket()
 
     __websocketInstances->push_back(this);
     
-    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
     _resetDirectorListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_RESET, [this, isDestroyed](EventCustom*){
         if (*isDestroyed)
             return;
@@ -558,7 +558,7 @@ void WebSocket::onSubThreadLoop()
     }
     else
     {
-        LOGD("Ready state is closing or was closed, code=%d, quit websocket thread!\n", _readyState);
+        LOGD("Ready state is closing or was closed, code=%d, quit websocket thread!\n", static_cast<int>(_readyState));
         _readStateMutex.unlock();
         _wsHelper->quitWebSocketThread();
     }
@@ -595,7 +595,15 @@ void WebSocket::onSubThreadStarted()
 
     info.port = CONTEXT_PORT_NO_LISTEN;
     info.protocols = _wsProtocols;
-    info.extensions = exts;
+    
+    // FIXME: Disable 'permessage-deflate' extension temporarily because of issues:
+    // https://github.com/cocos2d/cocos2d-x/issues/16045, https://github.com/cocos2d/cocos2d-x/issues/15767
+    // libwebsockets issue: https://github.com/warmcat/libwebsockets/issues/593
+    // Currently, we couldn't find out the exact reason.
+    // libwebsockets official said it's probably an issue of user code
+    // since 'libwebsockets' passed AutoBahn stressed Test.
+
+//    info.extensions = exts;
 
     info.gid = -1;
     info.uid = -1;
@@ -665,10 +673,10 @@ void WebSocket::onClientWritable()
         WsMessage* subThreadMsg = *iter;
         Data* data = (Data*)subThreadMsg->obj;
 
-        const size_t c_bufferSize = WS_RX_BUFFER_SIZE;
+        const ssize_t c_bufferSize = WS_RX_BUFFER_SIZE;
 
-        const size_t remaining = data->len - data->issued;
-        const size_t n = std::min(remaining, c_bufferSize );
+        const ssize_t remaining = data->len - data->issued;
+        const ssize_t n = std::min(remaining, c_bufferSize);
 
         WebSocketFrame* frame = nullptr;
 
@@ -794,7 +802,7 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
     }
     else
     {
-        LOGD("Emtpy message received, index=%d!\n", packageIndex);
+        LOGD("Empty message received, index=%d!\n", packageIndex);
     }
 
     // If no more data pending, send it to the client thread
@@ -811,14 +819,14 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
 
         ssize_t frameSize = frameData->size();
 
-        bool isBinary = lws_frame_is_binary(_wsInstance);
+        bool isBinary = (lws_frame_is_binary(_wsInstance) != 0);
 
         if (!isBinary)
         {
             frameData->push_back('\0');
         }
 
-        std::shared_ptr<bool> isDestroyed = _isDestroyed;
+        std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
         _wsHelper->sendMessageToCocosThread([this, frameData, frameSize, isBinary, isDestroyed](){
             // In UI thread
             LOGD("Notify data len %d to Cocos thread.\n", (int)frameSize);
@@ -854,7 +862,7 @@ void WebSocket::onConnectionOpened()
     _readyState = State::OPEN;
     _readStateMutex.unlock();
 
-    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
     _wsHelper->sendMessageToCocosThread([this, isDestroyed](){
         if (*isDestroyed)
         {
@@ -875,7 +883,7 @@ void WebSocket::onConnectionError()
     _readyState = State::CLOSING;
     _readStateMutex.unlock();
 
-    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
     _wsHelper->sendMessageToCocosThread([this, isDestroyed](){
         if (*isDestroyed)
         {
@@ -903,7 +911,7 @@ void WebSocket::onConnectionClosed()
     _readStateMutex.unlock();
 
     _wsHelper->quitWebSocketThread();
-    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
     _wsHelper->sendMessageToCocosThread([this, isDestroyed](){
         if (*isDestroyed)
         {
