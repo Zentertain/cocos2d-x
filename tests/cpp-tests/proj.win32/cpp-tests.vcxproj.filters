@@ -175,7 +175,7 @@
     <Filter Include="Classes\Box2DTestBed\Tests">
       <UniqueIdentifier>{17c1844a-dd68-4ed5-a368-383253473518}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\MutiTouchTest">
+    <Filter Include="Classes\MultiTouchTest">
       <UniqueIdentifier>{b3be049f-74ff-44a5-8895-0766e4807671}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ExtensionsTest\NetworkTest">
@@ -291,6 +291,9 @@
     </Filter>
     <Filter Include="Classes\VRTests">
       <UniqueIdentifier>{f88d1ce5-36f2-4dca-8ad6-b55a1becbfe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\WindowTest">
+      <UniqueIdentifier>{b7379517-97f9-4b73-a75c-0706211e4264}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -504,8 +507,8 @@
     <ClCompile Include="..\Classes\Box2DTestBed\TestEntries.cpp">
       <Filter>Classes\Box2DTestBed</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp">
-      <Filter>Classes\MutiTouchTest</Filter>
+    <ClCompile Include="..\Classes\MultiTouchTest\MultiTouchTest.cpp">
+      <Filter>Classes\MultiTouchTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
@@ -658,6 +661,9 @@
     <ClCompile Include="..\Classes\BugsTest\Bug-15594.cpp">
       <Filter>Classes\BugsTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-15776.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\BugsTest\Bug-14327.cpp">
       <Filter>Classes\BugsTest</Filter>
     </ClCompile>
@@ -689,6 +695,9 @@
     <ClCompile Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
     <ClCompile Include="..\Classes\VRTest\VRTest.cpp">
       <Filter>Classes\VRTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\WindowTest\WindowTest.cpp">
+      <Filter>Classes\WindowTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1076,8 +1085,8 @@
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\Web.h">
       <Filter>Classes\Box2DTestBed\Tests</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h">
-      <Filter>Classes\MutiTouchTest</Filter>
+    <ClInclude Include="..\Classes\MultiTouchTest\MultiTouchTest.h">
+      <Filter>Classes\MultiTouchTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
@@ -1250,6 +1259,9 @@
     <ClInclude Include="..\Classes\BugsTest\Bug-15594.h">
       <Filter>Classes\BugsTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-15776.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\BugsTest\Bug-14327.h">
       <Filter>Classes\BugsTest</Filter>
     </ClInclude>
@@ -1281,6 +1293,9 @@
     <ClInclude Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
     <ClInclude Include="..\Classes\VRTest\VRTest.h">
       <Filter>Classes\VRTests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\WindowTest\WindowTest.h">
+      <Filter>Classes\WindowTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

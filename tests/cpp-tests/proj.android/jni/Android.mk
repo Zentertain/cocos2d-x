@@ -6,6 +6,8 @@ LOCAL_MODULE := cpp_tests_shared
 
 LOCAL_MODULE_FILENAME := libcpp_tests
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := main.cpp \
 ../../Classes/ActionManagerTest/ActionManagerTest.cpp \
 ../../Classes/ActionsEaseTest/ActionsEaseTest.cpp \
@@ -33,6 +35,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/BugsTest/Bug-914.cpp \
 ../../Classes/BugsTest/Bug-12847.cpp \
 ../../Classes/BugsTest/Bug-15594.cpp \
+../../Classes/BugsTest/Bug-15776.cpp \
 ../../Classes/BugsTest/Bug-Child.cpp \
 ../../Classes/BugsTest/BugsTest.cpp \
 ../../Classes/Camera3DTest/Camera3DTest.cpp \
@@ -84,7 +87,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/MaterialSystemTest/MaterialSystemTest.cpp \
 ../../Classes/MenuTest/MenuTest.cpp \
 ../../Classes/MotionStreakTest/MotionStreakTest.cpp \
-../../Classes/MutiTouchTest/MutiTouchTest.cpp \
+../../Classes/MultiTouchTest/MultiTouchTest.cpp \
 ../../Classes/NewAudioEngineTest/NewAudioEngineTest.cpp \
 ../../Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 ../../Classes/NewRendererTest/NewRendererTest.cpp \
