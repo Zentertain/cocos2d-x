@@ -494,6 +494,51 @@ void ZipUtils::setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2,
     setPvrEncryptionKeyPart(3, keyPart4);
 }
 
+/**
+ * ETC1 Compressed
+ * add by lichuang
+ *
+ * --------------------- ETC1 Compress BEGIN---------------------
+ */
+bool ZipUtils::isETC1ZBuffer(const unsigned char *buffer, ssize_t len)
+{
+    if (static_cast<size_t>(len) < sizeof(struct ETC1ZHeader))
+    {
+        return false;
+    }
+    
+    struct ETC1ZHeader *header = (struct ETC1ZHeader*) buffer;
+    return header->sig[0] == '!' && header->sig[1] == 'E' && header->sig[2] == 'T' && header->sig[3] == 'C';
+}
+
+int ZipUtils::inflateETC1ZBuffer(const unsigned char *buffer, ssize_t bufferLen, unsigned char **out)
+{
+    struct ETC1ZHeader *header = (struct ETC1ZHeader*) buffer;
+    int len = header->fileSize;
+    *out = (unsigned char*)malloc(len);
+    if(! *out)
+    {
+        CCLOG("cocos2d: ETCCompressed: Failed to allocate memory for texture");
+        return -1;
+    }
+    uLongf destlen = len;
+    int ret = uncompress(*out, &destlen, (Bytef*)buffer + sizeof(*header), bufferLen - sizeof(*header) );
+    
+    if(ret != Z_OK)
+    {
+        CCLOG("cocos2d: ETCCompressed: Failed to uncompress data");
+        free(*out);
+        *out = nullptr;
+        return -1;
+    }
+    
+    return len;
+}
+/**
+ * --------------------- ETC1 Compress END---------------------
+ */
+
+
 // --------------------- ZipFile ---------------------
 // from unzip.cpp
 #define UNZ_MAXFILENAMEINZIP 256

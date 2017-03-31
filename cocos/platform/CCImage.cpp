@@ -554,6 +554,10 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
         {
             unpackedLen = ZipUtils::inflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
         }
+        else if (ZipUtils::isETC1ZBuffer(data, dataLen))
+        {
+            unpackedLen = ZipUtils::inflateETC1ZBuffer(data, dataLen, &unpackedData);
+        }
         else
         {
             unpackedData = const_cast<unsigned char*>(data);

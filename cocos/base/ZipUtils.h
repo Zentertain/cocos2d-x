@@ -67,6 +67,15 @@ typedef struct unz_file_info_s unz_file_info;
         CCZ_COMPRESSION_GZIP,               /** gzip format (not supported yet). */
         CCZ_COMPRESSION_NONE,               /** plain (not supported yet). */
     };
+    
+    /** 
+     * ETC1 Compressed Header
+     * add by lichuang
+     */
+    struct ETC1ZHeader{
+        unsigned char sig[4];
+        unsigned int fileSize;
+    };
 
     class CC_DLL ZipUtils
     {
@@ -207,7 +216,17 @@ typedef struct unz_file_info_s unz_file_info;
          */
         CC_DEPRECATED_ATTRIBUTE static void ccSetPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4) { setPvrEncryptionKey(keyPart1, keyPart2, keyPart3, keyPart4); }
         static void setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4);
+        
+        /*                  add by lichuang ETC1 Compressed
+         ** --------------------- ETC1 Compress BEGIN---------------------
+         */
+        static bool isETC1ZBuffer(const unsigned char *buffer, ssize_t len);
+        static int inflateETC1ZBuffer(const unsigned char *buffer, ssize_t bufferLen, unsigned char **out);
+         /*
+          ** --------------------- ETC1 Compress BEGIN---------------------
+          */
 
+        
     private:
         static int inflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t *outLength, ssize_t outLengthHint);
         static inline void decodeEncodedPvr (unsigned int *data, ssize_t len);
