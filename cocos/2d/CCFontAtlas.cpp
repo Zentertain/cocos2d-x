@@ -280,7 +280,7 @@ void FontAtlas::findNewCharacters(const std::u32string& u32Text, std::unordered_
 
         // Using `append` method is a workaround for this issue. So please be carefuly while using the assignment operator
         // of `std::u16string`.
-        newChars.append(u16Text);
+        newChars.append(u32Text);
     }
     else
     {
