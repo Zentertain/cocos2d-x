@@ -121,7 +121,7 @@ void localStorageSetItem( const std::string& key, const std::string& value)
     ok |= sqlite3_reset(_stmt_update);
 	
     if (ok != SQLITE_OK && ok != SQLITE_DONE)
-        printf("Error in localStorage.setItem() %x\n", ok);
+        printf("Error in localStorage.setItem() ok=%x,key=%s,vLen=%ld\n", ok, key.c_str(), value.length());
 }
 
 /** gets an item from the LS */
@@ -137,7 +137,7 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
 
     if (ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW)
     {
-        printf("Error in localStorage.getItem() %x\n", ok);
+        printf("Error in localStorage.getItem() %x,key=%s\n", ok, key.c_str());
         return false;
     }
     else if (!text)
