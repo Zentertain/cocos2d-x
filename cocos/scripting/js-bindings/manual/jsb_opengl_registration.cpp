@@ -49,6 +49,10 @@ void JSB_register_opengl(JSContext *_cx, JS::HandleObject object)
     
     js_register_cocos2dx_GLNode(_cx, ccns);
     
+    JS_DefineFunction(_cx, ccns, "glBindTexture2DN", JSB_bindTexture2DN, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(_cx, ccns, "glUseProgram", JSB_useProgram, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(_cx, ccns, "glBlendFunc", JSB_blendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE);
+
     // New WebGL functions, not present on OpenGL ES 2.0
     JS_DefineFunction(_cx, opengl, "getSupportedExtensions", JSB_glGetSupportedExtensions, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(_cx, opengl, "activeTexture", JSB_glActiveTexture, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );

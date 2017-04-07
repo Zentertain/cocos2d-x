@@ -21,6 +21,9 @@
  */
 
 #include "scripting/js-bindings/manual/js_bindings_opengl.h"
+#include "base/CCDirector.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 
@@ -143,7 +146,7 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JS::HandleObject global) {
         JS_FN("create", js_cocos2dx_GLNode_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
-    
+
     JS::RootedObject parentProto(cx, jsb_cocos2d_Node_prototype);
     js_cocos2dx_GLNode_prototype = JS_InitClass(
         cx, global,
@@ -154,10 +157,68 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JS::HandleObject global) {
         funcs,
         NULL, // no static properties
         st_funcs);
-    
+
     // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, js_cocos2dx_GLNode_prototype);
     jsb_register_class<cocos2d::GLNode>(cx, js_cocos2dx_GLNode_class, proto, parentProto);
 
     anonEvaluate(cx, global, "(function () { cc.GLNode.extend = cc.Class.extend; })()");
 }
+
+
+bool JSB_bindTexture2DN(JSContext *cx, uint32_t argc, jsval *vp) {
+    JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    uint32_t arg0;
+    cocos2d::Texture2D* arg1;
+    
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    do {
+        if (args.get(1).isNull()) { arg1 = nullptr; break; }
+        if (!args.get(1).isObject()) { ok = false; break; }
+        js_proxy_t *jsProxy;
+        JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
+        jsProxy = jsb_get_js_proxy(tmpObj);
+        arg1 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
+        JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+    } while (0);
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+    
+    cocos2d::GL::bindTexture2DN((GLenum)arg0 , (GLuint)arg1->getName());
+    args.rval().setUndefined();
+    return true;
+}
+
+bool JSB_useProgram(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    uint32_t arg0;
+    
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+    
+    cocos2d::GL::useProgram((GLuint)arg0  );
+    args.rval().setUndefined();
+    return true;
+}
+bool JSB_blendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    uint32_t arg0; uint32_t arg1;
+    
+    ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
+    ok &= jsval_to_uint32( cx, args.get(1), &arg1 );
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+    
+    cocos2d::GL::blendFunc((GLenum)arg0 , (GLenum)arg1  );
+    args.rval().setUndefined();
+    return true;
+}
+
+
+

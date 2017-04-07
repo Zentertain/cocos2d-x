@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include "base/CCTouch.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
+#include "base/ccUTF8.h"
 #include "platform/CCStdC.h"
-#include "deprecated/CCString.h"
 
 #include <vector>
 
@@ -137,7 +137,7 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         // menu in the center of the screen
         Size s = Director::getInstance()->getWinSize();
 
-        this->ignoreAnchorPointForPosition(true);
+        this->setIgnoreAnchorPointForPosition(true);
         setAnchorPoint(Vec2(0.5f, 0.5f));
         this->setContentSize(s);
 
@@ -267,6 +267,7 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
         }
     }
     
+    _touchBeganPosition = touch->getLocation();
     _selectedItem = this->getItemForTouch(touch, camera);
     if (_selectedItem)
     {
@@ -274,6 +275,10 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
         _selectedWithCamera = camera;
         _selectedItem->selected();
         
+        //if (_propagateTouchEvents)
+        {
+            this->propagateTouchEvent(cocos2d::EventTouch::EventCode::BEGAN, event, this, touch);
+        }
         return true;
     }
     
@@ -287,10 +292,20 @@ void Menu::onTouchEnded(Touch* touch, Event* event)
     if (_selectedItem)
     {
         _selectedItem->unselected();
-        _selectedItem->activate();
+        if(_touchHandleEnabled)
+        {
+            _selectedItem->activate();
+        }
     }
+    setTouchHandleEnabled(true);
     _state = Menu::State::WAITING;
     _selectedWithCamera = nullptr;
+    
+    //if (_propagateTouchEvents)
+    {
+        this->propagateTouchEvent(cocos2d::EventTouch::EventCode::ENDED, event, this, touch);
+    }
+    
     this->release();
 }
 
@@ -302,7 +317,13 @@ void Menu::onTouchCancelled(Touch* touch, Event* event)
     {
         _selectedItem->unselected();
     }
+    setTouchHandleEnabled(true);
     _state = Menu::State::WAITING;
+    
+    //if (_propagateTouchEvents)
+    {
+        this->propagateTouchEvent(cocos2d::EventTouch::EventCode::CANCELLED, event, this, touch);
+    }
     this->release();
 }
 
@@ -321,6 +342,10 @@ void Menu::onTouchMoved(Touch* touch, Event* event)
         {
             _selectedItem->selected();
         }
+    }
+    //if (_propagateTouchEvents)
+    {
+        this->propagateTouchEvent(cocos2d::EventTouch::EventCode::MOVED, event, this, touch);
     }
 }
 

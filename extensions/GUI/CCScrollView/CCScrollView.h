@@ -266,6 +266,8 @@ public:
     void updateTweenAction(float value, const std::string& key) override;
 
     bool hasVisibleParents() const;
+    
+    virtual void interceptTouchEvent(cocos2d::EventTouch::EventCode eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch) override;
 protected:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.

@@ -37,3 +37,9 @@ protected:
 NS_CC_END
 
 void js_register_cocos2dx_GLNode(JSContext *cx, JS::HandleObject global);
+
+extern "C" {
+    bool JSB_bindTexture2DN(JSContext *cx, uint32_t argc, jsval *vp);
+    bool JSB_useProgram(JSContext *cx, uint32_t argc, jsval *vp);
+    bool JSB_blendFunc(JSContext *cx, uint32_t argc, jsval *vp);
+}

@@ -41,8 +41,7 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
-
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 
@@ -542,7 +541,7 @@ void ParticleSystemQuad::setTotalParticles(int tp)
     
     // fixed issue #5762
     // reset the emission rate
-    setEmissionRate(_totalParticles / _life);
+    // setEmissionRate(_totalParticles / _life);
     
     resetSystem();
 }
@@ -706,5 +705,4 @@ std::string ParticleSystemQuad::getDescription() const
 {
     return StringUtils::format("<ParticleSystemQuad | Tag = %d, Total Particles = %d>", _tag, _totalParticles);
 }
-
 NS_CC_END

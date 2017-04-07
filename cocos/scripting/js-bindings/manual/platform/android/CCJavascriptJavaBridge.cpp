@@ -22,7 +22,7 @@
  
 #include <android/log.h>
 #include "scripting/js-bindings/manual/platform/android/CCJavascriptJavaBridge.h"
-#include "cocos2d.h"
+
 #include "platform/android/jni/JniHelper.h"
 #include "scripting/js-bindings/manual/spidermonkey_specifics.h"
 #include "scripting/js-bindings/manual/ScriptingCore.h"
@@ -56,6 +56,11 @@ JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalSt
 
 JavascriptJavaBridge::CallInfo::~CallInfo(void)
 {
+    if (m_env){
+        if (m_classID){
+            m_env->DeleteLocalRef(m_classID);
+        }
+    }
     if (m_returnType == TypeString && m_ret.stringValue)
     {
         delete m_ret.stringValue;
@@ -83,11 +88,18 @@ bool JavascriptJavaBridge::CallInfo::execute(void)
             break;
 
         case TypeString:
+        {
             m_retjstring = (jstring)m_env->CallStaticObjectMethod(m_classID, m_methodID);
             std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjstring);
             
             m_ret.stringValue = new string(strValue);
             break;
+        }
+
+        default:
+            m_error = JSJ_ERR_TYPE_NOT_SUPPORT;
+            LOGD("Return type '%d' is not supported", static_cast<int>(m_returnType));
+            return false;
     }
 
     if (m_env->ExceptionCheck() == JNI_TRUE)
@@ -123,10 +135,17 @@ bool JavascriptJavaBridge::CallInfo::executeWithArgs(jvalue *args)
              break;
 
          case TypeString:
+        {
              m_retjstring = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
              std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjstring);
              m_ret.stringValue = new string(strValue);
              break;
+        }
+
+        default:
+            m_error = JSJ_ERR_TYPE_NOT_SUPPORT;
+            LOGD("Return type '%d' is not supported", static_cast<int>(m_returnType));
+            return false;
      }
 
     if (m_env->ExceptionCheck() == JNI_TRUE)
@@ -279,6 +298,8 @@ JS::Value JavascriptJavaBridge::convertReturnValue(JSContext *cx, ReturnValue re
 			return BOOLEAN_TO_JSVAL(retValue.boolValue);
 		case TypeString:
 			return c_string_to_jsval(cx, retValue.stringValue->c_str(),retValue.stringValue->size());
+        default:
+            break;
 	}
 
 	return ret;
@@ -390,7 +411,24 @@ JS_BINDED_FUNC_IMPL(JavascriptJavaBridge, callStaticMethod)
                 }
             }
             bool success = call.executeWithArgs(args);
-            if (args) delete []args;
+            if (args){
+                for (int i = 0; i < count; ++i){
+                    int index = i + 3;
+                    switch (call.argumentTypeAtIndex(i)){
+                        case TypeInteger:
+                            break;
+                        case TypeFloat:
+                            break;
+                        case TypeBoolean:
+                            break;
+                        case TypeString:
+                        default:
+                            call.getEnv()->DeleteLocalRef(args[i].l);
+                        break;
+                    }
+                }
+                delete []args;
+            }
             int errorCode = call.getErrorCode();
             if(errorCode < 0)
                 JS_ReportError(cx, "js_cocos2dx_JSJavaBridge : call result code: %d", errorCode);

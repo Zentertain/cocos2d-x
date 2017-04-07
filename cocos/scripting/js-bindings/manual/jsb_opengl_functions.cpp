@@ -679,11 +679,18 @@ bool JSB_glDrawElements(JSContext *cx, uint32_t argc, jsval *vp) {
     ok &= jsval_to_uint32( cx, args.get(0), &arg0 );
     ok &= jsval_to_int32( cx, args.get(1), &arg1 );
     ok &= jsval_to_uint32( cx, args.get(2), &arg2 );
-    GLsizei count;
-    ok &= JSB_get_arraybufferview_dataptr( cx, args.get(3), &count, &arg3);
-    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+    
+    JS::RootedObject jsobj(cx);
+    bool ret = JS_ValueToObject( cx, args.get(3), &jsobj );
+    if(ret && !jsobj) {
+        glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , nullptr);
+    } else {
+        GLsizei count;
+        ok &= JSB_get_arraybufferview_dataptr( cx, args.get(3), &count, &arg3);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+        glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)arg3  );
+    }
 
-    glDrawElements((GLenum)arg0 , (GLsizei)arg1 , (GLenum)arg2 , (GLvoid*)arg3  );
     args.rval().setUndefined();
     return true;
 }
