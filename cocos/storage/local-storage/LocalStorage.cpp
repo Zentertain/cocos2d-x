@@ -44,6 +44,15 @@ static sqlite3_stmt *_stmt_remove;
 static sqlite3_stmt *_stmt_update;
 static sqlite3_stmt *_stmt_clear;
 
+static void handleError(int retCode)
+{
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+//    printf("Error is: %s\n", sqlite3_errstr(retCode));
+//#else
+//    printf("Error is: %s\n", sqlite3_errmsg(_db));
+//#endif
+    printf("Error is: %d, %s\n", retCode, sqlite3_errmsg(_db));
+}
 
 static void localStorageCreateTable()
 {
@@ -54,7 +63,10 @@ static void localStorageCreateTable()
     ok |= sqlite3_finalize(stmt);
 	
     if (ok != SQLITE_OK && ok != SQLITE_DONE)
+    {
         printf("Error in CREATE TABLE\n");
+        handleError(ok);
+    }
 }
 
 void localStorageInit( const std::string& fullpath/* = "" */)
@@ -89,6 +101,7 @@ void localStorageInit( const std::string& fullpath/* = "" */)
         if (ret != SQLITE_OK) {
             printf("Error initializing DB\n");
             // report error
+            handleError(ret);
         }
 		
         _initialized = 1;
@@ -121,7 +134,10 @@ void localStorageSetItem( const std::string& key, const std::string& value)
     ok |= sqlite3_reset(_stmt_update);
 	
     if (ok != SQLITE_OK && ok != SQLITE_DONE)
-        printf("Error in localStorage.setItem() ok=%x,key=%s,vLen=%ld\n", ok, key.c_str(), value.length());
+    {
+        printf("Error in localStorage.setItem() ok=%d,key=%s,vLen=%ld\n", ok, key.c_str(), value.length());
+        handleError(ok);
+    }
 }
 
 /** gets an item from the LS */
@@ -137,7 +153,8 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
 
     if (ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW)
     {
-        printf("Error in localStorage.getItem() %x,key=%s\n", ok, key.c_str());
+        printf("Error in localStorage.getItem() %d,key=%s\n", ok, key.c_str());
+        handleError(ok);
         return false;
     }
     else if (!text)
@@ -163,7 +180,10 @@ void localStorageRemoveItem( const std::string& key )
     ok |= sqlite3_reset(_stmt_remove);
 
     if (ok != SQLITE_OK && ok != SQLITE_DONE)
+    {
         printf("Error in localStorage.removeItem()\n");
+        handleError(ok);
+    }
 }
 
 /** removes all items from the LS */
@@ -174,7 +194,10 @@ void localStorageClear()
     int ok = sqlite3_step(_stmt_clear);
     
     if( ok != SQLITE_OK && ok != SQLITE_DONE)
+    {
         printf("Error in localStorage.clear()\n");
+        handleError(ok);
+    }
 }
 
 #endif // #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
