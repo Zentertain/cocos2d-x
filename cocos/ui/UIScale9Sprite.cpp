@@ -601,6 +601,12 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
                    y1,
                    x2 - x1,
                    y2 - y1);
+    
+    //Add by qinning, force use 1/3.
+    insets = Rect( _originalContentSize.width / 3.0f,
+                  _originalContentSize.height / 3.0f,
+                  _originalContentSize.width / 3.0f,
+                  _originalContentSize.height / 3.0f);
 
     // Only update center rect while in slice mode.
     if (_renderingType == RenderingType::SLICE && _renderMode != RenderMode::POLYGON)
