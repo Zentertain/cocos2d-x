@@ -56,7 +56,7 @@ int js_module_register()
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
     
     // chipmunk can be commented out to reduce the package
-    sc->addRegisterCallback(jsb_register_chipmunk);
+    ////sc->addRegisterCallback(jsb_register_chipmunk);
     // opengl can be commented out to reduce the package
     sc->addRegisterCallback(JSB_register_opengl);
     
@@ -69,8 +69,8 @@ int js_module_register()
     sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
     
     // studio can be commented out to reduce the package,
-    sc->addRegisterCallback(register_all_cocos2dx_studio);
-    sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
+    ////sc->addRegisterCallback(register_all_cocos2dx_studio);
+    ////sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     
     // spine can be commented out to reduce the package
     sc->addRegisterCallback(register_all_cocos2dx_spine);
@@ -90,7 +90,7 @@ int js_module_register()
     sc->addRegisterCallback(register_all_cocos2dx_3d_manual);
     
     // 3d extension can be commented out to reduce the package
-    sc->addRegisterCallback(register_all_cocos2dx_3d_extension);
+    ////sc->addRegisterCallback(register_all_cocos2dx_3d_extension);
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     // Physics 3d can be commented out to reduce the package

@@ -90,9 +90,11 @@
 /** @def JSB_INCLUDE_CHIPMUNK
  Whether or not it should include JS bindings for Chipmunk
  */
+/*
 #ifndef JSB_INCLUDE_CHIPMUNK
 #define JSB_INCLUDE_CHIPMUNK 1
 #endif // JSB_INCLUDE_CHIPMUNK
+ */
 
 
 /** @def JSB_INCLUDE_COCOSBUILDERREADER
