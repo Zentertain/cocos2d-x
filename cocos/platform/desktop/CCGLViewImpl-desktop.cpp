@@ -1083,8 +1083,8 @@ void GLViewImpl::attachNSGL(void* nsWindow, void* nsDelegate, void* nsView, void
     glfwWindowHint(GLFW_DEPTH_BITS,_glContextAttrs.depthBits);
     glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
     
-    _mainWindow = glfwAttachNSGL(nsWindow, nsDelegate, nsView, nsGLContext);
-    
+    _mainWindow = glfwAttachNSGL(nsWindow, nsView, nsGLContext, nsDelegate);
+
     if (_mainWindow == nullptr)
     {
         std::string message = "Can't create window";
