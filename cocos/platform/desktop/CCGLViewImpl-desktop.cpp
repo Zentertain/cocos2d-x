@@ -1159,32 +1159,32 @@ void GLViewImpl::detachNSGL()
 
 void GLViewImpl::onMove()
 {
-    
+    glfwOnMove(_mainWindow);
 }
 
 void GLViewImpl::onFocus(bool isFocus)
 {
-
+    glfwOnFocus(_mainWindow, isFocus);
 }
 
 void GLViewImpl::onSize(Rect contentRect, Rect fbRect)
 {
-
+    glfwOnSize(_mainWindow, contentRect.size.width, contentRect.size.height, fbRect.size.width, fbRect.size.height);
 }
 
 void GLViewImpl::onMinSize()
 {
-
+    glfwOnMinSize(_mainWindow);
 }
 
 void GLViewImpl::onMaxSize()
 {
-
+    glfwOnMaxSize(_mainWindow);
 }
 
 void GLViewImpl::onTerminate()
 {
-
+    glfwOnTerminate(_mainWindow);
 }
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
