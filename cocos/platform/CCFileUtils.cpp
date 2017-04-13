@@ -534,6 +534,40 @@ bool FileUtils::writeToFile(const ValueMap& /*dict*/, const std::string &/*fullP
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
+//Implement File Cache Buffer
+FileCacheBuffer::~FileCacheBuffer()
+{
+}
+
+void FileCacheBuffer::resize(size_t size)
+{
+    _innerBuffer.resize(size);
+}
+
+void* FileCacheBuffer::buffer() const
+{
+    if(_innerBuffer.empty())
+        return nullptr;
+    else
+        return const_cast<unsigned char*>(&_innerBuffer.front());
+}
+
+void FileCacheBuffer::toResizableBuffer(cocos2d::ResizableBuffer *dist)
+{
+    if(dist)
+    {
+        size_t sz = _innerBuffer.size();
+        dist->resize(sz);
+        if(sz)
+        {
+            void* bufferDist = dist->buffer();
+            const void* bufferMe = &_innerBuffer.front();
+            memcpy(bufferDist, bufferMe, sz);
+        }
+    }
+}
+
+
 // Implement FileUtils
 FileUtils* FileUtils::s_sharedFileUtils = nullptr;
 
@@ -651,6 +685,60 @@ void FileUtils::getDataFromFile(const std::string& filename, std::function<void(
     performOperationOffthread([fullPath]() -> Data {
         return FileUtils::getInstance()->getDataFromFile(fullPath);
     }, std::move(callback));
+}
+
+bool FileUtils::cacheFile(const std::string &filename)
+{
+    auto fs = FileUtils::getInstance();
+    std::string fullPath = fs->fullPathForFilename(filename);
+    auto cachedIter = _fileCache.find(fullPath);
+    if(cachedIter != _fileCache.end())
+        return true;
+    
+    FileCacheBuffer* buffer = new FileCacheBuffer();
+    auto ret = getContents(fullPath, buffer);
+    if(ret == FileUtils::Status::OK)
+    {
+        CCLOG("FileUtils::cacheFile ----> cache file added for:%s", filename.c_str());
+        _fileCache.insert(decltype(_fileCache)::value_type(fullPath, buffer));
+        return true;
+    }
+    else
+    {
+        CCLOG("FileUtils::cacheFile ----> cache file failed for:%s", filename.c_str());
+        delete buffer;
+        return false;
+    }
+}
+
+void FileUtils::uncacheFile(const std::string &filename)
+{
+    auto fs = FileUtils::getInstance();
+    std::string fullPath = fs->fullPathForFilename(filename);
+    auto cachedIter = _fileCache.find(fullPath);
+    if(cachedIter != _fileCache.end())
+    {
+        CCLOG("cache file removed for:%s", filename.c_str());
+        delete cachedIter->second;
+        _fileCache.erase(cachedIter);
+    }
+}
+
+FileUtils::Status FileUtils::getContentsWithCache(const std::string &filename, cocos2d::ResizableBuffer *buffer)
+{
+    auto fs = FileUtils::getInstance();
+    std::string fullPath = fs->fullPathForFilename(filename);
+    auto cachedIter = _fileCache.find(fullPath);
+    if(cachedIter != _fileCache.end())
+    {
+        CCLOG("FileUtils::getContentsWithCache ----> cache hitted for file:%s", filename.c_str());
+        cachedIter->second->toResizableBuffer(buffer);
+        return FileUtils::Status::OK;
+    }
+    else
+    {
+        return getContents(filename, buffer);
+    }
 }
 
 FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableBuffer* buffer)

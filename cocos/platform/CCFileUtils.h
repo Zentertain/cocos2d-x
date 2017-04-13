@@ -115,6 +115,20 @@ public:
     }
 };
 
+/**
+ * @a cache buffer
+ * @{
+ */
+class FileCacheBuffer : public ResizableBuffer {
+public:
+    virtual ~FileCacheBuffer();
+    virtual void resize(size_t size);
+    virtual void* buffer() const;
+    void toResizableBuffer(ResizableBuffer* dist);
+private:
+    std::vector<unsigned char> _innerBuffer;
+};
+
 /** Helper class to handle file operations. */
 class CC_DLL FileUtils
 {
@@ -266,10 +280,24 @@ public:
     >
     Status getContents(const std::string& filename, T* buffer) {
         ResizableBufferAdapter<T> buf(buffer);
-        return getContents(filename, &buf);
+        return getContentsWithCache(filename, &buf);
     }
     virtual Status getContents(const std::string& filename, ResizableBuffer* buffer);
 
+    /**
+     *  Gets resource file data, if the data is already in cache, use cache
+     *  Otherwise, just like normal getContents
+     */
+    Status getContentsWithCache(const std::string& filename, ResizableBuffer* buffer);
+    /**
+     *  Cache a specified file data
+     */
+    bool cacheFile(const std::string& filename);
+    /**
+     *  Delete a file data from cache
+     */
+    void uncacheFile(const std::string& filename);
+    
     /**
      *  Gets resource file data
      *
@@ -923,6 +951,12 @@ protected:
      */
     mutable std::unordered_map<std::string, std::string> _fullPathCache;
 
+    /**
+     *  The file cache, key is fullpath, value is cache
+     *  This variable is used to improving the performance of file read in platform
+     *  where read file is very consuming, like android
+     */
+    mutable std::unordered_map<std::string, FileCacheBuffer*> _fileCache;
     /**
      * Writable path.
      */
