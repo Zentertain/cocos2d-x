@@ -220,7 +220,7 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Ref *pOwner, co
         strCCBFileName += strSuffix;
     }
 
-    std::string strPath = FileUtils::getInstance()->fullPathForFilename(strCCBFileName);
+    std::string strPath = strCCBFileName;//this will call in FileUtil. FileUtils::getInstance()->fullPathForFilename(strCCBFileName);
 
     auto dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(strPath));
     

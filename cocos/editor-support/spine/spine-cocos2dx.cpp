@@ -47,8 +47,7 @@ void _spAtlasPage_disposeTexture (spAtlasPage* self) {
 }
 
 char* _spUtil_readFile (const char* path, int* length) {
-	Data data = FileUtils::getInstance()->getDataFromFile(
-			FileUtils::getInstance()->fullPathForFilename(path));
+	Data data = FileUtils::getInstance()->getDataFromFile(path);
 	*length = data.getSize();
 	char* bytes = MALLOC(char, *length);
 	memcpy(bytes, data.getBytes(), *length);
