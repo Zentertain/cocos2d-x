@@ -123,7 +123,7 @@ public:
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 protected:
-    GLViewImpl(bool initglfw = true);
+    GLViewImpl(bool initglfw = true, bool isForEditor = false);
     virtual ~GLViewImpl();
 
     bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor, bool resizable);
@@ -174,7 +174,7 @@ public:
     // extensions for editor.
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     // attach native OpenGL View And Context.
-    static GLViewImpl* createAndAttachNSGL(void* window, void* delegate, void* view, void* glContext);
+    static GLViewImpl* createAndAttachNSGL(bool isForEditor, void* window, void* delegate, void* view, void* glContext);
     void attachNSGL(void* window, void* delegate, void* view, void* glContext);
     void detachNSGL();
 

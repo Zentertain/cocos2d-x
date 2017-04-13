@@ -276,7 +276,7 @@ static keyCodeItem g_keyCodeStructArray[] = {
 //////////////////////////////////////////////////////////////////////////
 
 
-GLViewImpl::GLViewImpl(bool initglfw)
+GLViewImpl::GLViewImpl(bool initglfw, bool isForEditor)
 : _captured(false)
 , _supportTouch(false)
 , _isInRetinaMonitor(false)
@@ -299,7 +299,10 @@ GLViewImpl::GLViewImpl(bool initglfw)
     if (initglfw)
     {
         glfwSetErrorCallback(GLFWEventHandler::onGLFWError);
-        glfwInit();
+        if ( isForEditor )
+            glfwInitWithoutAutoRelease();
+        else
+            glfwInit();
     }
 }
 
@@ -1061,9 +1064,9 @@ bool GLViewImpl::initGlew()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
-GLViewImpl* GLViewImpl::createAndAttachNSGL(void* nsWindow, void* nsDelegate, void* nsView, void* nsGLContext)
+GLViewImpl* GLViewImpl::createAndAttachNSGL(bool isForEditor, void* nsWindow, void* nsDelegate, void* nsView, void* nsGLContext)
 {
-    auto ret = new (std::nothrow) GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl(true, true);
     ret->attachNSGL(nsWindow, nsDelegate, nsView, nsGLContext);
     ret->autorelease();
 
