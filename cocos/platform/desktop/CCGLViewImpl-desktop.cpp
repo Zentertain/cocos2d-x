@@ -1059,4 +1059,130 @@ bool GLViewImpl::initGlew()
     return true;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
+GLViewImpl* GLViewImpl::createAndAttachNSGL(void* nsWindow, void* nsDelegate, void* nsView, void* nsGLContext)
+{
+    auto ret = new (std::nothrow) GLViewImpl;
+    ret->attachNSGL(nsWindow, nsDelegate, nsView, nsGLContext);
+    ret->autorelease();
+
+    return ret;
+
+}
+
+void GLViewImpl::attachNSGL(void* nsWindow, void* nsDelegate, void* nsView, void* nsGLContext)
+{
+    _frameZoomFactor = 1;
+    
+    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+    glfwWindowHint(GLFW_RED_BITS,_glContextAttrs.redBits);
+    glfwWindowHint(GLFW_GREEN_BITS,_glContextAttrs.greenBits);
+    glfwWindowHint(GLFW_BLUE_BITS,_glContextAttrs.blueBits);
+    glfwWindowHint(GLFW_ALPHA_BITS,_glContextAttrs.alphaBits);
+    glfwWindowHint(GLFW_DEPTH_BITS,_glContextAttrs.depthBits);
+    glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
+    
+    _mainWindow = glfwAttachNSGL(nsWindow, nsDelegate, nsView, nsGLContext);
+    
+    if (_mainWindow == nullptr)
+    {
+        std::string message = "Can't create window";
+        if (!_glfwError.empty())
+        {
+            message.append("\nMore info: \n");
+            message.append(_glfwError);
+        }
+        
+        MessageBox(message.c_str(), "Error launch application");
+        return;
+    }
+    
+    /*
+     *  Note that the created window and context may differ from what you requested,
+     *  as not all parameters and hints are
+     *  [hard constraints](@ref window_hints_hard).  This includes the size of the
+     *  window, especially for full screen windows.  To retrieve the actual
+     *  attributes of the created window and context, use queries like @ref
+     *  glfwGetWindowAttrib and @ref glfwGetWindowSize.
+     *
+     *  see declaration glfwCreateWindow
+     */
+    int realW = 0, realH = 0;
+    glfwGetWindowSize(_mainWindow, &realW, &realH);
+    glfwMakeContextCurrent(_mainWindow);
+    
+    glfwSetMouseButtonCallback(_mainWindow, GLFWEventHandler::onGLFWMouseCallBack);
+    glfwSetCursorPosCallback(_mainWindow, GLFWEventHandler::onGLFWMouseMoveCallBack);
+    glfwSetScrollCallback(_mainWindow, GLFWEventHandler::onGLFWMouseScrollCallback);
+    glfwSetCharCallback(_mainWindow, GLFWEventHandler::onGLFWCharCallback);
+    glfwSetKeyCallback(_mainWindow, GLFWEventHandler::onGLFWKeyCallback);
+    glfwSetWindowPosCallback(_mainWindow, GLFWEventHandler::onGLFWWindowPosCallback);
+    glfwSetFramebufferSizeCallback(_mainWindow, GLFWEventHandler::onGLFWframebuffersize);
+    glfwSetWindowSizeCallback(_mainWindow, GLFWEventHandler::onGLFWWindowSizeFunCallback);
+    glfwSetWindowIconifyCallback(_mainWindow, GLFWEventHandler::onGLFWWindowIconifyCallback);
+    glfwSetWindowFocusCallback(_mainWindow, GLFWEventHandler::onGLFWWindowFocusCallback);
+    
+    setFrameSize(realW, realH);
+    
+    // check OpenGL version at first
+    const GLubyte* glVersion = glGetString(GL_VERSION);
+    
+    if ( utils::atof((const char*)glVersion) < 1.5 )
+    {
+        char strComplain[256] = {0};
+        sprintf(strComplain,
+                "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.",
+                glVersion);
+        MessageBox(strComplain, "OpenGL version too old");
+        return ;
+    }
+    
+    initGlew();
+    
+    // Enable point size by default.
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+    
+    //    // GLFW v3.2 no longer emits "onGLFWWindowSizeFunCallback" at creation time. Force default viewport:
+    //    setViewPortInPoints(0, 0, neededWidth, neededHeight);
+    //
+
+}
+
+void GLViewImpl::detachNSGL()
+{
+    glfwDetachNSGL(_mainWindow);
+}
+
+void GLViewImpl::onMove()
+{
+    
+}
+
+void GLViewImpl::onFocus(bool isFocus)
+{
+
+}
+
+void GLViewImpl::onSize(Rect contentRect, Rect fbRect)
+{
+
+}
+
+void GLViewImpl::onMinSize()
+{
+
+}
+
+void GLViewImpl::onMaxSize()
+{
+
+}
+
+void GLViewImpl::onTerminate()
+{
+
+}
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
 NS_CC_END // end of namespace cocos2d;

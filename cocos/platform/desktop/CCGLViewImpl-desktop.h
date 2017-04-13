@@ -171,6 +171,25 @@ public:
     static const std::string EVENT_WINDOW_FOCUSED;
     static const std::string EVENT_WINDOW_UNFOCUSED;
 
+    // extensions for editor.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    // attach native OpenGL View And Context.
+    static GLViewImpl* createAndAttachNSGL(void* window, void* delegate, void* view, void* glContext);
+    void attachNSGL(void* window, void* delegate, void* view, void* glContext);
+    void detachNSGL();
+
+    // attach native delegate for native window and view.
+
+    void onMove();
+    void onFocus(bool isFocus); 
+    void onSize(Rect contentRect, Rect fbRect);
+    void onMinSize(); 
+    void onMaxSize(); 
+    void onTerminate();
+
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(GLViewImpl);
 };
