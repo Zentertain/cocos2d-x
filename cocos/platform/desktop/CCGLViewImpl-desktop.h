@@ -163,6 +163,8 @@ protected:
     float _mouseX;
     float _mouseY;
 
+    bool _isForEidtor;
+    
     friend class GLFWEventHandler;
     
 public:

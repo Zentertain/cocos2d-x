@@ -287,6 +287,7 @@ GLViewImpl::GLViewImpl(bool initglfw, bool isForEditor)
 , _monitor(nullptr)
 , _mouseX(0.0f)
 , _mouseY(0.0f)
+, _isForEidtor(isForEditor)
 {
     _viewName = "cocos2dx";
     g_keyCodeMap.clear();
@@ -643,6 +644,7 @@ Size GLViewImpl::getMonitorSize() const {
 
 void GLViewImpl::updateFrameSize()
 {
+    auto updateFrameSizeFunction = _isForEidtor ? glfwSetWindowViewSize : glfwSetWindowSize;
     if (_screenSize.width > 0 && _screenSize.height > 0)
     {
         int w = 0, h = 0;
@@ -661,7 +663,7 @@ void GLViewImpl::updateFrameSize()
             {
                 _retinaFactor = 2;
             }
-            glfwSetWindowSize(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
+            updateFrameSizeFunction(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
 
             _isInRetinaMonitor = true;
         }
@@ -671,7 +673,7 @@ void GLViewImpl::updateFrameSize()
             {
                 _retinaFactor = 1;
             }
-            glfwSetWindowSize(_mainWindow, _screenSize.width * _retinaFactor * _frameZoomFactor, _screenSize.height *_retinaFactor * _frameZoomFactor);
+            updateFrameSizeFunction(_mainWindow, _screenSize.width * _retinaFactor * _frameZoomFactor, _screenSize.height *_retinaFactor * _frameZoomFactor);
 
             _isInRetinaMonitor = false;
         }
@@ -894,6 +896,9 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
     float factorX = frameSizeW / w * _retinaFactor * _frameZoomFactor;
     float factorY = frameSizeH / h * _retinaFactor * _frameZoomFactor;
 
+    // glfwSetWindowSize(window, frameSizeW * factorX, frameSizeH * factorY);
+    // return ;
+    
     if (std::abs(factorX - 0.5f) < FLT_EPSILON && std::abs(factorY - 0.5f) < FLT_EPSILON)
     {
         _isInRetinaMonitor = true;
