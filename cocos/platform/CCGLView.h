@@ -67,6 +67,8 @@ enum class ResolutionPolicy
      */
     FIXED_WIDTH,
 
+    FIXED_SCALE,
+    
     UNKNOWN,
 };
 

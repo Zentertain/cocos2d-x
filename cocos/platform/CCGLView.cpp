@@ -155,6 +155,11 @@ void GLView::updateDesignResolutionSize()
             _designResolutionSize.height = ceilf(_screenSize.height/_scaleY);
         }
         
+        else if ( _resolutionPolicy == ResolutionPolicy::FIXED_SCALE) {
+            _designResolutionSize.width  = _screenSize.width;
+            _designResolutionSize.height = _screenSize.height;
+        }
+        
         // calculate the rect of viewport
         float viewPortW = _designResolutionSize.width * _scaleX;
         float viewPortH = _designResolutionSize.height * _scaleY;
