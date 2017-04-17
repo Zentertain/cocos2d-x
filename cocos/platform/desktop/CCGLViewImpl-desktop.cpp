@@ -644,11 +644,13 @@ Size GLViewImpl::getMonitorSize() const {
 
 void GLViewImpl::updateFrameSize()
 {
-    auto updateFrameSizeFunction = _isForEidtor ? glfwSetWindowViewSize : glfwSetWindowSize;
+    auto setFrameSizeFunction = _isForEidtor ? glfwSetWindowViewSize : glfwSetWindowSize;
+    auto getFrameSizeFunction = _isForEidtor ? glfwGetWindowViewPos : glfwGetWindowPos;
+    
     if (_screenSize.width > 0 && _screenSize.height > 0)
     {
         int w = 0, h = 0;
-        glfwGetWindowSize(_mainWindow, &w, &h);
+        getFrameSizeFunction(_mainWindow, &w, &h);
 
         int frameBufferW = 0, frameBufferH = 0;
         glfwGetFramebufferSize(_mainWindow, &frameBufferW, &frameBufferH);
@@ -663,7 +665,7 @@ void GLViewImpl::updateFrameSize()
             {
                 _retinaFactor = 2;
             }
-            updateFrameSizeFunction(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
+            setFrameSizeFunction(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
 
             _isInRetinaMonitor = true;
         }
@@ -673,7 +675,7 @@ void GLViewImpl::updateFrameSize()
             {
                 _retinaFactor = 1;
             }
-            updateFrameSizeFunction(_mainWindow, _screenSize.width * _retinaFactor * _frameZoomFactor, _screenSize.height *_retinaFactor * _frameZoomFactor);
+            setFrameSizeFunction(_mainWindow, _screenSize.width * _retinaFactor * _frameZoomFactor, _screenSize.height *_retinaFactor * _frameZoomFactor);
 
             _isInRetinaMonitor = false;
         }
@@ -1117,7 +1119,7 @@ void GLViewImpl::attachNSGL(void* nsWindow, void* nsDelegate, void* nsView, void
      *  see declaration glfwCreateWindow
      */
     int realW = 0, realH = 0;
-    glfwGetWindowSize(_mainWindow, &realW, &realH);
+    glfwGetWindowViewSize(_mainWindow, &realW, &realH);
     glfwMakeContextCurrent(_mainWindow);
     
     glfwSetMouseButtonCallback(_mainWindow, GLFWEventHandler::onGLFWMouseCallBack);
