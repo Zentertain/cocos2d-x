@@ -6,6 +6,15 @@
 #include "platform/CCApplication.h"
 #include "platform/CCFileUtils.h"
 #include "platform/android/jni/JniHelper.h"
+
+#include "platform/android/CCApplication-android.h"
+#include "platform/android/CCGLViewImpl-android.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCTextureCache.h"
+#include "renderer/ccGLStateCache.h"
+#include "2d/CCDrawingPrimitives.h"
+#include "network/CCDownloader-android.h"
+
 #include <jni.h>
 
 #include "base/ccUTF8.h"
@@ -31,8 +40,19 @@ extern "C" {
         if (Director::getInstance()->getOpenGLView()) {
             // don't invoke at first to keep the same logic as iOS
             // can refer to https://github.com/cocos2d/cocos2d-x/issues/14206
-            if (!firstTime)
+            if (!firstTime){
                 Application::getInstance()->applicationWillEnterForeground();
+
+                auto director = cocos2d::Director::getInstance();
+                cocos2d::GL::invalidateStateCache();
+                cocos2d::GLProgramCache::getInstance()->reloadDefaultGLPrograms();
+                cocos2d::DrawPrimitives::init();
+                cocos2d::VolatileTextureMgr::reloadAllTextures();
+
+                cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
+                director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
+                director->setGLDefaultValues();
+            }
 
             cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
             cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&foregroundEvent);
