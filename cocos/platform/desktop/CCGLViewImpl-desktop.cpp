@@ -1202,33 +1202,33 @@ void GLViewImpl::onTerminate()
 //
 
 // attach native delegate mouse && keyboard events.
-void GLViewImpl::onLeftMouseDown(int mods)
+void GLViewImpl::onLeftMouseDown(int rawMods)
 {
-    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_LEFT, GLFW_PRESS, mods);
+    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_LEFT, GLFW_PRESS, rawMods);
 }
 
-void GLViewImpl::onLeftMouseUp(int mods)
+void GLViewImpl::onLeftMouseUp(int rawMods)
 {
-    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_LEFT, GLFW_RELEASE, mods);
+    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_LEFT, GLFW_RELEASE, rawMods);
 }
 
-void GLViewImpl::onRightMouseDown(int mods)
+void GLViewImpl::onRightMouseDown(int rawMods)
 {
-    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_RIGHT, GLFW_PRESS, mods);
+    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_RIGHT, GLFW_PRESS, rawMods);
 }
 
-void GLViewImpl::onRightMouseUp(int mods)
+void GLViewImpl::onRightMouseUp(int rawMods)
 {
-    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_RIGHT, GLFW_RELEASE, mods);
+    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_RIGHT, GLFW_RELEASE, rawMods);
 }
 
-void GLViewImpl::onOtherMouseDown(int btn, int mods)
+void GLViewImpl::onOtherMouseDown(int btn, int rawMods)
 {
-     glfwInputMouseClick(_mainWindow, btn, GLFW_PRESS, mods);
+     glfwInputMouseClick(_mainWindow, btn, GLFW_PRESS, rawMods);
 }
-void GLViewImpl::onOtherMouseUp(int btn, int mods)
+void GLViewImpl::onOtherMouseUp(int btn, int rawMods)
 {
-    glfwInputMouseClick(_mainWindow, btn, GLFW_RELEASE, mods);
+    glfwInputMouseClick(_mainWindow, btn, GLFW_RELEASE, rawMods);
 }
 
 void GLViewImpl::onMouseEnter()
@@ -1246,19 +1246,19 @@ void GLViewImpl::onMouseMove(float posx, float posy)
     glfwInputCursorPos(_mainWindow, posx, posy);
 }
 
-void GLViewImpl::onKeyDown(int key, int keyCode, int mods)
+void GLViewImpl::onKeyDown(int rawKeyCode, int rawMods)
 {
-    glfwInputKey(_mainWindow, key, keyCode, GLFW_PRESS, mods);
+    glfwInputKey(_mainWindow, rawKeyCode, GLFW_PRESS, rawMods);
 }
 
-void GLViewImpl::onKeyUp(int key, int keyCode, int mods)
+void GLViewImpl::onKeyUp(int rawKeyCode, int rawMods)
 {
-    glfwInputKey(_mainWindow, key, keyCode, GLFW_RELEASE, mods);
+    glfwInputKey(_mainWindow, rawKeyCode, GLFW_RELEASE, rawMods);
 }
 
-void GLViewImpl::onFlagChanged(int key, int keyCode, int action, int mods)
+void GLViewImpl::onFlagChanged(int rawKeyCode, int action, int rawMods)
 {
-    glfwInputKey(_mainWindow, key, keyCode, action, mods);
+    glfwInputKey(_mainWindow, rawKeyCode, action, rawMods);
 }
 
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

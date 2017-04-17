@@ -190,20 +190,20 @@ public:
     void onTerminate();
 
     // attach native delegate mouse && keyboard events.
-    void onLeftMouseDown(int mods);
-    void onLeftMouseUp(int mods);
-    void onRightMouseDown(int mods);
-    void onRightMouseUp(int mods);
-    void onOtherMouseDown(int btn, int mods);
-    void onOtherMouseUp(int btn, int mods);
+    void onLeftMouseDown(int rawMods);
+    void onLeftMouseUp(int rawMods);
+    void onRightMouseDown(int rawMods);
+    void onRightMouseUp(int rawMods);
+    void onOtherMouseDown(int btn, int rawMods);
+    void onOtherMouseUp(int btn, int rawMods);
     
     void onMouseEnter();
     void onMouseExit();
     void onMouseMove(float posx, float posy);
 
-    void onKeyDown(int key, int keyCode, int mods);
-    void onKeyUp(int key, int keyCode, int mods);
-    void onFlagChanged(int key, int keyCode, int action, int mods);
+    void onKeyDown(int rawKeyCode, int rawMods);
+    void onKeyUp(int rawKeyCode, int rawMods);
+    void onFlagChanged(int rawKeyCode, int action, int rawMods);
     
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     
