@@ -189,7 +189,22 @@ public:
     void onMaxSize(); 
     void onTerminate();
 
+    // attach native delegate mouse && keyboard events.
+    void onLeftMouseDown(int mods);
+    void onLeftMouseUp(int mods);
+    void onRightMouseDown(int mods);
+    void onRightMouseUp(int mods);
+    void onOtherMouseDown(int btn, int mods);
+    void onOtherMouseUp(int btn, int mods);
+    
+    void onMouseEnter();
+    void onMouseExit();
+    void onMouseMove(float posx, float posy);
 
+    void onKeyDown(int key, int keyCode, int mods);
+    void onKeyUp(int key, int keyCode, int mods);
+    void onFlagChanged(int key, int keyCode, int action, int mods);
+    
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     
 private:

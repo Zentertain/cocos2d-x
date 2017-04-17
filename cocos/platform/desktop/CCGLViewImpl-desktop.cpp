@@ -514,6 +514,9 @@ bool GLViewImpl::windowShouldClose()
 
 void GLViewImpl::pollEvents()
 {
+    if (_isForEidtor)
+        return;
+    
     glfwPollEvents();
 }
 
@@ -1193,6 +1196,71 @@ void GLViewImpl::onTerminate()
 {
     glfwOnTerminate(_mainWindow);
 }
+
+//
+// mouse && keyboard events.
+//
+
+// attach native delegate mouse && keyboard events.
+void GLViewImpl::onLeftMouseDown(int mods)
+{
+    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_LEFT, GLFW_PRESS, mods);
+}
+
+void GLViewImpl::onLeftMouseUp(int mods)
+{
+    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_LEFT, GLFW_RELEASE, mods);
+}
+
+void GLViewImpl::onRightMouseDown(int mods)
+{
+    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_RIGHT, GLFW_PRESS, mods);
+}
+
+void GLViewImpl::onRightMouseUp(int mods)
+{
+    glfwInputMouseClick(_mainWindow, GLFW_MOUSE_BUTTON_RIGHT, GLFW_RELEASE, mods);
+}
+
+void GLViewImpl::onOtherMouseDown(int btn, int mods)
+{
+     glfwInputMouseClick(_mainWindow, btn, GLFW_PRESS, mods);
+}
+void GLViewImpl::onOtherMouseUp(int btn, int mods)
+{
+    glfwInputMouseClick(_mainWindow, btn, GLFW_RELEASE, mods);
+}
+
+void GLViewImpl::onMouseEnter()
+{
+    glfwInputCursorEnter(_mainWindow, GLFW_TRUE);
+}
+
+void GLViewImpl::onMouseExit()
+{
+    glfwInputCursorEnter(_mainWindow, GLFW_FALSE);
+}
+
+void GLViewImpl::onMouseMove(float posx, float posy)
+{
+    glfwInputCursorPos(_mainWindow, posx, posy);
+}
+
+void GLViewImpl::onKeyDown(int key, int keyCode, int mods)
+{
+    glfwInputKey(_mainWindow, key, keyCode, GLFW_PRESS, mods);
+}
+
+void GLViewImpl::onKeyUp(int key, int keyCode, int mods)
+{
+    glfwInputKey(_mainWindow, key, keyCode, GLFW_RELEASE, mods);
+}
+
+void GLViewImpl::onFlagChanged(int key, int keyCode, int action, int mods)
+{
+    glfwInputKey(_mainWindow, key, keyCode, action, mods);
+}
+
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 NS_CC_END // end of namespace cocos2d;
