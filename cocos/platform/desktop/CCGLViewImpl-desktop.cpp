@@ -648,7 +648,7 @@ Size GLViewImpl::getMonitorSize() const {
 void GLViewImpl::updateFrameSize()
 {
     auto setFrameSizeFunction = _isForEidtor ? glfwSetWindowViewSize : glfwSetWindowSize;
-    auto getFrameSizeFunction = _isForEidtor ? glfwGetWindowViewPos : glfwGetWindowPos;
+    auto getFrameSizeFunction = _isForEidtor ? glfwGetWindowViewSize : glfwGetWindowSize;
     
     if (_screenSize.width > 0 && _screenSize.height > 0)
     {
@@ -901,8 +901,7 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
     float factorX = frameSizeW / w * _retinaFactor * _frameZoomFactor;
     float factorY = frameSizeH / h * _retinaFactor * _frameZoomFactor;
 
-    // glfwSetWindowSize(window, frameSizeW * factorX, frameSizeH * factorY);
-    // return ;
+    auto setFrameSizeFunction = _isForEidtor ? glfwSetWindowViewSize : glfwSetWindowSize;
     
     if (std::abs(factorX - 0.5f) < FLT_EPSILON && std::abs(factorY - 0.5f) < FLT_EPSILON)
     {
@@ -916,13 +915,13 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
             _retinaFactor = 2;
         }
 
-        glfwSetWindowSize(window, static_cast<int>(frameSizeW * 0.5f * _retinaFactor * _frameZoomFactor) , static_cast<int>(frameSizeH * 0.5f * _retinaFactor * _frameZoomFactor));
+        setFrameSizeFunction(window, static_cast<int>(frameSizeW * 0.5f * _retinaFactor * _frameZoomFactor) , static_cast<int>(frameSizeH * 0.5f * _retinaFactor * _frameZoomFactor));
     }
     else if (std::abs(factorX - 2.0f) < FLT_EPSILON && std::abs(factorY - 2.0f) < FLT_EPSILON)
     {
         _isInRetinaMonitor = false;
         _retinaFactor = 1;
-        glfwSetWindowSize(window, static_cast<int>(frameSizeW * _retinaFactor * _frameZoomFactor), static_cast<int>(frameSizeH * _retinaFactor * _frameZoomFactor));
+        setFrameSizeFunction(window, static_cast<int>(frameSizeW * _retinaFactor * _frameZoomFactor), static_cast<int>(frameSizeH * _retinaFactor * _frameZoomFactor));
     }
 }
 
