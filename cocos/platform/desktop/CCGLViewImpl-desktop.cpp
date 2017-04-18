@@ -670,6 +670,12 @@ void GLViewImpl::updateFrameSize()
             }
             setFrameSizeFunction(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
 
+            if (_isInRetinaMonitor == false)
+            {
+                _isInRetinaMonitor = true;
+                onGLFWWindowSizeFunCallback(_mainWindow, w, h);
+            }
+            
             _isInRetinaMonitor = true;
         }
         else
@@ -680,6 +686,12 @@ void GLViewImpl::updateFrameSize()
             }
             setFrameSizeFunction(_mainWindow, _screenSize.width * _retinaFactor * _frameZoomFactor, _screenSize.height *_retinaFactor * _frameZoomFactor);
 
+            if (_isInRetinaMonitor == true)
+            {
+                _isInRetinaMonitor = false;
+                onGLFWWindowSizeFunCallback(_mainWindow, w, h);
+            }
+            
             _isInRetinaMonitor = false;
         }
     }
