@@ -275,6 +275,10 @@ static keyCodeItem g_keyCodeStructArray[] = {
 // implement GLViewImpl
 //////////////////////////////////////////////////////////////////////////
 
+static bool isFrameBufferDoubleToScreen(int screenW, int screenH, int frameBufferW, int frameBufferH)
+{
+    return (std::abs(screenW * 2 - frameBufferW) <= 1) && (std::abs(screenH * 2 - frameBufferH) <= 1);
+}
 
 GLViewImpl::GLViewImpl(bool initglfw, bool isForEditor)
 : _captured(false)
@@ -658,7 +662,7 @@ void GLViewImpl::updateFrameSize()
         int frameBufferW = 0, frameBufferH = 0;
         glfwGetFramebufferSize(_mainWindow, &frameBufferW, &frameBufferH);
 
-        if (frameBufferW == 2 * w && frameBufferH == 2 * h)
+        if (isFrameBufferDoubleToScreen(w, h, frameBufferW, frameBufferH))
         {
             if (_isRetinaEnabled)
             {
