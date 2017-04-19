@@ -93,6 +93,7 @@ Node::Node()
 // userData is always inited as nil
 , _userData(nullptr)
 , _userObject(nullptr)
+, _userObjectForEditor(nullptr)
 , _glProgramState(nullptr)
 , _running(false)
 , _visible(true)
@@ -712,6 +713,11 @@ void Node::setUserObject(Ref* userObject)
     CC_SAFE_RETAIN(userObject);
     CC_SAFE_RELEASE(_userObject);
     _userObject = userObject;
+}
+
+void Node::setUserObjectForEditor(Ref* userObject)
+{
+    _userObjectForEditor = userObject; 
 }
 
 GLProgramState* Node::getGLProgramState() const

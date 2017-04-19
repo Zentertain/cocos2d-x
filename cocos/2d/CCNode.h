@@ -1041,6 +1041,26 @@ public:
      */
     virtual void setUserObject(Ref *userObject);
 
+    /**
+     * Returns a user assigned Object.
+     *
+     * Similar to userData, but instead of holding a void* it holds an object.
+     *
+     * @return A user assigned Object.
+     * @lua NA
+     */
+    virtual Ref* getUserObjectForEditor() { return _userObjectForEditor; }
+    
+    /**
+     * Returns a user assigned Object.
+     *
+     * Similar to UserObject, but instead of holding a Ref* it holds an id from editor (cast to void*).
+     * The UserObject will not be retained, it already retained in oc code.
+     *
+     * @param userObject    A user assigned Object.
+     */
+    virtual void setUserObjectForEditor(Ref *userObject);
+    
     /// @} end of Tag & User Data
 
 
@@ -1957,7 +1977,8 @@ protected:
 
     void *_userData;                ///< A user assigned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object
-
+    Ref *_userObjectForEditor;      ///< A user assigned Object For CocosBuilder-2dx.
+    
     GLProgramState *_glProgramState; ///< OpenGL Program State
 
     Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates
