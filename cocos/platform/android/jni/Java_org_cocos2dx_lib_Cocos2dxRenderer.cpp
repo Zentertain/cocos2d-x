@@ -40,18 +40,10 @@ extern "C" {
         if (Director::getInstance()->getOpenGLView()) {
             // don't invoke at first to keep the same logic as iOS
             // can refer to https://github.com/cocos2d/cocos2d-x/issues/14206
-            if (!firstTime){
+            if (!firstTime) {
                 Application::getInstance()->applicationWillEnterForeground();
 
-                auto director = cocos2d::Director::getInstance();
-                cocos2d::GL::invalidateStateCache();
-                cocos2d::GLProgramCache::getInstance()->reloadDefaultGLPrograms();
-                cocos2d::DrawPrimitives::init();
                 cocos2d::VolatileTextureMgr::reloadAllTextures();
-
-                cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
-                director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
-                director->setGLDefaultValues();
             }
 
             cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
