@@ -355,24 +355,32 @@ void Scale9Sprite::setPreferredSize(const Size& preferredSize)
 
 void Scale9Sprite::setInsetLeft(float insetLeft)
 {
+    if(insetLeft == 0)
+        insetLeft = _originalContentSize.width / 3;
     _insetLeft = insetLeft;
     updateCapInset();
 }
 
 void Scale9Sprite::setInsetTop(float insetTop)
 {
+    if(insetTop == 0)
+        insetTop = _originalContentSize.height / 3;
     _insetTop = insetTop;
     updateCapInset();
 }
 
 void Scale9Sprite::setInsetRight(float insetRight)
 {
+    if(insetRight == 0)
+        insetRight = _originalContentSize.width / 3;
     _insetRight = insetRight;
     updateCapInset();
 }
 
 void Scale9Sprite::setInsetBottom(float insetBottom)
 {
+    if(insetBottom == 0)
+        insetBottom = _originalContentSize.height / 3;
     _insetBottom = insetBottom;
     updateCapInset();
 }
@@ -555,7 +563,7 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
     Rect insets = insetsCopy;
 
     // When Insets == Zero --> we should use a 1/3 of its untrimmed size
-    if (insets.equals(Rect::ZERO)) {
+    if (insets.equals(Rect::ZERO) || insets.equals(Rect(0, 0, _originalContentSize.width, _originalContentSize.height))) {
         insets = Rect( _originalContentSize.width / 3.0f,
                       _originalContentSize.height / 3.0f,
                       _originalContentSize.width / 3.0f,
@@ -603,10 +611,10 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
                    y2 - y1);
     
     //Add by qinning, force use 1/3.
-    insets = Rect( _originalContentSize.width / 3.0f,
-                  _originalContentSize.height / 3.0f,
-                  _originalContentSize.width / 3.0f,
-                  _originalContentSize.height / 3.0f);
+//    insets = Rect( _originalContentSize.width / 3.0f,
+//                  _originalContentSize.height / 3.0f,
+//                  _originalContentSize.width / 3.0f,
+//                  _originalContentSize.height / 3.0f);
 
     // Only update center rect while in slice mode.
     if (_renderingType == RenderingType::SLICE && _renderMode != RenderMode::POLYGON)
