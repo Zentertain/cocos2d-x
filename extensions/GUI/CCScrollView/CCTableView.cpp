@@ -576,6 +576,10 @@ void TableView::onTouchEnded(Touch *pTouch, Event *pEvent)
     if (_touchedCell){
 		Rect bb = this->getBoundingBox();
 		bb.origin = _parent->convertToWorldSpace(bb.origin);
+        
+        Point rt = Point(bb.getMaxX(), bb.getMaxY());
+        rt = _parent->convertToWorldSpace(rt);
+        bb.size.setSize(rt.x - bb.origin.x, rt.y - bb.origin.y);
 
 		if (bb.containsPoint(pTouch->getLocation()) && _tableViewDelegate != nullptr)
         {
