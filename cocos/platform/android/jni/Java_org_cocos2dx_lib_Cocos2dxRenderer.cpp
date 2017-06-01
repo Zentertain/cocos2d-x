@@ -42,8 +42,6 @@ extern "C" {
             // can refer to https://github.com/cocos2d/cocos2d-x/issues/14206
             if (!firstTime) {
                 Application::getInstance()->applicationWillEnterForeground();
-
-                cocos2d::VolatileTextureMgr::reloadAllTextures();
             }
 
             cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
