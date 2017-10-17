@@ -70,12 +70,14 @@ bool SpriteFrameCache::init()
     _spriteFrames.reserve(20);
     _spriteFramesAliases.reserve(20);
     _loadedFileNames = new std::set<std::string>();
+    _plistRefCounts = new std::unordered_map<std::string, int>();
     return true;
 }
 
 SpriteFrameCache::~SpriteFrameCache()
 {
     CC_SAFE_DELETE(_loadedFileNames);
+    CC_SAFE_DELETE(_plistRefCounts);
 }
 
 void SpriteFrameCache::parseIntegerList(const std::string &string, std::vector<int> &res)
@@ -760,6 +762,49 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
         CCLOG("cocos2d: SpriteFrameCache: Couldn't load texture");
     }
     return true;
+}
+
+std::vector<std::string> SpriteFrameCache::getLoadedPlists(){
+    std::vector<std::string> ret;
+    for(auto it=_loadedFileNames->begin(); it != _loadedFileNames->end(); ++it){
+        ret.emplace_back(*it);
+    }
+    return ret;
+}
+
+void SpriteFrameCache::logPlist(const std::string & plistName){
+    CCLOG("loadedplists:");
+    for(auto it=_loadedFileNames->begin(); it != _loadedFileNames->end(); ++it){
+        CCLOG("%s", (*it).c_str());
+    }
+    CCLOG("plistRefCount:");
+    for(auto it=_plistRefCounts->begin(); it != _plistRefCounts->end(); ++it){
+        CCLOG("%s,%d", (it->first).c_str(), it->second);
+    }
+}
+
+void SpriteFrameCache::retainPlist(const std::string & plistName){
+    auto it = _plistRefCounts->find(plistName);
+    if(it != _plistRefCounts->end()){
+        (*_plistRefCounts)[plistName] = (*_plistRefCounts)[plistName] + 1;
+    }else{
+        (*_plistRefCounts)[plistName] = 1;
+    }
+}
+
+void SpriteFrameCache::releasePlist(const std::string & plistName){
+    auto it = _plistRefCounts->find(plistName);
+    if(it != _plistRefCounts->end()){
+        if((*_plistRefCounts)[plistName] == 1){
+            _plistRefCounts->erase(it);
+            this->removeSpriteFramesFromFile(plistName);
+            CCLOG("remove plist:%s", plistName.c_str());
+        }else{
+            (*_plistRefCounts)[plistName] = (*_plistRefCounts)[plistName] - 1;
+        }
+    }else{
+        CCLOGWARN("cocos2d: release an unknown plist: %s", plistName.c_str());
+    }
 }
 
 NS_CC_END

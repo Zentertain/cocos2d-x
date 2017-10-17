@@ -44,6 +44,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCMaterial.h"
 #include "math/TransformUtils.h"
+#include "2d/CCSpriteFrameCache.h"
 
 
 #if CC_NODE_RENDER_SUBPIXEL
@@ -122,6 +123,7 @@ Node::Node()
 #if CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
+,_refPlists(0)
 {
     // set default scheduler and actionManager
     _director = Director::getInstance();
@@ -195,6 +197,9 @@ Node::~Node()
     CC_SAFE_RELEASE(_eventDispatcher);
 
     delete[] _additionalTransform;
+    for(auto it=_refPlists.begin(); it!=_refPlists.end(); ++it){
+        SpriteFrameCache::getInstance()->releasePlist(*it);
+    }
 }
 
 bool Node::init()
@@ -2213,11 +2218,15 @@ void Node::setTouchHandleEnabled(bool enabled)
     _touchHandleEnabled = enabled;
 }
 
+void Node::pushPlist(const std::string & plist) {
+    _refPlists.emplace_back(plist);
+    SpriteFrameCache::getInstance()->retainPlist(plist);
+}
+
 // MARK: Deprecated
 
 __NodeRGBA::__NodeRGBA()
 {
     CCLOG("NodeRGBA deprecated.");
 }
-
 NS_CC_END

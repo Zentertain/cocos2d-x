@@ -468,7 +468,7 @@ void AssetsManagerEx::parseVersion()
 
     if (!_remoteManifest->isVersionLoaded())
     {
-        CCLOG("AssetsManagerEx : Fail to parse version file, step skipped\n");
+        CCLOG("AssetsManagerEx : Fail to parse version file %s, step skipped\n", _cacheVersionPath.c_str());
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }

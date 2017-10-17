@@ -28,7 +28,8 @@
 
 #ifndef __CCNODE_H__
 #define __CCNODE_H__
-
+#include <vector>
+#include <string>
 #include "base/ccMacros.h"
 #include "base/CCVector.h"
 #include "base/CCProtocols.h"
@@ -1823,6 +1824,8 @@ public:
     virtual void propagateTouchEvent(cocos2d::EventTouch::EventCode eventType, cocos2d::Event *event, Node* sender, cocos2d::Touch *touch);
     virtual Vec2 getTouchBeganPosition();
     virtual void setTouchHandleEnabled(bool enabled);
+    
+    void pushPlist(const std::string & plist);
 
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
@@ -1950,6 +1953,7 @@ protected:
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
     
+    std::vector<std::string> _refPlists;
     // opacity controls
     GLubyte     _displayedOpacity;
     GLubyte     _realOpacity;

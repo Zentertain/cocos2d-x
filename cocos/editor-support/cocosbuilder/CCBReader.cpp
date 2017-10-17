@@ -225,7 +225,9 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Ref *pOwner, co
     auto dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(strPath));
     
     Node *ret =  this->readNodeGraphFromData(dataPtr, pOwner, parentSize);
-    
+    for(auto it=_loadedSpriteSheets.begin(); it!=_loadedSpriteSheets.end(); ++it){
+        ret->pushPlist(*it);
+    }
     return ret;
 }
 

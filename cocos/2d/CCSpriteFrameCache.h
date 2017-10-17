@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #include <set>
 #include <string>
+#include <unordered_map>
 #include "2d/CCSpriteFrame.h"
 #include "base/CCRef.h"
 #include "base/CCValue.h"
@@ -239,6 +240,13 @@ public:
 
     bool reloadTexture(const std::string& plist);
 
+    std::vector<std::string> getLoadedPlists();
+    
+    void logPlist(const std::string & plistName);
+    
+    void retainPlist(const std::string & plistName);
+    
+    void releasePlist(const std::string & plistName);
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
     SpriteFrameCache(){}
@@ -272,6 +280,7 @@ protected:
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;
     std::set<std::string>*  _loadedFileNames;
+    std::unordered_map<std::string, int>* _plistRefCounts;
 };
 
 // end of _2d group
