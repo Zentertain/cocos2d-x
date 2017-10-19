@@ -60647,6 +60647,67 @@ bool js_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture(JSContext *cx, u
     JS_ReportError(cx, "js_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_SpriteFrameCache_retainPlist(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteFrameCache* cobj = (cocos2d::SpriteFrameCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrameCache_retainPlist : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteFrameCache_retainPlist : Error processing arguments");
+        cobj->retainPlist(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_cocos2dx_SpriteFrameCache_retainPlist : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteFrameCache_releasePlist(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteFrameCache* cobj = (cocos2d::SpriteFrameCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrameCache_releasePlist : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteFrameCache_releasePlist : Error processing arguments");
+        cobj->releasePlist(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_cocos2dx_SpriteFrameCache_releasePlist : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteFrameCache_setNeedExtraPlistManagement(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteFrameCache* cobj = (cocos2d::SpriteFrameCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrameCache_setNeedExtraPlistManagement : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteFrameCache_setNeedExtraPlistManagement : Error processing arguments");
+        cobj->setNeedExtraPlistManagement(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_cocos2dx_SpriteFrameCache_setNeedExtraPlistManagement : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+
 bool js_cocos2dx_SpriteFrameCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -60705,6 +60766,9 @@ void js_register_cocos2dx_SpriteFrameCache(JSContext *cx, JS::HandleObject globa
         JS_FN("removeSpriteFrameByName", js_cocos2dx_SpriteFrameCache_removeSpriteFrameByName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isSpriteFramesWithFileLoaded", js_cocos2dx_SpriteFrameCache_isSpriteFramesWithFileLoaded, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeSpriteFramesFromTexture", js_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("retainPlist", js_cocos2dx_SpriteFrameCache_retainPlist, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("releasePlist", js_cocos2dx_SpriteFrameCache_releasePlist, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setNeedExtraPlistManagement", js_cocos2dx_SpriteFrameCache_setNeedExtraPlistManagement, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

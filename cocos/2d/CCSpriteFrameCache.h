@@ -247,9 +247,12 @@ public:
     void retainPlist(const std::string & plistName);
     
     void releasePlist(const std::string & plistName);
+    
+    void setNeedExtraPlistManagement(bool value){ _needExtraPlistManagement = value; }
+    
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
-    SpriteFrameCache(){}
+    SpriteFrameCache():_needExtraPlistManagement(false){}
 
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
@@ -281,6 +284,8 @@ protected:
     ValueMap _spriteFramesAliases;
     std::set<std::string>*  _loadedFileNames;
     std::unordered_map<std::string, int>* _plistRefCounts;
+    //用于ccb卸载时自动卸载相关的plist,默认关闭,以防其他合用引擎分支的游戏出问题
+    bool _needExtraPlistManagement;
 };
 
 // end of _2d group

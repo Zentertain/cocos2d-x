@@ -784,6 +784,7 @@ void SpriteFrameCache::logPlist(const std::string & plistName){
 }
 
 void SpriteFrameCache::retainPlist(const std::string & plistName){
+    if(!_needExtraPlistManagement) return;
     auto it = _plistRefCounts->find(plistName);
     if(it != _plistRefCounts->end()){
         (*_plistRefCounts)[plistName] = (*_plistRefCounts)[plistName] + 1;
@@ -793,6 +794,7 @@ void SpriteFrameCache::retainPlist(const std::string & plistName){
 }
 
 void SpriteFrameCache::releasePlist(const std::string & plistName){
+    if(!_needExtraPlistManagement) return;
     auto it = _plistRefCounts->find(plistName);
     if(it != _plistRefCounts->end()){
         if((*_plistRefCounts)[plistName] == 1){
