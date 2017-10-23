@@ -250,6 +250,8 @@ public:
     
     void setNeedExtraPlistManagement(bool value){ _needExtraPlistManagement = value; }
     
+    bool getNeedExtraPlistManagement(){ return _needExtraPlistManagement; }
+    
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
     SpriteFrameCache():_needExtraPlistManagement(false){}

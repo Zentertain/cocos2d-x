@@ -60647,6 +60647,24 @@ bool js_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture(JSContext *cx, u
     JS_ReportError(cx, "js_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_SpriteFrameCache_getNeedExtraPlistManagement(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteFrameCache* cobj = (cocos2d::SpriteFrameCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrameCache_getNeedExtraPlistManagement : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->getNeedExtraPlistManagement();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_cocos2dx_SpriteFrameCache_getNeedExtraPlistManagement : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_SpriteFrameCache_retainPlist(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -60769,6 +60787,7 @@ void js_register_cocos2dx_SpriteFrameCache(JSContext *cx, JS::HandleObject globa
         JS_FN("retainPlist", js_cocos2dx_SpriteFrameCache_retainPlist, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("releasePlist", js_cocos2dx_SpriteFrameCache_releasePlist, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNeedExtraPlistManagement", js_cocos2dx_SpriteFrameCache_setNeedExtraPlistManagement, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getNeedExtraPlistManagement", js_cocos2dx_SpriteFrameCache_getNeedExtraPlistManagement, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
