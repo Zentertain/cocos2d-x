@@ -627,6 +627,8 @@ public:
      *  @return The file size.
      */
     virtual long getFileSize(const std::string &filepath);
+    
+    virtual void listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const;
 
     /** Returns the full path cache. */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }

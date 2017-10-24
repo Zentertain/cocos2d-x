@@ -5651,6 +5651,11 @@
 		C5F516221C822E060013B695 /* TabControlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516161C8216C60013B695 /* TabControlReader.cpp */; };
 		C5F516231C822E190013B695 /* UITabControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516111C8216660013B695 /* UITabControl.h */; };
 		C5F516251C822E470013B695 /* TabControlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516171C8216C60013B695 /* TabControlReader.h */; };
+		C68B51901F9F26C500D79CF7 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = C68B518E1F9F26C500D79CF7 /* md5.h */; };
+		C68B51921F9F277600D79CF7 /* tinydir.h in Headers */ = {isa = PBXBuildFile; fileRef = C68B51911F9F277600D79CF7 /* tinydir.h */; };
+		C68B51931F9F2E5B00D79CF7 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = C68B518D1F9F26C500D79CF7 /* md5.c */; };
+		C68B51941F9F2E5C00D79CF7 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = C68B518D1F9F26C500D79CF7 /* md5.c */; };
+		C68B51951F9F2E5F00D79CF7 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = C68B518D1F9F26C500D79CF7 /* md5.c */; };
 		D0FD03491A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034B1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
@@ -7685,6 +7690,9 @@
 		C5F516151C8216C60013B695 /* CSTabControl_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSTabControl_generated.h; path = TabControlReader/CSTabControl_generated.h; sourceTree = "<group>"; };
 		C5F516161C8216C60013B695 /* TabControlReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TabControlReader.cpp; path = TabControlReader/TabControlReader.cpp; sourceTree = "<group>"; };
 		C5F516171C8216C60013B695 /* TabControlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabControlReader.h; path = TabControlReader/TabControlReader.h; sourceTree = "<group>"; };
+		C68B518D1F9F26C500D79CF7 /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = ../external/md5/md5.c; sourceTree = "<group>"; };
+		C68B518E1F9F26C500D79CF7 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = md5.h; path = ../external/md5/md5.h; sourceTree = "<group>"; };
+		C68B51911F9F277600D79CF7 /* tinydir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinydir.h; path = ../external/tinydir/tinydir.h; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
 		D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAllocatorDiagnostics.cpp; sourceTree = "<group>"; };
 		D0FD033D1A3B51AA00825BB5 /* CCAllocatorDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorDiagnostics.h; sourceTree = "<group>"; };
@@ -8320,6 +8328,8 @@
 		1A57033E180BD0490088DEC7 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				C68B518C1F9F26AE00D79CF7 /* tinydir */,
+				C68B518B1F9F26A300D79CF7 /* md5 */,
 				68B39B391B1C5C670084F72C /* clipper */,
 				B6DD2F731B04820C00E47F5F /* recast */,
 				B6CAB0021AF9A9EE00B9B856 /* bullet */,
@@ -11233,6 +11243,23 @@
 			name = TabControlReader;
 			sourceTree = "<group>";
 		};
+		C68B518B1F9F26A300D79CF7 /* md5 */ = {
+			isa = PBXGroup;
+			children = (
+				C68B518D1F9F26C500D79CF7 /* md5.c */,
+				C68B518E1F9F26C500D79CF7 /* md5.h */,
+			);
+			name = md5;
+			sourceTree = "<group>";
+		};
+		C68B518C1F9F26AE00D79CF7 /* tinydir */ = {
+			isa = PBXGroup;
+			children = (
+				C68B51911F9F277600D79CF7 /* tinydir.h */,
+			);
+			name = tinydir;
+			sourceTree = "<group>";
+		};
 		D0FD03391A3B51AA00825BB5 /* allocator */ = {
 			isa = PBXGroup;
 			children = (
@@ -11371,6 +11398,7 @@
 				B68778FE1A8CA82E00643ABF /* CCParticle3DEmitter.h in Headers */,
 				50ABBEC11925AB6F00A911A9 /* CCValue.h in Headers */,
 				B276EF631988D1D500CD400F /* CCVertexIndexBuffer.h in Headers */,
+				C68B51901F9F26C500D79CF7 /* md5.h in Headers */,
 				B29A7DE519EE1B7700872B35 /* SkeletonAnimation.h in Headers */,
 				50ABBE871925AB6F00A911A9 /* ccMacros.h in Headers */,
 				B665E32C1AA80A6500DDB1C5 /* CCPUOnCountObserver.h in Headers */,
@@ -11423,6 +11451,7 @@
 				B665E3101AA80A6500DDB1C5 /* CCPUObserver.h in Headers */,
 				B6CAB2071AF9AA1A00B9B856 /* btOverlappingPairCache.h in Headers */,
 				1A570077180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
+				C68B51921F9F277600D79CF7 /* tinydir.h in Headers */,
 				1A57007B180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
 				B6CAB38D1AF9AA1A00B9B856 /* btPolyhedralContactClipping.h in Headers */,
 				15AE182A19AAD2F700C27E9E /* CCMeshSkin.h in Headers */,
@@ -14720,6 +14749,7 @@
 				B6CAB3951AF9AA1A00B9B856 /* btSubSimplexConvexCast.cpp in Sources */,
 				B29A7E3719EE1B7700872B35 /* AnimationStateData.c in Sources */,
 				15AE182419AAD2F700C27E9E /* CCMesh.cpp in Sources */,
+				C68B51931F9F2E5B00D79CF7 /* md5.c in Sources */,
 				15AE190D19AAD35000C27E9E /* CCDisplayManager.cpp in Sources */,
 				B6CAB2271AF9AA1A00B9B856 /* btCollisionDispatcher.cpp in Sources */,
 				382383FA1A258FA7002C4610 /* idl_gen_go.cpp in Sources */,
@@ -15726,6 +15756,7 @@
 				507B3B471C31BDD30067B53E /* CCTextureCache.cpp in Sources */,
 				507B3B481C31BDD30067B53E /* CCPUMaterialManager.cpp in Sources */,
 				507B3B491C31BDD30067B53E /* CCScene.cpp in Sources */,
+				C68B51951F9F2E5F00D79CF7 /* md5.c in Sources */,
 				507B3B4A1C31BDD30067B53E /* Vec4.cpp in Sources */,
 				507B3B4B1C31BDD30067B53E /* CCBillBoard.cpp in Sources */,
 				507B3B4C1C31BDD30067B53E /* Particle3DReader.cpp in Sources */,
@@ -16421,6 +16452,7 @@
 				B6CAB5361AF9AA1A00B9B856 /* btVector3.cpp in Sources */,
 				B665E39F1AA80A6500DDB1C5 /* CCPUPositionEmitter.cpp in Sources */,
 				1A57007E180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
+				C68B51941F9F2E5C00D79CF7 /* md5.c in Sources */,
 				15AE1BF319AAE01E00C27E9E /* CCControlSaturationBrightnessPicker.cpp in Sources */,
 				B6CAB2521AF9AA1A00B9B856 /* btEmptyCollisionAlgorithm.cpp in Sources */,
 				B665E2D31AA80A6500DDB1C5 /* CCPUInterParticleColliderTranslator.cpp in Sources */,

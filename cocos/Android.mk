@@ -221,6 +221,7 @@ navmesh/CCNavMeshUtils.cpp \
 ../external/ConvertUTF/ConvertUTFWrapper.cpp \
 ../external/ConvertUTF/ConvertUTF.c \
 ../external/tinyxml2/tinyxml2.cpp \
+../external/md5/md5.c \
 ../external/unzip/ioapi_mem.cpp \
 ../external/unzip/ioapi.cpp \
 ../external/unzip/unzip.cpp \

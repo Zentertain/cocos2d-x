@@ -25,7 +25,9 @@ THE SOFTWARE.
 
 #include "base/ccUtils.h"
 
+#include <cmath>
 #include <stdlib.h>
+#include "md5/md5.h"
 
 #include "base/CCDirector.h"
 #include "base/CCAsyncTaskPool.h"
@@ -399,6 +401,27 @@ Node* findChild(Node* levelRoot, int tag)
     }
 
     return nullptr;
+}
+    
+std::string getFileMD5Hash(const std::string &filename)
+{
+    static const unsigned int MD5_DIGEST_LENGTH = 16;
+    
+    Data d;
+    FileUtils::getInstance()->getContents(filename, &d);
+    
+    md5_state_t state;
+    md5_byte_t digest[MD5_DIGEST_LENGTH];
+    char hexOutput[(MD5_DIGEST_LENGTH << 1) + 1] = {0};
+    
+    ccx_md5_init(&state);
+    ccx_md5_append(&state, (const md5_byte_t *)d.getBytes(), (int)d.getSize());
+    ccx_md5_finish(&state, digest);
+    
+    for (int di = 0; di < 16; ++di)
+        sprintf(hexOutput + di * 2, "%02x", digest[di]);
+    
+    return hexOutput;
 }
 
 }
