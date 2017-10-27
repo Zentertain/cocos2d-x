@@ -677,7 +677,6 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
     if (!path) {
         return nullptr;
     }
-
     JS::PersistentRootedScript* script = getScript(path);
     if (script != nullptr) {
         return script;
@@ -698,8 +697,9 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
     JS::RootedObject obj(cx, global);
     bool compileSucceed = false;
     
+    std::string pathWithoutExt = RemoveFileExt(std::string(path));
     // a) check jsc file first
-    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+    std::string byteCodePath = pathWithoutExt + BYTE_CODE_FILE_EXT;
 
     // Check whether '.jsc' files exist to avoid outputing log which says 'couldn't find .jsc file'.
     if (futil->isFileExist(byteCodePath))
@@ -715,7 +715,28 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
             filename_script[byteCodePath] = script;
         }
     }
-
+    byteCodePath = pathWithoutExt + ".dat";
+    if (futil->isFileExist(byteCodePath))
+    {
+        ssize_t dataSize = 0;
+        std::size_t index = byteCodePath.rfind("/");
+        std::string innerFilename;
+        if(index != std::string::npos && index != byteCodePath.length()-1){
+            innerFilename = byteCodePath.substr(index+1);
+        }else{
+            innerFilename = byteCodePath;
+        }
+        unsigned char * data = futil->getFileDataFromZip(futil->fullPathForFilename(byteCodePath), innerFilename, &dataSize, "0O00O000O000OO00O0O0");
+        if (data)
+        {
+            *script = JS_DecodeScript(cx, data, (uint32_t)dataSize, nullptr);
+        }
+        if (*script) {
+            compileSucceed = true;
+            filename_script[byteCodePath] = script;
+        }
+    }
+        
     // b) no jsc file, check js file
     if (!(*script))
     {
@@ -746,7 +767,6 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
     else {
         filename_script[byteCodePath] = script;
     }
-    
     if (compileSucceed) {
         return script;
     } else {
