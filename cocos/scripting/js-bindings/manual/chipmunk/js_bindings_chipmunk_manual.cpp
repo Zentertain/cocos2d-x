@@ -254,9 +254,9 @@ void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JS::HandleObject globalOb
     TypeTest<cocos2d::DrawNode> t1;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t1.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
+    auto typeMapIter = _js_global_type_map->find(typeName);
 
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    CCASSERT(typeMapIter != _js_global_type_map->end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
 
@@ -417,8 +417,8 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JS::HandleObject globalO
     TypeTest<cocos2d::Sprite> t1;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t1.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    auto typeMapIter = _js_global_type_map->find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map->end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
 

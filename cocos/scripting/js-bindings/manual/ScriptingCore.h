@@ -565,7 +565,7 @@ js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleO
     TypeTest<T> t;
     js_type_class_t *p = nullptr;
     std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    if (_js_global_type_map->find(typeName) == _js_global_type_map->end())
     {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsClass;
@@ -579,7 +579,7 @@ js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleO
             p->parentProto.construct(cx);
         }
         p->parentProto.ref() = parentProto ;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
+        _js_global_type_map->insert(std::make_pair(typeName, p));
     }
     return p;
 }

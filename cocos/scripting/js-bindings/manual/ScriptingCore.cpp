@@ -91,17 +91,17 @@ static void serverEntryPoint(unsigned int port);
 
 //js_proxy_t *_native_js_global_ht = NULL;
 //js_proxy_t *_js_native_global_ht = NULL;
-std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
-static std::unordered_map<void*, js_proxy_t*> _native_js_global_map;
-static std::unordered_map<JSObject*, js_proxy_t*> _js_native_global_map;
+std::unordered_map<std::string, js_type_class_t*> *_js_global_type_map = new std::unordered_map<std::string, js_type_class_t*>();
+static std::unordered_map<void*, js_proxy_t*> *_native_js_global_map = new std::unordered_map<void*, js_proxy_t*>();
+static std::unordered_map<JSObject*, js_proxy_t*> *_js_native_global_map = new std::unordered_map<JSObject*, js_proxy_t*>();
 static std::unordered_map<JSObject*, JSObject*> _js_hook_owner_map;
 
 static char *_js_log_buf = NULL;
 
-static std::vector<sc_register_sth> registrationList;
+static std::vector<sc_register_sth> *registrationList = new std::vector<sc_register_sth>();
 
 // name ~> JSScript map
-static std::unordered_map<std::string, JS::PersistentRootedScript*> filename_script;
+static std::unordered_map<std::string, JS::PersistentRootedScript*> *filename_script = new std::unordered_map<std::string, JS::PersistentRootedScript*>();
 // port ~> socket map
 static std::unordered_map<int,int> ports_sockets;
 
@@ -541,23 +541,23 @@ void ScriptingCore::start()
 }
 
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
-    registrationList.push_back(callback);
+    registrationList->push_back(callback);
 }
 
 void ScriptingCore::removeAllRoots(JSContext *cx)
 {
     // Native -> JS. No need to free "second"
-    _native_js_global_map.clear();
+    _native_js_global_map->clear();
 
     // JS -> Native: free "second" and "unroot" it.
-    auto it_js = _js_native_global_map.begin();
-    while (it_js != _js_native_global_map.end())
+    auto it_js = _js_native_global_map->begin();
+    while (it_js != _js_native_global_map->end())
     {
         JS::RemoveObjectRoot(cx, &it_js->second->obj);
         free(it_js->second);
-        it_js = _js_native_global_map.erase(it_js);
+        it_js = _js_native_global_map->erase(it_js);
     }
-    _js_native_global_map.clear();
+    _js_native_global_map->clear();
 }
 
 // Just a wrapper around JSPrincipals that allows static construction.
@@ -639,7 +639,7 @@ void ScriptingCore::createGlobalContext() {
 
     runScript("script/jsb_prepare.js");
 
-    for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
+    for (std::vector<sc_register_sth>::iterator it = registrationList->begin(); it != registrationList->end(); it++) {
         sc_register_sth callback = *it;
         callback(_cx, _global.ref());
     }
@@ -661,13 +661,13 @@ JS::PersistentRootedScript* ScriptingCore::getScript(const char *path)
 {
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-    if (filename_script.find(byteCodePath) != filename_script.end())
-        return filename_script[byteCodePath];
+    if (filename_script->find(byteCodePath) != filename_script->end())
+        return (*filename_script)[byteCodePath];
 
     // b) no jsc file, check js file
     std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(path);
-    if (filename_script.find(fullPath) != filename_script.end())
-        return filename_script[fullPath];
+    if (filename_script->find(fullPath) != filename_script->end())
+        return (*filename_script)[fullPath];
 
     return NULL;
 }
@@ -712,7 +712,7 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
         
         if (*script) {
             compileSucceed = true;
-            filename_script[byteCodePath] = script;
+            (*filename_script)[byteCodePath] = script;
         }
     }
 
@@ -740,11 +740,11 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
 #endif
         if (ok) {
             compileSucceed = true;
-            filename_script[fullPath] = script;
+            (*filename_script)[fullPath] = script;
         }
     }
     else {
-        filename_script[byteCodePath] = script;
+        (*filename_script)[byteCodePath] = script;
     }
     
     if (compileSucceed) {
@@ -759,30 +759,30 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
 void ScriptingCore::cleanScript(const char *path)
 {
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-    auto it = filename_script.find(byteCodePath);
-    if (it != filename_script.end())
+    auto it = filename_script->find(byteCodePath);
+    if (it != filename_script->end())
     {
         delete it->second;
-        filename_script.erase(it);
+        filename_script->erase(it);
     }
 
     std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(path);
-    it = filename_script.find(fullPath);
-    if (it != filename_script.end())
+    it = filename_script->find(fullPath);
+    if (it != filename_script->end())
     {
         delete it->second;
-        filename_script.erase(it);
+        filename_script->erase(it);
     }
 }
 
 std::unordered_map<std::string, JS::PersistentRootedScript*>& ScriptingCore::getFileScript()
 {
-    return filename_script;
+    return *filename_script;
 }
 
 void ScriptingCore::cleanAllScript()
 {
-    filename_script.clear();
+    filename_script->clear();
 }
 
 bool ScriptingCore::runScript(const char *path)
@@ -887,15 +887,15 @@ void ScriptingCore::cleanup()
         _js_log_buf = NULL;
     }
 
-    for (auto iter = _js_global_type_map.begin(); iter != _js_global_type_map.end(); ++iter)
+    for (auto iter = _js_global_type_map->begin(); iter != _js_global_type_map->end(); ++iter)
     {
         free(iter->second->jsclass);
         free(iter->second);
     }
 
-    _js_global_type_map.clear();
-    filename_script.clear();
-    registrationList.clear();
+    _js_global_type_map->clear();
+    filename_script->clear();
+    registrationList->clear();
     
     _needCleanup = false;
 }
@@ -2136,21 +2136,21 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsHandle)
         CC_ASSERT(proxy && "not enough memory");
 
 #if 0
-        if (_js_native_global_map.find(jsObj) != _js_native_global_map.end())
+        if (_js_native_global_map->find(jsObj) != _js_native_global_map->end())
         {
-            CCLOG("BUG: old:%s new:%s", JS_GetClass(_js_native_global_map.at(jsObj)->_jsobj)->name, JS_GetClass(jsObj)->name);
+            CCLOG("BUG: old:%s new:%s", JS_GetClass(_js_native_global_map->at(jsObj)->_jsobj)->name, JS_GetClass(jsObj)->name);
         }
 #endif
 
-        CC_ASSERT(_native_js_global_map.find(nativeObj) == _native_js_global_map.end() && "Native Key should not be present");
-//        CC_ASSERT(_js_native_global_map.find(jsObj) == _js_native_global_map.end() && "JS Key should not be present");
+        CC_ASSERT(_native_js_global_map->find(nativeObj) == _native_js_global_map->end() && "Native Key should not be present");
+//        CC_ASSERT(_js_native_global_map->find(jsObj) == _js_native_global_map->end() && "JS Key should not be present");
         // If native proxy doesn't exist, and js proxy exist, means previous js object in this location have already been released.
         // In some circumstances, js object may be released without calling its finalizer, so the proxy haven't been removed.
         // For ex: var seq = cc.sequence(moveBy, cc.callFunc(this.callback, this));
         // In this code, cc.callFunc is created in parameter, and directly released after the native function call, the finalizer won't be triggered.
         // The current solution keep the game running with a warning because it may cause memory leak as the native object may have been retained.
-        auto existJSProxy = _js_native_global_map.find(jsObj);
-        if (existJSProxy != _js_native_global_map.end()) {
+        auto existJSProxy = _js_native_global_map->find(jsObj);
+        if (existJSProxy != _js_native_global_map->end()) {
 #if COCOS2D_DEBUG
             CCLOG("jsbindings: Failed to remove proxy for native object: %p, force removing it, but it may cause memory leak", existJSProxy->second->ptr);
 #endif
@@ -2162,8 +2162,8 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsHandle)
         proxy->_jsobj = jsObj;
 
         // One Proxy in two entries
-        _native_js_global_map[nativeObj] = proxy;
-        _js_native_global_map[jsObj] = proxy;
+        (*_native_js_global_map)[nativeObj] = proxy;
+        (*_js_native_global_map)[jsObj] = proxy;
     }
     else CCLOG("jsb_new_proxy: Invalid keys");
 
@@ -2172,16 +2172,16 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsHandle)
 
 js_proxy_t* jsb_get_native_proxy(void* nativeObj)
 {
-    auto search = _native_js_global_map.find(nativeObj);
-    if(search != _native_js_global_map.end())
+    auto search = _native_js_global_map->find(nativeObj);
+    if(search != _native_js_global_map->end())
         return search->second;
     return nullptr;
 }
 
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
 {
-    auto search = _js_native_global_map.find(jsObj);
-    if(search != _js_native_global_map.end())
+    auto search = _js_native_global_map->find(jsObj);
+    if(search != _js_native_global_map->end())
         return search->second;
     return nullptr;
 }
@@ -2200,28 +2200,28 @@ void jsb_remove_proxy(js_proxy_t* proxy)
     CC_ASSERT(nativeKey && "Invalid nativeKey");
     CC_ASSERT(jsKey && "Invalid JSKey");
 
-    auto it_nat = _native_js_global_map.find(nativeKey);
-    auto it_js = _js_native_global_map.find(jsKey);
+    auto it_nat = _native_js_global_map->find(nativeKey);
+    auto it_js = _js_native_global_map->find(jsKey);
 
 #if 0
     // XXX FIXME: sanity check. Remove me once it is tested that it works Ok
-    if (it_nat != _native_js_global_map.end() && it_js != _js_native_global_map.end())
+    if (it_nat != _native_js_global_map->end() && it_js != _js_native_global_map->end())
     {
         CC_ASSERT(it_nat->second == it_js->second && "BUG. Different enties");
     }
 #endif
 
-    if (it_nat != _native_js_global_map.end())
+    if (it_nat != _native_js_global_map->end())
     {
-        _native_js_global_map.erase(it_nat);
+        _native_js_global_map->erase(it_nat);
     }
     else CCLOG("jsb_remove_proxy: failed. Native key not found");
 
-    if (it_js != _js_native_global_map.end())
+    if (it_js != _js_native_global_map->end())
     {
         // Free it once, since we only have one proxy alloced entry
         free(it_js->second);
-        _js_native_global_map.erase(it_js);
+        _js_native_global_map->erase(it_js);
     }
     else CCLOG("jsb_remove_proxy: failed. JS key not found");
 }

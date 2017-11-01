@@ -72,12 +72,12 @@ template <class T>
 inline js_type_class_t *js_get_type_from_native(T* native_obj) {
     bool found = false;
     std::string typeName = typeid(*native_obj).name();
-    auto typeProxyIter = _js_global_type_map.find(typeName);
-    if (typeProxyIter == _js_global_type_map.end())
+    auto typeProxyIter = _js_global_type_map->find(typeName);
+    if (typeProxyIter == _js_global_type_map->end())
     {
         typeName = typeid(T).name();
-        typeProxyIter = _js_global_type_map.find(typeName);
-        if (typeProxyIter != _js_global_type_map.end())
+        typeProxyIter = _js_global_type_map->find(typeName);
+        if (typeProxyIter != _js_global_type_map->end())
         {
             found = true;
         }
