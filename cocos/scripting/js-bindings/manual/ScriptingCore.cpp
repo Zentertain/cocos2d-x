@@ -76,6 +76,8 @@
 
 #define BYTE_CODE_FILE_EXT ".jsc"
 
+static const char * zipPwd = "Hs%FvNduWMGqn1W#n3qXo0KKspDrs0xWYq%4uNXGsjJvE%hYEx9*X3jmhGc*IUmylDjpX1LCw6aJ*GaR61QpiCi$k9Tz*RDp1tv";
+
 using namespace cocos2d;
 
 static std::string inData;
@@ -726,7 +728,7 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
         }else{
             innerFilename = byteCodePath;
         }
-        unsigned char * data = futil->getFileDataFromZip(futil->fullPathForFilename(byteCodePath), innerFilename, &dataSize, "0O00O000O000OO00O0O0");
+        unsigned char * data = futil->getFileDataFromZip(futil->fullPathForFilename(byteCodePath), innerFilename, &dataSize, zipPwd);
         if (data)
         {
             *script = JS_DecodeScript(cx, data, (uint32_t)dataSize, nullptr);
