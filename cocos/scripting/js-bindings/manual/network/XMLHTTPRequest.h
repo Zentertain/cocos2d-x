@@ -96,7 +96,7 @@ private:
     void _setHttpRequestData(const char *data, size_t len);
     void _sendRequest(JSContext *cx);
     void _notify(JS::HandleObject callback);
-    
+    void releaseJsCallback();
     std::string                       _url;
     JSContext*                        _cx;
     std::string                       _meth;
@@ -125,6 +125,8 @@ private:
     std::unordered_map<std::string, std::string>          _requestHeader;
     bool                              _isAborted;
     cocos2d::Scheduler*               _scheduler;
+    cocos2d::EventListenerCustom*     _resetListener;
+    bool                              _isReset;
 };
 
 #endif

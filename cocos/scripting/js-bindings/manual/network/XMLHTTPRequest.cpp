@@ -31,6 +31,7 @@
 #include <algorithm>
 #include <sstream>
 #include "base/CCDirector.h"
+#include "base/EventDispatcher.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 using namespace std;
@@ -287,6 +288,7 @@ MinXmlHttpRequest::MinXmlHttpRequest()
 : _url()
 {
     MinXmlHttpRequest(ScriptingCore::getInstance()->getGlobalContext());
+    cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(_resetListener);
 }
 
 /**
@@ -321,17 +323,22 @@ MinXmlHttpRequest::MinXmlHttpRequest(JSContext *cx)
 , _onloadCallback(nullptr)
 , _onloadendCallback(nullptr)
 , _ontimeoutCallback(nullptr)
+, _resetListener(nullptr)
+, _isReset(false)
 {
     _scheduler = cocos2d::Director::getInstance()->getScheduler();
     _scheduler->retain();
+    _resetListener = cocos2d::Director::getInstance()->getEventDispatcher()->addCustomEventListener(cocos2d::Director::EVENT_RESET, [=](cocos2d::EventCustom* event){
+        this->releaseJsCallback();
+    });
 }
 
-/**
- * @brief Destructor cleans up _httpRequest and stuff
- *
- */
-MinXmlHttpRequest::~MinXmlHttpRequest()
-{
+void MinXmlHttpRequest::releaseJsCallback(){
+    if(_isReset){
+        return;
+    }
+    _isReset = true;
+    
     JS::RootedValue callback(_cx);
     if (_onreadystateCallback)
     {
@@ -368,6 +375,14 @@ MinXmlHttpRequest::~MinXmlHttpRequest()
         callback.set(OBJECT_TO_JSVAL(_ontimeoutCallback));
         js_remove_object_root(callback);
     }
+}
+/**
+ * @brief Destructor cleans up _httpRequest and stuff
+ *
+ */
+MinXmlHttpRequest::~MinXmlHttpRequest()
+{
+    this->releaseJsCallback();
 
     if (_httpRequest)
     {
