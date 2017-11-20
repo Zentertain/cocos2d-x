@@ -36,6 +36,10 @@
 #include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "scripting/js-bindings/manual/jsb_helper.h"
 
+namespace cocos2d{
+    class EventListenerCustom;
+};
+
 class MinXmlHttpRequest : public cocos2d::Ref
 {
 public:

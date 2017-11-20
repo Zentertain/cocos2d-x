@@ -31,7 +31,8 @@
 #include <algorithm>
 #include <sstream>
 #include "base/CCDirector.h"
-#include "base/EventDispatcher.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventListenerCustom.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 using namespace std;
