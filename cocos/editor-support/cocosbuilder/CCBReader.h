@@ -351,6 +351,8 @@ public:
     void addOwnerOutletName(std::string name);
     void addOwnerOutletNode(cocos2d::Node *node);
 
+    static void enableFileDataCache(bool enabled);
+    static void releaseFileDataCache();
 private:
     void cleanUpNodeGraph(cocos2d::Node *pNode);
     bool readSequences();
@@ -368,7 +370,7 @@ private:
     bool init();
     
     friend class NodeLoader;
-
+    
 private:
     std::shared_ptr<cocos2d::Data> _data;
     unsigned char *_bytes;
@@ -402,6 +404,9 @@ private:
     
     CCBAnimationManagerMapPtr _animationManagers;
     
+    static bool fileDataCacheEnabled;
+    static std::unordered_map<std::string, std::shared_ptr<cocos2d::Data>> fileDataCache;
+
     bool _jsControlled;
 };
 

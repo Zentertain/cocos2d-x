@@ -21,8 +21,11 @@
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
+
 namespace cocosbuilder {
 
+std::unordered_map<std::string, std::shared_ptr<cocos2d::Data>> CCBReader::fileDataCache;
+bool CCBReader::fileDataCacheEnabled = false;
 /*************************************************************************
  Implementation of CCBFile
  *************************************************************************/
@@ -219,10 +222,25 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Ref *pOwner, co
     {
         strCCBFileName += strSuffix;
     }
-
-    std::string strPath = FileUtils::getInstance()->fullPathForFilename(strCCBFileName);
-
-    auto dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(strPath));
+    std::string strPath = FileUtils::getInstance()->fullPathForFilename(strCCBFileName.c_str());
+    auto cacheItr = fileDataCache.find(strPath);
+    std::shared_ptr<Data> dataPtr = nullptr;
+    if (fileDataCacheEnabled)
+    {
+        if (cacheItr != fileDataCache.end())
+        {
+            dataPtr = cacheItr->second;
+        }
+        else
+        {
+            dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(strPath));
+            fileDataCache[strPath] = dataPtr;
+        }
+    }
+    else
+    {
+        dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(strPath));
+    }
     
     Node *ret =  this->readNodeGraphFromData(dataPtr, pOwner, parentSize);
     
@@ -1058,6 +1076,14 @@ void CCBReader::addOwnerOutletNode(Node *node)
     _ownerOutletNodes.pushBack(node);
 }
 
+void CCBReader::enableFileDataCache(bool enabled) {
+    fileDataCacheEnabled = enabled;
+}
+
+void CCBReader::releaseFileDataCache() {
+    fileDataCache.clear();
+}
+    
 /************************************************************************
  Static functions
  ************************************************************************/
